@@ -1,7 +1,8 @@
 import { AxiosInstance, AxiosResponse } from "axios";
-import { Route, routeBuilder } from "utils/route";
+import { routeBuilder } from "utils/route";
 import { Key, payloadBuilder } from "utils/payload";
 import { CachiosInstance } from "cachios";
+import { Route } from "types/route";
 
 export type WithPayloadHTTPMethods = "post" | "put" | "patch";
 

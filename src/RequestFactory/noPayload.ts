@@ -1,7 +1,8 @@
 import { AxiosInstance } from "axios";
 import cachios, { CachiosInstance } from "cachios";
 import { ObjectId } from "mongodb";
-import { BaseParamType, Route, routeBuilder, routeBuilderWithParam } from "utils/route";
+import { BaseParamType, Route } from "types/route";
+import { routeBuilder, routeBuilderWithParam } from "utils/route";
 
 export type NoPayloadHTTPMethods = "get" | "delete" | "head" | "options";
 

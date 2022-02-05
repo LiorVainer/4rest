@@ -1,6 +1,4 @@
-export type Route = string[] | string;
-export type Prefix = string;
-export type BaseParamType = { toString: () => string };
+import { BaseParamType, Prefix, Route } from "types/route";
 
 export const routeBuilder = (prefix: Prefix, route?: Route): string =>
   `${prefix}/${route ? (typeof route === "string" ? route : route?.join("/")) : ""}`;

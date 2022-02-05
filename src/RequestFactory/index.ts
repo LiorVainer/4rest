@@ -1,6 +1,5 @@
-import { Axios, AxiosInstance } from "axios";
 import { CachiosInstance } from "cachios";
-import { Prefix } from "utils/route";
+import { Prefix } from "types/route";
 import { NoPayloadHTTPMethods, noPayloadRequest, noPayloadRequestByParam } from "./noPayload";
 import { WithPayloadHTTPMethods, withPayloadRequest } from "./withPayload";
 
