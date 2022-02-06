@@ -1,7 +1,6 @@
 {
   "name": "arpeggios",
   "version": "1.0.0",
-  "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -16,5 +15,14 @@
     "axios": "0.22.0",
     "cachios": "^3.1.1",
     "mongodb": "^4.3.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LiorVainer/arpeggios.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LiorVainer/arpeggios/issues"
+  },
+  "homepage": "https://github.com/LiorVainer/arpeggios#readme",
+  "description": ""
 }
