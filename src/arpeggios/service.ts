@@ -1,14 +1,15 @@
 import { Arpeggios } from "./../index";
-import { ArpeggiosInstance, ArpeggiosRequests } from "types/arpeggios";
+import { ArpeggiosInstance, ArpeggiosMethods } from "types/arpeggios";
 import { Route } from "types/route";
 import { basicCachiosInstance } from "utils/cachios";
+import { ObjectId } from "mongodb";
 
 export interface ArpeggiosConfig {
   routes?: {
     getAll?: Route;
-    getByParam?: Route;
+    getById?: Route;
     deleteAll?: Route;
-    deleteByParam?: Route;
+    deleteById?: Route;
     post?: Route;
     patch?: Route;
     put?: Route;
@@ -16,29 +17,16 @@ export interface ArpeggiosConfig {
   instance?: ArpeggiosInstance;
 }
 
-export class ArpeggiosService<
-  Response,
-  Payload = Response,
-  GetAll = Response[],
-  GetByParam = Response,
-  DeleteAll = Response[],
-  DeleteByParam = Response,
-  PostResponse = Response,
-  PostPayload = Partial<Payload>,
-  PatchResponse = PostResponse,
-  PatchPayload = PostPayload,
-  PutResponse = PostResponse,
-  PutPayload = PostPayload
-> {
+export class ArpeggiosService<Response, Payload = Response, IdType = ObjectId> {
   private instance: ArpeggiosInstance = Arpeggios(basicCachiosInstance());
-  protected service: ArpeggiosRequests;
+  protected service: ArpeggiosMethods;
   private config: ArpeggiosConfig = {};
 
   // Request Functions By Method
   public getAll;
-  public getByParam;
+  public getById;
   public deleteAll;
-  public deleteByParam;
+  public deleteById;
   public post;
   public patch;
   public put;
@@ -54,24 +42,12 @@ export class ArpeggiosService<
 
     this.service = this.instance(prefix);
 
-    this.getAll = this.service.get<GetAll>(this.config?.routes?.getAll);
-    this.getByParam = this.service.getByParam<GetByParam>(
-      this.config?.routes?.getByParam
-    );
-    this.deleteAll = this.service.delete<DeleteAll>(
-      this.config?.routes?.deleteAll
-    );
-    this.deleteByParam = this.service.deleteByParam<DeleteByParam>(
-      this.config?.routes?.deleteByParam
-    );
-    this.post = this.service.post<PostResponse, PostPayload>(
-      this.config?.routes?.post
-    );
-    this.patch = this.service.patch<PatchResponse, PatchPayload>(
-      this.config.routes?.patch
-    );
-    this.put = this.service.put<PutResponse, Partial<Payload>>(
-      this.config.routes?.put
-    );
+    this.getAll = this.service.get<Response[]>(this.config?.routes?.getAll);
+    this.getById = this.service.getByParam<Response, IdType>(this.config?.routes?.getById);
+    this.deleteAll = this.service.delete<Response[]>(this.config?.routes?.deleteAll);
+    this.deleteById = this.service.deleteByParam<Response, IdType>(this.config?.routes?.deleteById);
+    this.post = this.service.post<Response, Payload>(this.config?.routes?.post);
+    this.patch = this.service.patch<Response, Partial<Payload>>(this.config.routes?.patch);
+    this.put = this.service.put<Response, Partial<Payload>>(this.config.routes?.put);
   }
 }

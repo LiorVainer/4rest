@@ -2,7 +2,7 @@ import { Arpeggios } from "index";
 import { Route } from "types/route";
 
 export type ArpeggiosInstance = ReturnType<typeof Arpeggios>;
-export type ArpeggiosRequests = ReturnType<ArpeggiosInstance>;
+export type ArpeggiosMethods = ReturnType<ArpeggiosInstance>;
 
 export interface ArpeggiosConfig {
   prefix?: string;
