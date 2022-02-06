@@ -40,7 +40,7 @@ export const noPayloadRequest =
  */
 export const noPayloadRequestByParam =
   ({ cachios, prefix, method }: NoPayloadRequestFactoryProps) =>
-  <ResponseDataType = any, ParamType extends BaseParamType = ObjectId>(route?: Route) => {
+  <ResponseDataType = any, ParamType extends BaseParamType = string>(route?: Route) => {
     return async (param: ParamType) =>
       cachios[method]<ResponseDataType>(routeBuilderWithParam(prefix, param, route)).then((res) => res.data);
   };
