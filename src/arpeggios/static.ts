@@ -1,8 +1,7 @@
 import cachiosLib, { CachiosInstance, CachiosRequestConfig } from "cachios";
 import axiosLib, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { Arpeggios } from "./../index";
-import { ArpeggiosConfig, ArpeggiosInstance } from "types/arpeggios";
-import { ArpeggiosService } from "./service";
+import { ArpeggiosInstance } from "types/arpeggios";
 
 interface ArpeggiosStaticProps {
   axios?: AxiosInstance;
@@ -11,9 +10,15 @@ interface ArpeggiosStaticProps {
 }
 
 export class ArpeggiosStatic {
-  create({ axios, axiosRequestConfig, cachios }: ArpeggiosStaticProps = {}): ArpeggiosInstance {
+  create({
+    axios,
+    axiosRequestConfig,
+    cachios,
+  }: ArpeggiosStaticProps = {}): ArpeggiosInstance {
     const axiosInstance = axios ? axios : axiosLib.create(axiosRequestConfig);
-    const cachiosInstance = cachios ? cachios : cachiosLib.create(axiosInstance);
+    const cachiosInstance = cachios
+      ? cachios
+      : cachiosLib.create(axiosInstance);
 
     const arpeggiosInstance = Arpeggios(cachiosInstance);
 

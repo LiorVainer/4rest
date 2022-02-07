@@ -1,8 +1,8 @@
-
 # Arpeggios
 
-Promise based HTTP client library built on top of ```axios``` and ```cachios``` libraries suggesting easy to use and customizable CRUD service and type safe API requests
+Promise based HTTP client library built on top of `axios` and `cachios` libraries suggesting easy to use and customizable CRUD service and type safe API requests
 
+<br />
 
 ## Installation
 
@@ -11,31 +11,45 @@ Using npm
 ```bash
   npm install arpeggios
 ```
+
 Using yarn
+
 ```bash
   yarn add arpeggios
 ```
+
+<br />
+
 ## Features
 
-- Service built in with CRUD Methods:
-    - getAll
-    - getById
-    - deleteAll
-    - deleteById
-    - post
-    - patch
-    - put
-- Custom services with additional methods extending out of the box CRUD that comes built in
-- Service can be made based on fully configured ```axios``` or ```cachios``` Instances
-- Convenient custom configuration For Service
-- Type safe API fetching requests, payloads, and responses
+<strong> 🦴 Service with built in with CRUD Methods: </strong>
+
+- getAll
+- getById
+- deleteAll
+- deleteById
+- post
+- patch
+- put
+
+<br />
+
+✨ <strong>Custom Services</strong> with option to add additional methods extending out of the box CRUD that comes built in
+
+🧱 <strong>Services Built On</strong> fully configured `axios` or `cachios` Instances
+
+⚙️ <strong>Convenient Configuration</strong> with custom routes and base API requests instance For Service
+
+🛡️ <strong>Type Safe</strong> API fetching requests, payloads, and responses
+
+<br />
 
 ## Usage / Examples
 
 ### Create Basic Service
 
 ```typescript
-import { ArpeggiosService } from 'arpeggios'
+import { ArpeggiosService } from "arpeggios";
 import { User } from "./types";
 
 const userService = new ArpeggiosService<User>("/user");
@@ -44,6 +58,7 @@ const userService = new ArpeggiosService<User>("/user");
 ### Use Basic Service
 
 #### GET
+
 ```typescript
 // GET http://localhost:5000/user
 async function getUsers() {
@@ -56,7 +71,8 @@ async function getUserById(id: ObjectId) {
 }
 ```
 
-#### DELETE 
+#### DELETE
+
 ```typescript
 // DELETE http://localhost:5000/user
 async function deleteAllUsers() {
@@ -69,7 +85,8 @@ async function deleteUserById(id: ObjectId) {
 }
 ```
 
-#### POST 
+#### POST
+
 ```typescript
 // POST http://localhost:5000/user/:id
 async function createUser(newUser: User) {
@@ -77,7 +94,8 @@ async function createUser(newUser: User) {
 }
 ```
 
-#### PATCH 
+#### PATCH
+
 ```typescript
 // PATCH http://localhost:5000/user/:id
 async function updateUser(partialUser: Partial<User>) {
@@ -85,7 +103,8 @@ async function updateUser(partialUser: Partial<User>) {
 }
 ```
 
-#### PUT 
+#### PUT
+
 ```typescript
 // PUT http://localhost:5000/user/:id
 async function updateUser(partialUser: Partial<User>) {
@@ -96,13 +115,15 @@ async function updateUser(partialUser: Partial<User>) {
 ### Custom Service Types
 
 #### Arpeggios Service Generic Types
+
 ```typescript
 class ArpeggiosService<Response, Payload = Response, IdType = ObjectId>
 ```
 
 #### Example
+
 ```typescript
-import { ArpeggiosService } from 'Arpeggios'
+import { ArpeggiosService } from "Arpeggios";
 import { UserWithId, User } from "./types";
 
 const userService = new ArpeggiosService<UserWithId, User, string>("/user");
@@ -115,19 +136,25 @@ const userService = new ArpeggiosService<UserWithId, User, string>("/user");
 ### Create Custom Service
 
 ```typescript
-import { ArpeggiosService } from 'arpeggios'
+import { ArpeggiosService } from "arpeggios";
 
 export class UserService extends ArpeggiosService<UserWithId, User> {
   constructor(config?: ArpeggiosConfig) {
     super("/user", config); /* prefix for request url is "/user" */
   }
 
-  public getByFullname = this.service.getByParam<UserWithId, string>("fullName");
-  public isEmailTaken = this.service.getByParam<boolean, string>(["email", "taken"]);
+  public getByFullname = this.service.getByParam<UserWithId, string>(
+    "fullName"
+  );
+  public isEmailTaken = this.service.getByParam<boolean, string>([
+    "email",
+    "taken",
+  ]);
 }
 ```
 
 ### Use Custom Service
+
 ```typescript
 const userService = new UserService();
 
@@ -140,14 +167,16 @@ async function isEmailTaken(email: string) {
 }
 ```
 
+<br>
 
 ## Configuration
+
 ### CRUD Routes
 
 ```typescript
 const userService = new ArpeggiosService<User>("/user", {
   /* All Service built in CRUD methods route control ( string | string[] ) */
-  routes: { 
+  routes: {
     getAll: ["get", "all"], // GET http://localhost:5000/user/get/all
     deleteAll: "all",       // DELETE http://localhost:5000/user/all
     deleteById: "id",       // DELETE http://localhost:5000/user/id/:id
@@ -158,7 +187,8 @@ const userService = new ArpeggiosService<User>("/user", {
 });
 ```
 
-### Instance based ```axios``` or ```cachios``` Service 
+### Instance based `axios` or `cachios` Service
+
 ```typescript
 import arpeggios, { ArpeggiosService } from 'arpeggios'
 
@@ -169,7 +199,7 @@ import arpeggios, { ArpeggiosService } from 'arpeggios'
 const arpeggiosInstance = arpeggios.create( /* Here goes instance or config*/ );
 
 const userService = new ArpeggiosService<User>("/user", {
-  routes: { 
+  routes: {
     ...
   },
   instance: arpeggiosInstance,
@@ -179,4 +209,3 @@ const userService = new ArpeggiosService<User>("/user", {
 ## License
 
 [MIT](https://github.com/LiorVainer/arpeggios/blob/main/LICENSE)
-

@@ -24,5 +24,13 @@
     "url": "https://github.com/LiorVainer/arpeggios/issues"
   },
   "homepage": "https://github.com/LiorVainer/arpeggios#readme",
-  "description": ""
+  "description": "",
+  "keywords": [
+    "axios",
+    "cachios",
+    "mongodb",
+    "rest",
+    "restful-api-client",
+    "fetch"
+  ]
 }

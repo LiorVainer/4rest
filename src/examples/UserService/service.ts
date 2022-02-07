@@ -12,8 +12,13 @@ export class UserService extends ArpeggiosService<UserWithId, User> {
   }
 
   public getAll = this.service.get<UserWithId[]>("all");
-  public getByFullname = this.service.getByParam<UserWithId, string>("fullName");
-  public isEmailTaken = this.service.getByParam<boolean, string>(["email", "taken"]);
+  public getByFullname = this.service.getByParam<UserWithId, string>(
+    "fullName"
+  );
+  public isEmailTaken = this.service.getByParam<boolean, string>([
+    "email",
+    "taken",
+  ]);
 }
 
 const userService = new UserService();

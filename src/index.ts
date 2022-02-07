@@ -4,9 +4,17 @@ import { noPayloadRequestMethods as npReqMethods } from "RequestFactory/noPayloa
 import { withPayloadRequestMethods as wpReqMethods } from "RequestFactory/withPayload";
 import cachios, { CachiosInstance } from "cachios";
 import { FetchInstance } from "types/fetchInstance";
-import { ArpeggiosInstance, ArpeggiosMethods } from "types/arpeggios";
-import { basicCachiosInstance, fetchInstanceToCachiosInstance } from "utils/cachios";
+export {
+  ArpeggiosInstance,
+  ArpeggiosMethods,
+  ArpeggiosConfig,
+} from "types/arpeggios";
+import {
+  basicCachiosInstance,
+  fetchInstanceToCachiosInstance,
+} from "utils/cachios";
 import { ArpeggiosStatic } from "arpeggios/static";
+export { ArpeggiosService } from "./arpeggios/service";
 
 /**
  * Factory Function For Creating HTTP Requests Functions Built on top of Cachios and Axios
@@ -14,7 +22,8 @@ import { ArpeggiosStatic } from "arpeggios/static";
  * @returns - Object Containes HTTP Request Functions Maker Properties
  */
 export const Arpeggios = (fetchInstance: FetchInstance) => (prefix: string) => {
-  const arpeggios: CachiosInstance = fetchInstanceToCachiosInstance(fetchInstance);
+  const arpeggios: CachiosInstance =
+    fetchInstanceToCachiosInstance(fetchInstance);
   const requestFactory = new RequestFactory(arpeggios, prefix);
   return {
     get: requestFactory.noPayloadRequest(npReqMethods.GET),
