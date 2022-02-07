@@ -22,7 +22,7 @@ Using yarn
 
 ## Features
 
-<strong> 🦴 Service with built in with CRUD Methods: </strong>
+💎 <strong> Service with built in with CRUD Methods: </strong>
 
 - getAll
 - getById
@@ -88,7 +88,7 @@ async function deleteUserById(id: ObjectId) {
 #### POST
 
 ```typescript
-// POST http://localhost:5000/user/:id
+// POST http://localhost:5000/user
 async function createUser(newUser: User) {
   const userCreated: User = await userService.post(newUser);
 }
@@ -97,7 +97,7 @@ async function createUser(newUser: User) {
 #### PATCH
 
 ```typescript
-// PATCH http://localhost:5000/user/:id
+// PATCH http://localhost:5000/user
 async function updateUser(partialUser: Partial<User>) {
   const updatedUser: User = await userService.patch(partialUser);
 }
@@ -106,7 +106,7 @@ async function updateUser(partialUser: Partial<User>) {
 #### PUT
 
 ```typescript
-// PUT http://localhost:5000/user/:id
+// PUT http://localhost:5000/user
 async function updateUser(partialUser: Partial<User>) {
   const updatedUser: User = await userService.put(partialUser);
 }
@@ -123,10 +123,10 @@ class ArpeggiosService<Response, Payload = Response, IdType = ObjectId>
 #### Example
 
 ```typescript
-import { ArpeggiosService } from "Arpeggios";
+import { ArpeggiosService } from "arpeggios";
 import { UserWithId, User } from "./types";
 
-const userService = new ArpeggiosService<UserWithId, User, string>("/user");
+const userService = new ArpeggiosService<UserWithId, User, string>("user");
 
 // Response - UserWithId
 // Payload - User
@@ -180,29 +180,23 @@ const userService = new ArpeggiosService<User>("user", {
     getAll: ["get", "all"], // GET http://localhost:5000/user/get/all
     deleteAll: "all",       // DELETE http://localhost:5000/user/all
     deleteById: "id",       // DELETE http://localhost:5000/user/id/:id
-    ...
+    ...,
     post: "create",         // POST http://localhost:5000/user/create
     patch: "update"         // POST http://localhost:5000/user/update
   }
 });
 ```
 
-<strong>Instance based</strong> `axios` or `cachios` Service
+<strong>Create Arpeggios Instance based</strong> `axios` or `cachios` Instance with `arpeggios.create()` Function
 
 ```typescript
-import arpeggios, { ArpeggiosService } from 'arpeggios'
-
+import arpeggios from "arpeggios";
 
 /* Customised Arpeggios Instance can be based on
    AxiosInstance, AxiosRequestConfig or CachiosInstance */
 
-const arpeggiosInstance = arpeggios.create( /* Here goes instance or config*/ );
-
-const userService = new ArpeggiosService<User>("user", {
-  routes: {
-    ...
-  },
-  instance: arpeggiosInstance,
+const arpeggiosInstance = arpeggios.create({
+  /* Here goes instance or config*/
 });
 ```
 
@@ -214,6 +208,18 @@ interface ArpeggiosCreateProps {
   cachios?: CachiosInstance;
   axiosRequestConfig?: AxiosRequestConfig;
 }
+```
+
+<strong>Use instance to configure</strong> `ArepeggiosService`
+
+```typescript
+import { ArpeggiosService } from 'arpeggios'
+const userService = new ArpeggiosService<User>("user", {
+  routes: {
+    ...
+  },
+  instance: arpeggiosInstance,
+});
 ```
 
 ## License
