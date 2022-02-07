@@ -206,6 +206,8 @@ const userService = new ArpeggiosService<User>("user", {
 });
 ```
 
+<strong>Options to configure</strong> `arpeggios.create()`
+
 ```typescript
 interface ArpeggiosCreateProps {
   axios?: AxiosInstance;
