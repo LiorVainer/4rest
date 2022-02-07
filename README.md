@@ -171,7 +171,7 @@ async function isEmailTaken(email: string) {
 
 ## Configuration
 
-### CRUD Routes
+<strong>CRUD Routes</strong>
 
 ```typescript
 const userService = new ArpeggiosService<User>("user", {
@@ -187,7 +187,7 @@ const userService = new ArpeggiosService<User>("user", {
 });
 ```
 
-### Instance based `axios` or `cachios` Service
+<strong>Instance based</strong> `axios` or `cachios` Service
 
 ```typescript
 import arpeggios, { ArpeggiosService } from 'arpeggios'
