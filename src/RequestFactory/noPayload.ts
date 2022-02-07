@@ -1,8 +1,8 @@
 import { AxiosInstance } from "axios";
 import cachios, { CachiosInstance } from "cachios";
 import { ObjectId } from "mongodb";
-import { BaseParamType, Route } from "types/route";
-import { routeBuilder, routeBuilderWithParam } from "utils/route";
+import { BaseParamType, Route } from "../types/route";
+import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 
 export type NoPayloadHTTPMethods = "get" | "delete" | "head" | "options";
 
@@ -29,7 +29,10 @@ export interface NoPayloadRequestFactoryProps {
 export const noPayloadRequest =
   ({ cachios, prefix, method }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any>(route?: Route) => {
-    return async () => cachios[method]<ResponseDataType>(routeBuilder(prefix, route)).then((res) => res.data);
+    return async () =>
+      cachios[method]<ResponseDataType>(routeBuilder(prefix, route)).then(
+        (res) => res.data
+      );
   };
 
 /**
@@ -40,7 +43,11 @@ export const noPayloadRequest =
  */
 export const noPayloadRequestByParam =
   ({ cachios, prefix, method }: NoPayloadRequestFactoryProps) =>
-  <ResponseDataType = any, ParamType extends BaseParamType = string>(route?: Route) => {
+  <ResponseDataType = any, ParamType extends BaseParamType = string>(
+    route?: Route
+  ) => {
     return async (param: ParamType) =>
-      cachios[method]<ResponseDataType>(routeBuilderWithParam(prefix, param, route)).then((res) => res.data);
+      cachios[method]<ResponseDataType>(
+        routeBuilderWithParam(prefix, param, route)
+      ).then((res) => res.data);
   };

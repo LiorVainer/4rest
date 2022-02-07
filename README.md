@@ -52,7 +52,7 @@ Using yarn
 import { ArpeggiosService } from "arpeggios";
 import { User } from "./types";
 
-const userService = new ArpeggiosService<User>("/user");
+const userService = new ArpeggiosService<User>("user");
 ```
 
 ### Use Basic Service
@@ -140,7 +140,7 @@ import { ArpeggiosService } from "arpeggios";
 
 export class UserService extends ArpeggiosService<UserWithId, User> {
   constructor(config?: ArpeggiosConfig) {
-    super("/user", config); /* prefix for request url is "/user" */
+    super("user", config); /* prefix for request url is "user" */
   }
 
   public getByFullname = this.service.getByParam<UserWithId, string>(
@@ -174,7 +174,7 @@ async function isEmailTaken(email: string) {
 ### CRUD Routes
 
 ```typescript
-const userService = new ArpeggiosService<User>("/user", {
+const userService = new ArpeggiosService<User>("user", {
   /* All Service built in CRUD methods route control ( string | string[] ) */
   routes: {
     getAll: ["get", "all"], // GET http://localhost:5000/user/get/all
@@ -198,12 +198,20 @@ import arpeggios, { ArpeggiosService } from 'arpeggios'
 
 const arpeggiosInstance = arpeggios.create( /* Here goes instance or config*/ );
 
-const userService = new ArpeggiosService<User>("/user", {
+const userService = new ArpeggiosService<User>("user", {
   routes: {
     ...
   },
   instance: arpeggiosInstance,
 });
+```
+
+```typescript
+interface ArpeggiosCreateProps {
+  axios?: AxiosInstance;
+  cachios?: CachiosInstance;
+  axiosRequestConfig?: AxiosRequestConfig;
+}
 ```
 
 ## License

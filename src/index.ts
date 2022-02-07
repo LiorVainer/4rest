@@ -1,19 +1,17 @@
-import { Route } from "types/route";
-import { RequestFactory } from "RequestFactory";
-import { noPayloadRequestMethods as npReqMethods } from "RequestFactory/noPayload";
-import { withPayloadRequestMethods as wpReqMethods } from "RequestFactory/withPayload";
-import cachios, { CachiosInstance } from "cachios";
-import { FetchInstance } from "types/fetchInstance";
+import { RequestFactory } from "./RequestFactory";
+import { noPayloadRequestMethods as npReqMethods } from "./RequestFactory/noPayload";
+import { withPayloadRequestMethods as wpReqMethods } from "./RequestFactory/withPayload";
+import { CachiosInstance } from "cachios";
+import { FetchInstance } from "./types/fetchInstance";
+import { fetchInstanceToCachiosInstance } from "./utils/cachios";
+import { ArpeggiosStatic } from "./arpeggios/static";
+
 export {
   ArpeggiosInstance,
   ArpeggiosMethods,
   ArpeggiosConfig,
 } from "types/arpeggios";
-import {
-  basicCachiosInstance,
-  fetchInstanceToCachiosInstance,
-} from "utils/cachios";
-import { ArpeggiosStatic } from "arpeggios/static";
+export { ArpeggiosCreateProps, ArpeggiosStatic } from "./arpeggios/static";
 export { ArpeggiosService } from "./arpeggios/service";
 
 /**

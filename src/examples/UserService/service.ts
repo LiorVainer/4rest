@@ -1,14 +1,11 @@
-import { ArpeggiosConfig, ArpeggiosService } from "arpeggios/service";
-import axios from "axios";
+import { ArpeggiosConfig, ArpeggiosService } from "../../arpeggios/service";
 import { ObjectId } from "mongodb";
 import arpeggios, { Arpeggios } from "../..";
 import { User, UserWithId } from "./types";
 
-const arpeggiosInstance = arpeggios.create();
-
 export class UserService extends ArpeggiosService<UserWithId, User> {
   constructor(config?: ArpeggiosConfig) {
-    super("/user", config);
+    super("user", config);
   }
 
   public getAll = this.service.get<UserWithId[]>("all");
@@ -21,10 +18,19 @@ export class UserService extends ArpeggiosService<UserWithId, User> {
   ]);
 }
 
-const userService = new UserService();
+const arpeggiosInstance = arpeggios.create({
+  axiosRequestConfig: {
+    baseURL: "https://5988808c-7225-4abf-8aa4-3b48bc78c300.mock.pstmn.io",
+  },
+});
+
+const userService = new UserService({
+  instance: arpeggiosInstance,
+});
 
 async function getUserByFullname(fullname: string) {
   const user: User = await userService.getByFullname(fullname);
+  console.log(user);
 }
 
 async function isEmailTaken(email: string) {
@@ -38,6 +44,7 @@ async function isEmailTaken(email: string) {
 
 async function getUsers() {
   const users: User[] = await userService.getAll();
+  console.log(users);
 }
 
 async function getUserById(id: ObjectId) {
@@ -59,3 +66,5 @@ async function createUser(newUser: User) {
 async function updateUser(partialUser: Partial<User>) {
   const updatedUser: User = await userService.patch(partialUser);
 }
+
+getUsers();

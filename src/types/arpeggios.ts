@@ -1,5 +1,5 @@
 import { Arpeggios } from "index";
-import { Route } from "types/route";
+import { Route } from "../types/route";
 
 export type ArpeggiosInstance = ReturnType<typeof Arpeggios>;
 export type ArpeggiosMethods = ReturnType<ArpeggiosInstance>;
