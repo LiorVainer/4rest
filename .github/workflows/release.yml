@@ -23,23 +23,29 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.1
         with:
           registry-url:  https://registry.npmjs.org
-          
-      - name: Typescript Compile To JS
-        run: npm run build
+      
+      
+      - name: Install Dependencies
+        run: yarn
         
-      - name: Patch Version Number
-        run: npm version patch -m "Patched Arpeggios To Version %s"
-        env: 
-          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+      - name: Typescript Compile To JS
+        run: yarn run build
+        
+      - name:  Automated Version Bump
+        uses:  'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag-prefix:  'v'
         
       - name: Publish new version to NPM
-        run: npm public --access public
+        run: npm publish --access public
         env: 
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
   
