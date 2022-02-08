@@ -29,9 +29,13 @@ jobs:
         uses: actions/setup-node@v2.5.1
         with:
           registry-url:  https://registry.npmjs.org
-          
+      
+      
       - name: Typescript Compile To JS
-        run: npm run build
+        run: yarn
+        
+      - name: Typescript Compile To JS
+        run: yarn run build
         
       - name: Patch Version Number
         run: npm version patch -m "Patched Arpeggios To Version %s"
