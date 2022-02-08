@@ -38,7 +38,7 @@ jobs:
         run: yarn run build
         
       - name: Patch Version Number
-        run: npm version patch -m "Patched Arpeggios To Version %s"
+        run: npm version patch --force -m "Patched Arpeggios To Version %s"
         env: 
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
         
