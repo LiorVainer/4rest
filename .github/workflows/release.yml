@@ -37,10 +37,12 @@ jobs:
       - name: Typescript Compile To JS
         run: yarn run build
         
-      - name: Patch Version Number
-        run: npm version patch --force -m "Patched Arpeggios To Version %s"
-        env: 
-          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+      - name:  Automated Version Bump
+        uses:  'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag-prefix:  'v'
         
       - name: Publish new version to NPM
         run: npm public --access public
