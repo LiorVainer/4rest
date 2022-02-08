@@ -31,7 +31,7 @@ jobs:
           registry-url:  https://registry.npmjs.org
       
       
-      - name: Typescript Compile To JS
+      - name: Install Dependencies
         run: yarn
         
       - name: Typescript Compile To JS
@@ -45,7 +45,7 @@ jobs:
           tag-prefix:  'v'
         
       - name: Publish new version to NPM
-        run: npm public --access public
+        run: npm publish --access public
         env: 
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
   
