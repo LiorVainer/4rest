@@ -5,14 +5,14 @@ import { User, UserWithId } from "./types";
 
 export class UserService extends ArpeggiosService<UserWithId, User> {
   constructor(config?: ArpeggiosConfig) {
-    super("user", config);
+    super("user");
   }
 
-  public getAll = this.service.get<UserWithId[]>("all");
-  public getByFullname = this.service.getByParam<UserWithId, string>(
+  public getAll = this.methods.get<UserWithId[]>("all");
+  public getByFullname = this.methods.getByParam<UserWithId, string>(
     "fullName"
   );
-  public isEmailTaken = this.service.getByParam<boolean, string>([
+  public isEmailTaken = this.methods.getByParam<boolean, string>([
     "email",
     "taken",
   ]);
@@ -24,9 +24,7 @@ const arpeggiosInstance = arpeggios.create({
   },
 });
 
-const userService = new UserService({
-  instance: arpeggiosInstance,
-});
+const userService = new UserService();
 
 async function getUserByFullname(fullname: string) {
   const user: User = await userService.getByFullname(fullname);

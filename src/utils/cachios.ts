@@ -8,8 +8,7 @@ export const fetchInstanceToCachiosInstance = (fetchInstance: FetchInstance) =>
     : cachios.create(fetchInstance);
 
 export const basicCachiosInstance = () => {
-  const axiosInstance = axios.create({});
-  const cachiosInstance = cachios.create(axiosInstance);
+  const cachiosInstance = cachios.create(axios);
 
   return cachiosInstance;
 };

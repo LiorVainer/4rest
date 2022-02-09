@@ -1,11 +1,18 @@
+import { FetchInstance } from "./../types/fetchInstance";
 import { CachiosInstance } from "cachios";
+import { fetchInstanceToCachiosInstance } from "../utils/cachios";
 import { Prefix } from "../types/route";
 import {
   NoPayloadHTTPMethods,
   noPayloadRequest,
   noPayloadRequestByParam,
+  noPayloadRequestMethods,
 } from "./noPayload";
-import { WithPayloadHTTPMethods, withPayloadRequest } from "./withPayload";
+import {
+  WithPayloadHTTPMethods,
+  withPayloadRequest,
+  withPayloadRequestMethods,
+} from "./withPayload";
 
 export class RequestFactory {
   private cachios: CachiosInstance;
@@ -29,3 +36,25 @@ export class RequestFactory {
   public withPayloadRequest = (method: WithPayloadHTTPMethods) =>
     withPayloadRequest({ cachios: this.cachios, prefix: this.prefix, method });
 }
+
+export const createRequestMethods = (
+  prefix: string,
+  fetchInstance: FetchInstance
+) => {
+  const arpeggios: CachiosInstance =
+    fetchInstanceToCachiosInstance(fetchInstance);
+  const requestFactory = new RequestFactory(arpeggios, prefix);
+  return {
+    get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
+    getByParam: requestFactory.noPayloadRequestByParam(
+      noPayloadRequestMethods.GET
+    ),
+    delete: requestFactory.noPayloadRequest(noPayloadRequestMethods.DELETE),
+    deleteByParam: requestFactory.noPayloadRequestByParam(
+      noPayloadRequestMethods.DELETE
+    ),
+    post: requestFactory.withPayloadRequest(withPayloadRequestMethods.POST),
+    put: requestFactory.withPayloadRequest(withPayloadRequestMethods.PUT),
+    patch: requestFactory.withPayloadRequest(withPayloadRequestMethods.PATCH),
+  };
+};
