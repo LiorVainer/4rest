@@ -4,18 +4,26 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest"
   },
   "author": "Lior Vainer",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.17.2",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.0",
+    "babel-jest": "^27.5.1",
+    "jest": "^27.5.1",
     "typescript": "^4.5.5"
   },
   "dependencies": {
     "axios": "0.22.0",
     "axios-mock-adapter": "^1.20.0",
     "cachios": "^3.1.1",
-    "mongodb": "^4.3.1"
+    "mongodb": "^4.3.1",
+    "ts-node": "^10.5.0"
   },
   "repository": {
     "type": "git",
