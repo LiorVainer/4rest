@@ -1,8 +1,6 @@
-import { Arpeggios } from "index";
+import { ArpeggiosInstance } from "arpeggios/instance";
+import { createRequestMethods } from "RequestFactory";
 import { Route } from "../types/route";
-
-export type ArpeggiosInstance = ReturnType<typeof Arpeggios>;
-export type ArpeggiosMethods = ReturnType<ArpeggiosInstance>;
 
 export interface ArpeggiosConfig {
   prefix?: string;
@@ -17,3 +15,5 @@ export interface ArpeggiosConfig {
   };
   instance?: ArpeggiosInstance;
 }
+
+export type ArpeggiosMethods = ReturnType<typeof createRequestMethods>;

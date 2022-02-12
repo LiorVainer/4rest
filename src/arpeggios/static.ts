@@ -1,7 +1,7 @@
+import { Prefix } from "types/route";
 import cachiosLib, { CachiosInstance, CachiosRequestConfig } from "cachios";
 import axiosLib, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { Arpeggios } from "./../index";
-import { ArpeggiosInstance } from "../types/arpeggios";
+import { ArpeggiosInstance } from "./instance";
 
 export interface ArpeggiosCreateProps {
   axios?: AxiosInstance;
@@ -10,17 +10,12 @@ export interface ArpeggiosCreateProps {
 }
 
 export class ArpeggiosStatic {
-  create({
-    axios,
-    axiosRequestConfig,
-    cachios,
-  }: ArpeggiosCreateProps = {}): ArpeggiosInstance {
+  create({ axios, axiosRequestConfig, cachios }: ArpeggiosCreateProps = {}): ArpeggiosInstance {
     const axiosInstance = axios ? axios : axiosLib.create(axiosRequestConfig);
-    const cachiosInstance = cachios
-      ? cachios
-      : cachiosLib.create(axiosInstance);
 
-    const arpeggiosInstance = Arpeggios(cachiosInstance);
+    const cachiosInstance = cachios ? cachios : cachiosLib.create(axiosInstance);
+
+    const arpeggiosInstance = new ArpeggiosInstance(cachiosInstance);
 
     return arpeggiosInstance;
   }
