@@ -1,8 +1,9 @@
 import axios from "axios";
-import { User, UserWithId } from "../../../examples/UserService/types";
-import arpeggios, { Arpeggios, ArpeggiosService } from "../../../src";
 
-export let arpeggiosInstance: Arpeggios;
+import { User, UserWithId } from "../../../examples/UserService/types";
+import arpeggios, { ArpeggiosInstance, ArpeggiosService } from "../../../src";
+
+export let arpeggiosInstance: ArpeggiosInstance;
 export let userService: ArpeggiosService<UserWithId, User, number>;
 
 beforeAll(() => {

@@ -1,11 +1,14 @@
-import { FetchInstance } from "./../types/fetchInstance";
-import { ArpeggiosMethods } from "types/arpeggios";
-import { Route } from "../types/route";
+import { ServiceMethods } from "types/arpeggios";
 import { ObjectId } from "mongodb";
-import { createRequestMethods } from "../RequestFactory";
 import axios from "axios";
 
-export interface ArpeggiosConfig {
+import { Route } from "../types/route";
+
+import { FetchInstance } from "./../types/fetchInstance";
+import ArpeggiosInstance from "./instance";
+import { createRequestMethods } from "RequestFactory";
+
+export interface ServiceConfig {
   routes?: {
     getAll?: Route;
     getById?: Route;
@@ -15,10 +18,11 @@ export interface ArpeggiosConfig {
     patch?: Route;
     put?: Route;
   };
+  instance?: ArpeggiosInstance;
 }
 
 export class ArpeggiosService<Response, Payload = Response, IdType = ObjectId> {
-  private config: ArpeggiosConfig = {};
+  private config: ServiceConfig = {};
 
   // Request Functions By Method
   public getAll;
@@ -29,9 +33,9 @@ export class ArpeggiosService<Response, Payload = Response, IdType = ObjectId> {
   public patch;
   public put;
 
-  protected methods: ArpeggiosMethods;
+  protected methods: ServiceMethods;
 
-  constructor(prefix: string, fetchInstance: FetchInstance = axios, config?: ArpeggiosConfig) {
+  constructor(prefix: string, fetchInstance: FetchInstance = axios, config?: ServiceConfig) {
     if (config) {
       this.config = config;
     }

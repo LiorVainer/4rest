@@ -1,17 +1,18 @@
-import { AxiosInstance, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+
+import { CachiosInstance } from "cachios";
+
 import { routeBuilder } from "../utils/route";
 import { Key, payloadBuilder } from "../utils/payload";
-import { CachiosInstance } from "cachios";
 import { Route } from "../types/route";
 
 export type WithPayloadHTTPMethods = "post" | "put" | "patch";
 
-export const withPayloadRequestMethods: Record<string, WithPayloadHTTPMethods> =
-  {
-    POST: "post",
-    PUT: "put",
-    PATCH: "patch",
-  };
+export const withPayloadRequestMethods: Record<string, WithPayloadHTTPMethods> = {
+  POST: "post",
+  PUT: "put",
+  PATCH: "patch",
+};
 
 export interface WithPayloadRequestFactoryProps {
   cachios: CachiosInstance;
@@ -30,15 +31,10 @@ type DataPayload<T> = T | { [key in Key]: T };
  */
 export const withPayloadRequest =
   ({ cachios, prefix, method }: WithPayloadRequestFactoryProps) =>
-  <ResponseDataType = any, PayloadType = ResponseDataType>(
-    route?: Route,
-    key?: Key
-  ) => {
+  <ResponseDataType = any, PayloadType = ResponseDataType>(route?: Route, key?: Key) => {
     return async (data: PayloadType) =>
-      cachios[method]<
-        DataPayload<PayloadType>,
-        AxiosResponse<ResponseDataType>
-      >(routeBuilder(prefix, route), payloadBuilder(data, key)).then(
-        (res) => res.data
-      );
+      cachios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
+        routeBuilder(prefix, route),
+        payloadBuilder(data, key)
+      ).then((res) => res.data);
   };
