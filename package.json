@@ -5,7 +5,8 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "cover": "jest --coverage"
   },
   "author": "Lior Vainer",
   "license": "MIT",

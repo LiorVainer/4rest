@@ -9,6 +9,6 @@ export const config: Config.InitialOptions = {
 export default async (): Promise<Config.InitialOptions> => {
   return {
     verbose: true,
-    rootDir: "./src",
+    rootDir: "./tests",
   };
 };

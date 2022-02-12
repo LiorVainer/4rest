@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { userService } from "../base/index.test";
 
-describe("get", () => {
+describe("HTTP GET Method ", () => {
   let mock: MockAdapter;
 
   beforeEach(() => {
