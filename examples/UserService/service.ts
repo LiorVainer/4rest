@@ -1,12 +1,14 @@
 import { ObjectId } from "mongodb";
 
-import arpeggios, { ArpeggiosService, ServiceConfig } from "../../src/";
+import arpeggios, { ArpeggiosService, ServiceConfig, Service } from "../../src/";
 
 import { User, UserWithId } from "./types";
 
+const arpeggiosInstance = arpeggios.create();
+
 export class UserService extends ArpeggiosService<UserWithId, User> {
   constructor(config?: ServiceConfig) {
-    super("user");
+    super("user", arpeggiosInstance);
   }
 
   public getAll = this.methods.get<UserWithId[]>();

@@ -5,10 +5,10 @@ import { FetchInstance } from "../types/fetchInstance";
 import { ArpeggiosService, ServiceConfig } from "./service";
 
 export class ArpeggiosInstance {
-  constructor(protected fetchInstance: FetchInstance) {}
+  constructor(readonly fetchInstance: FetchInstance) {}
 
   public createService = <Response, Payload = Response, IdType = ObjectId>(prefix: string, config?: ServiceConfig) =>
-    new ArpeggiosService<Response, Payload, IdType>(prefix, this.fetchInstance, config);
+    new ArpeggiosService<Response, Payload, IdType>(prefix, this, config);
 }
 
 export default ArpeggiosInstance;

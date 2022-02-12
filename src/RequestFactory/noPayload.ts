@@ -1,4 +1,4 @@
-import { CachiosInstance } from "cachios";
+import { FetchInstance } from "types/fetchInstance";
 
 import { BaseParamType, Route } from "../types/route";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
@@ -13,7 +13,7 @@ export const noPayloadRequestMethods: Record<string, NoPayloadHTTPMethods> = {
 };
 
 export interface NoPayloadRequestFactoryProps {
-  cachios: CachiosInstance;
+  fetchInstance: FetchInstance;
   prefix: string;
   method: NoPayloadHTTPMethods;
 }
@@ -26,9 +26,9 @@ export interface NoPayloadRequestFactoryProps {
  * @returns - Request Function of selected method with route: "prefix/route"
  */
 export const noPayloadRequest =
-  ({ cachios, prefix, method }: NoPayloadRequestFactoryProps) =>
+  ({ fetchInstance, prefix, method }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any>(route?: Route) => {
-    return async () => cachios[method]<ResponseDataType>(routeBuilder(prefix, route)).then((res) => res.data);
+    return async () => fetchInstance[method]<ResponseDataType>(routeBuilder(prefix, route)).then((res) => res.data);
   };
 
 /**
@@ -38,7 +38,7 @@ export const noPayloadRequest =
  * @returns - Request Function of selected method with route: "prefix/route/:param"
  */
 export const noPayloadRequestByParam =
-  ({ cachios, prefix, method }: NoPayloadRequestFactoryProps) =>
+  ({ fetchInstance: cachios, prefix, method }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any, ParamType extends BaseParamType = string>(route?: Route) => {
     return async (param: ParamType) =>
       cachios[method]<ResponseDataType>(routeBuilderWithParam(prefix, param, route)).then((res) => res.data);

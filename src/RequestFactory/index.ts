@@ -1,36 +1,33 @@
-import { CachiosInstance } from "cachios";
+import { ArpeggiosInstance } from "index";
 
-import { fetchInstanceToCachiosInstance } from "../utils/cachios";
 import { Prefix } from "../types/route";
 
 import { FetchInstance } from "./../types/fetchInstance";
 import { NoPayloadHTTPMethods, noPayloadRequest, noPayloadRequestByParam, noPayloadRequestMethods } from "./noPayload";
 
-// eslint-disable-next-line import/namespace
 import { WithPayloadHTTPMethods, withPayloadRequest, withPayloadRequestMethods } from "./withPayload";
 
 export class RequestFactory {
-  private cachios: CachiosInstance;
+  private fetchInstance: FetchInstance;
   private prefix: Prefix;
 
-  constructor(cachios: CachiosInstance, prefix: Prefix) {
-    this.cachios = cachios;
+  constructor(fetchInstance: FetchInstance, prefix: Prefix) {
+    this.fetchInstance = fetchInstance;
     this.prefix = prefix;
   }
 
   public noPayloadRequest = (method: NoPayloadHTTPMethods) =>
-    noPayloadRequest({ cachios: this.cachios, prefix: this.prefix, method });
+    noPayloadRequest({ fetchInstance: this.fetchInstance, prefix: this.prefix, method });
 
   public noPayloadRequestByParam = (method: NoPayloadHTTPMethods) =>
-    noPayloadRequestByParam({ cachios: this.cachios, prefix: this.prefix, method });
+    noPayloadRequestByParam({ fetchInstance: this.fetchInstance, prefix: this.prefix, method });
 
   public withPayloadRequest = (method: WithPayloadHTTPMethods) =>
-    withPayloadRequest({ cachios: this.cachios, prefix: this.prefix, method });
+    withPayloadRequest({ fetchInstance: this.fetchInstance, prefix: this.prefix, method });
 }
 
-export const createRequestMethods = (prefix: string, fetchInstance: FetchInstance) => {
-  const arpeggios: CachiosInstance = fetchInstanceToCachiosInstance(fetchInstance);
-  const requestFactory = new RequestFactory(arpeggios, prefix);
+export const createRequestMethods = (prefix: string, arpeggiosInstance: ArpeggiosInstance) => {
+  const requestFactory = new RequestFactory(arpeggiosInstance.fetchInstance, prefix);
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
     getByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.GET),

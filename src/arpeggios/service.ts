@@ -1,12 +1,12 @@
-import { ServiceMethods } from "types/arpeggios";
 import { ObjectId } from "mongodb";
-import axios from "axios";
 
+import { ServiceMethods } from "../types/arpeggios";
 import { Route } from "../types/route";
 
-import { FetchInstance } from "./../types/fetchInstance";
+import { createRequestMethods } from "../RequestFactory";
+import arpeggios from "../";
+
 import ArpeggiosInstance from "./instance";
-import { createRequestMethods } from "RequestFactory";
 
 export interface ServiceConfig {
   routes?: {
@@ -25,22 +25,22 @@ export class ArpeggiosService<Response, Payload = Response, IdType = ObjectId> {
   private config: ServiceConfig = {};
 
   // Request Functions By Method
-  public getAll;
-  public getById;
-  public deleteAll;
-  public deleteById;
-  public post;
-  public patch;
-  public put;
+  readonly getAll;
+  readonly getById;
+  readonly deleteAll;
+  readonly deleteById;
+  readonly post;
+  readonly patch;
+  readonly put;
 
   protected methods: ServiceMethods;
 
-  constructor(prefix: string, fetchInstance: FetchInstance = axios, config?: ServiceConfig) {
+  constructor(prefix: string, arpeggiosInstance: ArpeggiosInstance = arpeggios.create(), config?: ServiceConfig) {
     if (config) {
       this.config = config;
     }
 
-    this.methods = createRequestMethods(prefix, fetchInstance);
+    this.methods = createRequestMethods(prefix, arpeggiosInstance);
 
     this.getAll = this.methods.get<Response[]>(this.config?.routes?.getAll);
     this.getById = this.methods.getByParam<Response, IdType>(this.config?.routes?.getById);

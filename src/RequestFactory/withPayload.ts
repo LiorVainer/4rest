@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-import { CachiosInstance } from "cachios";
+import { FetchInstance } from "types/fetchInstance";
 
 import { routeBuilder } from "../utils/route";
 import { Key, payloadBuilder } from "../utils/payload";
@@ -15,7 +15,7 @@ export const withPayloadRequestMethods: Record<string, WithPayloadHTTPMethods> =
 };
 
 export interface WithPayloadRequestFactoryProps {
-  cachios: CachiosInstance;
+  fetchInstance: FetchInstance;
   prefix: string;
   method: WithPayloadHTTPMethods;
 }
@@ -30,10 +30,10 @@ type DataPayload<T> = T | { [key in Key]: T };
  * @returns - Request Function of selected method with route: "prefix/route"
  */
 export const withPayloadRequest =
-  ({ cachios, prefix, method }: WithPayloadRequestFactoryProps) =>
+  ({ fetchInstance, prefix, method }: WithPayloadRequestFactoryProps) =>
   <ResponseDataType = any, PayloadType = ResponseDataType>(route?: Route, key?: Key) => {
     return async (data: PayloadType) =>
-      cachios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
+      fetchInstance[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
         routeBuilder(prefix, route),
         payloadBuilder(data, key)
       ).then((res) => res.data);
