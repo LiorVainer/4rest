@@ -1,5 +1,5 @@
 import { FetchInstance } from "./../types/fetchInstance";
-
+import { ArpeggiosMethods } from "types/arpeggios";
 import { Route } from "../types/route";
 import { ObjectId } from "mongodb";
 import { createRequestMethods } from "../RequestFactory";
@@ -29,7 +29,7 @@ export class ArpeggiosService<Response, Payload = Response, IdType = ObjectId> {
   public patch;
   public put;
 
-  protected methods: ReturnType<typeof createRequestMethods>;
+  protected methods: ArpeggiosMethods;
 
   constructor(prefix: string, fetchInstance: FetchInstance = axios, config?: ArpeggiosConfig) {
     if (config) {
