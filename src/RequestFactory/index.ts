@@ -1,18 +1,13 @@
-import { FetchInstance } from "./../types/fetchInstance";
 import { CachiosInstance } from "cachios";
+
 import { fetchInstanceToCachiosInstance } from "../utils/cachios";
 import { Prefix } from "../types/route";
-import {
-  NoPayloadHTTPMethods,
-  noPayloadRequest,
-  noPayloadRequestByParam,
-  noPayloadRequestMethods,
-} from "./noPayload";
-import {
-  WithPayloadHTTPMethods,
-  withPayloadRequest,
-  withPayloadRequestMethods,
-} from "./withPayload";
+
+import { FetchInstance } from "./../types/fetchInstance";
+import { NoPayloadHTTPMethods, noPayloadRequest, noPayloadRequestByParam, noPayloadRequestMethods } from "./noPayload";
+
+// eslint-disable-next-line import/namespace
+import { WithPayloadHTTPMethods, withPayloadRequest, withPayloadRequestMethods } from "./withPayload";
 
 export class RequestFactory {
   private cachios: CachiosInstance;
@@ -27,32 +22,20 @@ export class RequestFactory {
     noPayloadRequest({ cachios: this.cachios, prefix: this.prefix, method });
 
   public noPayloadRequestByParam = (method: NoPayloadHTTPMethods) =>
-    noPayloadRequestByParam({
-      cachios: this.cachios,
-      prefix: this.prefix,
-      method,
-    });
+    noPayloadRequestByParam({ cachios: this.cachios, prefix: this.prefix, method });
 
   public withPayloadRequest = (method: WithPayloadHTTPMethods) =>
     withPayloadRequest({ cachios: this.cachios, prefix: this.prefix, method });
 }
 
-export const createRequestMethods = (
-  prefix: string,
-  fetchInstance: FetchInstance
-) => {
-  const arpeggios: CachiosInstance =
-    fetchInstanceToCachiosInstance(fetchInstance);
+export const createRequestMethods = (prefix: string, fetchInstance: FetchInstance) => {
+  const arpeggios: CachiosInstance = fetchInstanceToCachiosInstance(fetchInstance);
   const requestFactory = new RequestFactory(arpeggios, prefix);
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
-    getByParam: requestFactory.noPayloadRequestByParam(
-      noPayloadRequestMethods.GET
-    ),
+    getByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.GET),
     delete: requestFactory.noPayloadRequest(noPayloadRequestMethods.DELETE),
-    deleteByParam: requestFactory.noPayloadRequestByParam(
-      noPayloadRequestMethods.DELETE
-    ),
+    deleteByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.DELETE),
     post: requestFactory.withPayloadRequest(withPayloadRequestMethods.POST),
     put: requestFactory.withPayloadRequest(withPayloadRequestMethods.PUT),
     patch: requestFactory.withPayloadRequest(withPayloadRequestMethods.PATCH),

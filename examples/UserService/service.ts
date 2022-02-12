@@ -1,10 +1,11 @@
-import { ArpeggiosConfig, ArpeggiosService } from "../../src/";
 import { ObjectId } from "mongodb";
-import arpeggios, { Arpeggios } from "../../src";
+
+import arpeggios, { ArpeggiosService, ServiceConfig } from "../../src/";
+
 import { User, UserWithId } from "./types";
 
 export class UserService extends ArpeggiosService<UserWithId, User> {
-  constructor(config?: ArpeggiosConfig) {
+  constructor(config?: ServiceConfig) {
     super("user");
   }
 
@@ -13,7 +14,7 @@ export class UserService extends ArpeggiosService<UserWithId, User> {
   public isEmailTaken = this.methods.getByParam<boolean, string>(["email", "taken"]);
 }
 
-const userService = new UserService();
+const userService = new UserService({});
 
 async function getUserByFullname(fullname: string) {
   const user: User = await userService.getByFullname(fullname);
