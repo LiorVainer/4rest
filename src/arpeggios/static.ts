@@ -11,7 +11,7 @@ export interface ArpeggiosCreateProps {
 
 export class ArpeggiosStatic {
   create({ axios, axiosRequestConfig, cachios }: ArpeggiosCreateProps = {}): ArpeggiosInstance {
-    let axiosInstance = axios ? axios : axiosLib.create(axiosRequestConfig);
+    const axiosInstance = axios ? axios : axiosLib.create(axiosRequestConfig);
 
     const cachiosInstance = cachios ? cachios : cachiosLib.create(axiosInstance);
 

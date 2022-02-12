@@ -29,13 +29,9 @@ export class ArpeggiosService<Response, Payload = Response, IdType = ObjectId> {
   public patch;
   public put;
 
-  protected methods;
+  protected methods: ReturnType<typeof createRequestMethods>;
 
-  constructor(
-    prefix: string,
-    fetchInstance: FetchInstance = axios,
-    config?: ArpeggiosConfig
-  ) {
+  constructor(prefix: string, fetchInstance: FetchInstance = axios, config?: ArpeggiosConfig) {
     if (config) {
       this.config = config;
     }
@@ -43,21 +39,11 @@ export class ArpeggiosService<Response, Payload = Response, IdType = ObjectId> {
     this.methods = createRequestMethods(prefix, fetchInstance);
 
     this.getAll = this.methods.get<Response[]>(this.config?.routes?.getAll);
-    this.getById = this.methods.getByParam<Response, IdType>(
-      this.config?.routes?.getById
-    );
-    this.deleteAll = this.methods.delete<Response[]>(
-      this.config?.routes?.deleteAll
-    );
-    this.deleteById = this.methods.deleteByParam<Response, IdType>(
-      this.config?.routes?.deleteById
-    );
+    this.getById = this.methods.getByParam<Response, IdType>(this.config?.routes?.getById);
+    this.deleteAll = this.methods.delete<Response[]>(this.config?.routes?.deleteAll);
+    this.deleteById = this.methods.deleteByParam<Response, IdType>(this.config?.routes?.deleteById);
     this.post = this.methods.post<Response, Payload>(this.config?.routes?.post);
-    this.patch = this.methods.patch<Response, Partial<Payload>>(
-      this.config.routes?.patch
-    );
-    this.put = this.methods.put<Response, Partial<Payload>>(
-      this.config.routes?.put
-    );
+    this.patch = this.methods.patch<Response, Partial<Payload>>(this.config.routes?.patch);
+    this.put = this.methods.put<Response, Partial<Payload>>(this.config.routes?.put);
   }
 }
