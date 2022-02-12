@@ -10,10 +10,12 @@ beforeAll(() => {
   userService = arpeggiosInstance.createService<UserWithId, User, number>("user");
 });
 
-test("Arrpegios Instance Defined", () => {
-  expect(arpeggiosInstance).toBeDefined();
-});
+describe("Arrpegios Classes", () => {
+  test("Arrpegios Instance Defined", () => {
+    expect(arpeggiosInstance).toBeDefined();
+  });
 
-test("Arpeggios Service Defined", () => {
-  expect(userService).toBeDefined();
+  test("Arpeggios Service Defined", () => {
+    expect(userService).toBeDefined();
+  });
 });
