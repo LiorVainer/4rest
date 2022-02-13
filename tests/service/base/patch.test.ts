@@ -2,6 +2,7 @@ import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 import { userService } from "../base/index.test";
+import { User } from "../../types/user";
 
 describe("HTTP PATCH Method", () => {
   let mock: MockAdapter;
@@ -15,7 +16,7 @@ describe("HTTP PATCH Method", () => {
   });
 
   test("patch", async () => {
-    const userPatchData = { name: "John Smith" };
+    const userPatchData: Partial<User> = { name: "John Smith" };
 
     mock.onPatch("user").reply((request) => {
       expect(JSON.parse(request.data)).toEqual(userPatchData);

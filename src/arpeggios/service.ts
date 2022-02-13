@@ -21,17 +21,17 @@ export interface ServiceConfig {
   instance?: ArpeggiosInstance;
 }
 
-export class ArpeggiosService<Response, Payload = Response, IdType = ObjectId> {
+export class ArpeggiosService<Response = any, Payload = Response, IdType = ObjectId> {
   private config: ServiceConfig = {};
 
   // Request Functions By Method
-  readonly getAll;
-  readonly getById;
-  readonly deleteAll;
-  readonly deleteById;
-  readonly post;
-  readonly patch;
-  readonly put;
+  readonly getAll: () => Promise<Response[]>;
+  readonly getById: (param: IdType) => Promise<Response>;
+  readonly deleteAll: () => Promise<Response[]>;
+  readonly deleteById: (param: IdType) => Promise<Response>;
+  readonly post: (payload: Payload) => Promise<Response>;
+  readonly patch: (payload: Partial<Payload>) => Promise<Response>;
+  readonly put: (payload: Partial<Payload>) => Promise<Response>;
 
   protected methods: ServiceMethods;
 

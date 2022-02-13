@@ -2,6 +2,7 @@ import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 import { userService } from "../base/index.test";
+import { User } from "../../types/user";
 
 describe("HTTP PUT Method", () => {
   let mock: MockAdapter;
@@ -15,7 +16,7 @@ describe("HTTP PUT Method", () => {
   });
 
   test("put", async () => {
-    const userPutData = { name: "John Smith" };
+    const userPutData: Partial<User> = { name: "John Smith", email: "john.smith@gmail.com" };
 
     mock.onPut("user").reply((request) => {
       expect(JSON.parse(request.data)).toEqual(userPutData);

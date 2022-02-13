@@ -2,11 +2,7 @@ import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 import { userService } from "../base/index.test";
-
-axios.interceptors.response.use((response) => {
-  console.log("Response:", JSON.stringify(response, null, 2));
-  return response;
-});
+import { User } from "../../types/user";
 
 describe("HTTP POST Method", () => {
   let mock: MockAdapter;
@@ -20,13 +16,13 @@ describe("HTTP POST Method", () => {
   });
 
   test("post", async () => {
-    const userData = { id: 1, name: "John Smith" };
+    const userPostData: User = { name: "John Smith", email: "john.smith@gmail.com" };
 
     mock.onPost("user").reply((request) => {
-      expect(JSON.parse(request.data)).toEqual(userData);
+      expect(JSON.parse(request.data)).toEqual(userPostData);
       return [200];
     });
 
-    await userService.post(userData);
+    await userService.post(userPostData);
   });
 });
