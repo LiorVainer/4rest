@@ -1,8 +1,9 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import { userService } from "./index.test";
 import { UserWithId } from "../../types/user";
+
+import { userService } from "./index.test";
 
 describe("Custom Service Method ", () => {
   let mock: MockAdapter;

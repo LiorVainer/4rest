@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { User, UserWithId } from "../../types/user";
+import { UserWithId } from "../../types/user";
 import arpeggios, { ArpeggiosInstance, ArpeggiosService, ServiceConfig } from "../../../src";
 
 export let arpeggiosInstance: ArpeggiosInstance;
