@@ -43,5 +43,26 @@ describe("Custom Service Method ", () => {
     expect(userDataFetched).toEqual(matchUser);
   });
 
-  test("getById", async () => {});
+  test("isEmailTaken", async () => {
+    const usersData: UserWithId[] = [
+      { _id: 1, name: "John Smith", email: "john.smith@gmail.com" },
+      { _id: 2, name: "Jane Doe", email: "jane.doe@gmail.com" },
+    ];
+
+    const trueEmail = "john.smith@gmail.com";
+    const falseEmail = "liorvainer@gmail.com";
+
+    mock
+      .onGet(`user/email/taken/${trueEmail}`)
+      .reply(200, usersData.find((user) => user.email === trueEmail) ? true : false);
+    mock
+      .onGet(`user/email/taken/${falseEmail}`)
+      .reply(200, usersData.find((user) => user.email === falseEmail) ? true : false);
+
+    const isEmailTakenTrue = await userService.isEmailTaken(trueEmail);
+    const isEmailTakenFalse = await userService.isEmailTaken(falseEmail);
+
+    expect(isEmailTakenTrue).toBeTruthy();
+    expect(isEmailTakenFalse).toBeFalsy();
+  });
 });
