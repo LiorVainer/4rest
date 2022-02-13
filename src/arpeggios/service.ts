@@ -24,16 +24,15 @@ export interface ServiceConfig {
 export class ArpeggiosService<Response = any, Payload = Response, IdType = ObjectId> {
   private config: ServiceConfig = {};
 
-  // Request Functions By Method
-  readonly getAll: () => Promise<Response[]>;
-  readonly getById: (param: IdType) => Promise<Response>;
-  readonly deleteAll: () => Promise<Response[]>;
-  readonly deleteById: (param: IdType) => Promise<Response>;
-  readonly post: (payload: Payload) => Promise<Response>;
-  readonly patch: (payload: Partial<Payload>) => Promise<Response>;
-  readonly put: (payload: Partial<Payload>) => Promise<Response>;
-
   protected methods: ServiceMethods;
+
+  getAll: () => Promise<Response[]>;
+  getById: (param: IdType) => Promise<Response>;
+  deleteAll: () => Promise<Response[]>;
+  deleteById: (param: IdType) => Promise<Response>;
+  post: (data: Payload) => Promise<Response>;
+  patch: (data: Partial<Payload>) => Promise<Response>;
+  put: (data: Partial<Payload>) => Promise<Response>;
 
   constructor(prefix: string, arpeggiosInstance: ArpeggiosInstance = arpeggios.create(), config?: ServiceConfig) {
     if (config) {

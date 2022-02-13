@@ -1,3 +1,4 @@
+import { CachiosInstance } from "cachios";
 import { ArpeggiosInstance } from "index";
 
 import { Prefix } from "../types/route";
@@ -8,26 +9,26 @@ import { NoPayloadHTTPMethods, noPayloadRequest, noPayloadRequestByParam, noPayl
 import { WithPayloadHTTPMethods, withPayloadRequest, withPayloadRequestMethods } from "./withPayload";
 
 export class RequestFactory {
-  private fetchInstance: FetchInstance;
+  private cachios: CachiosInstance;
   private prefix: Prefix;
 
-  constructor(fetchInstance: FetchInstance, prefix: Prefix) {
-    this.fetchInstance = fetchInstance;
+  constructor(cachios: CachiosInstance, prefix: Prefix) {
+    this.cachios = cachios;
     this.prefix = prefix;
   }
 
   public noPayloadRequest = (method: NoPayloadHTTPMethods) =>
-    noPayloadRequest({ fetchInstance: this.fetchInstance, prefix: this.prefix, method });
+    noPayloadRequest({ cachios: this.cachios, prefix: this.prefix, method });
 
   public noPayloadRequestByParam = (method: NoPayloadHTTPMethods) =>
-    noPayloadRequestByParam({ fetchInstance: this.fetchInstance, prefix: this.prefix, method });
+    noPayloadRequestByParam({ cachios: this.cachios, prefix: this.prefix, method });
 
   public withPayloadRequest = (method: WithPayloadHTTPMethods) =>
-    withPayloadRequest({ fetchInstance: this.fetchInstance, prefix: this.prefix, method });
+    withPayloadRequest({ cachios: this.cachios, prefix: this.prefix, method });
 }
 
 export const createRequestMethods = (prefix: string, arpeggiosInstance: ArpeggiosInstance) => {
-  const requestFactory = new RequestFactory(arpeggiosInstance.fetchInstance, prefix);
+  const requestFactory = new RequestFactory(arpeggiosInstance.cachiosInstance, prefix);
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
     getByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.GET),
