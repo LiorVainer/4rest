@@ -67,30 +67,30 @@ export class ArpeggiosService<Response = any, Payload = Response, IdType = Objec
     this.getAll = this.methods.get<Response[]>(routes?.getAll, fallback(requestConfig, requestConfigByMethod?.getAll));
     this.getById = this.methods.getByParam<Response, IdType>(
       routes?.getById,
-      fallback(requestConfig, requestConfigByMethod?.getById)
+      fallback(requestConfigByMethod?.getById, requestConfig)
     );
     this.deleteAll = this.methods.delete<Response[]>(
       routes?.deleteAll,
-      fallback(requestConfig, requestConfigByMethod?.deleteAll)
+      fallback(requestConfigByMethod?.deleteAll, requestConfig)
     );
     this.deleteById = this.methods.deleteByParam<Response, IdType>(
       routes?.deleteById,
-      fallback(requestConfig, requestConfigByMethod?.deleteById)
+      fallback(requestConfigByMethod?.deleteById, requestConfig)
     );
     this.post = this.methods.post<Response, Payload>(
       routes?.post,
-      fallback(payloadKey, payloadKeyByMethod?.put),
-      fallback(requestConfig, requestConfigByMethod?.post)
+      fallback(payloadKeyByMethod?.post, payloadKey),
+      fallback(requestConfigByMethod?.post, requestConfig)
     );
     this.patch = this.methods.patch<Response, Partial<Payload>>(
       routes?.patch,
-      fallback(payloadKey, payloadKeyByMethod?.put),
-      fallback(requestConfig, requestConfigByMethod?.patch)
+      fallback(payloadKeyByMethod?.patch, payloadKey),
+      fallback(requestConfigByMethod?.patch, requestConfig)
     );
     this.put = this.methods.put<Response, Partial<Payload>>(
       routes?.put,
-      fallback(payloadKey, payloadKeyByMethod?.put),
-      fallback(requestConfig, requestConfigByMethod?.put)
+      fallback(payloadKeyByMethod?.put, payloadKey),
+      fallback(requestConfigByMethod?.put, requestConfig)
     );
   }
 }
