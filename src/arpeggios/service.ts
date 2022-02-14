@@ -1,15 +1,17 @@
 import { ObjectId } from "mongodb";
 
+import { CachiosRequestConfig } from "cachios";
+
 import { ServiceMethods } from "../types/arpeggios";
 import { Route } from "../types/route";
 
 import { createRequestMethods } from "../RequestFactory";
 import arpeggios from "../";
 
+import { fallback } from "../utils/general";
+import { Key } from "../types/payload";
+
 import ArpeggiosInstance from "./instance";
-import { CachiosRequestConfig } from "cachios";
-import { Key } from "types/payload";
-import { fallback } from "utils/general";
 
 export interface ServiceConfig {
   routes?: {

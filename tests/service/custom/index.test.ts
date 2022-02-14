@@ -11,8 +11,8 @@ export class UserService extends ArpeggiosService<UserWithId, User> {
     super("user", arpeggiosInstance, config);
   }
 
-  public getAll = this.getAll();
-  public getByName = this.methods.getByParam<UserWithId, string>("fullName");
+  public getAll = this.methods.get<UserWithId[]>();
+  public getByName = this.methods.getByParam<UserWithId, string>("name");
   public isEmailTaken = this.methods.getByParam<boolean, string>(["email", "taken"]);
 }
 
