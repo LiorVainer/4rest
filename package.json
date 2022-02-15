@@ -1,6 +1,6 @@
 {
   "name": "arpeggios",
-  "version": "1.0.8",
+  "version": "0.0.0-development",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -8,7 +8,8 @@
     "test": "jest",
     "test:cover": "jest --coverage",
     "lint": "npx eslint **/*.{ts,tsx}",
-    "lint:fix": "npx eslint **/*.{ts,tsx} --fix"
+    "lint:fix": "npx eslint **/*.{ts,tsx} --fix",
+    "semantic-release": "semantic-release"
   },
   "author": "Lior Vainer",
   "license": "MIT",
@@ -28,7 +29,8 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest": "^27.5.1",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "semantic-release": "^19.0.2"
   },
   "dependencies": {
     "axios": "0.22.0",
@@ -39,7 +41,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LiorVainer/arpeggios.git"
+    "url": "https://github.com/LiorVainer/arpeggios.git"
   },
   "bugs": {
     "url": "https://github.com/LiorVainer/arpeggios/issues"
