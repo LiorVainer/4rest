@@ -23,6 +23,8 @@ describe("HTTP POST Method", () => {
       return [200];
     });
 
-    await userService.post(userPostData);
+    const response = await userService.post(userPostData);
+
+    expect(response.status).toBe(200);
   });
 });

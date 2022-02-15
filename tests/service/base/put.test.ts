@@ -23,6 +23,8 @@ describe("HTTP PUT Method", () => {
       return [200];
     });
 
-    await userService.put(userPutData);
+    const response = await userService.put(userPutData);
+
+    expect(response.status).toBe(200);
   });
 });

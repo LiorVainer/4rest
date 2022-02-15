@@ -23,6 +23,8 @@ describe("HTTP PATCH Method", () => {
       return [200];
     });
 
-    await userService.patch(userPatchData);
+    const response = await userService.patch(userPatchData);
+
+    expect(response.status).toBe(200);
   });
 });

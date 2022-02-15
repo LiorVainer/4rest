@@ -25,9 +25,9 @@ describe("Custom Service Method ", () => {
     const responseDataUsersData: string[] = ["John Smith", "Jane Doe"];
     mock.onGet("user").reply(200, responseDataUsersData);
 
-    const usersDataFetched = await userService.getAll();
-    expect("id" in usersDataFetched).toBeFalsy();
-    expect("length" in usersDataFetched).toBeTruthy();
+    const response = await userService.getAll();
+    expect("id" in response.data).toBeFalsy();
+    expect("length" in response.data).toBeTruthy();
   });
 
   test("getByName", async () => {
@@ -43,9 +43,9 @@ describe("Custom Service Method ", () => {
       usersData.find((user) => user.name === name)
     );
 
-    const userDataFetched = await userService.getByName("John Smith");
+    const response = await userService.getByName("John Smith");
 
-    expect(userDataFetched).toEqual(matchUser);
+    expect(response.data).toEqual(matchUser);
   });
 
   test("isEmailTaken", async () => {
@@ -67,7 +67,7 @@ describe("Custom Service Method ", () => {
     const isEmailTakenTrue = await userService.isEmailTaken(trueEmail);
     const isEmailTakenFalse = await userService.isEmailTaken(falseEmail);
 
-    expect(isEmailTakenTrue).toBeTruthy();
-    expect(isEmailTakenFalse).toBeFalsy();
+    expect(isEmailTakenTrue.data).toBeTruthy();
+    expect(isEmailTakenFalse.data).toBeFalsy();
   });
 });

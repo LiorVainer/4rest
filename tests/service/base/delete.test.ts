@@ -18,8 +18,8 @@ describe("HTTP DELETE Method ", () => {
     const usersData = [{ id: 1, name: "John Smith" }];
     mock.onDelete("user").reply(200, usersData);
 
-    const usersDataFetched = await userService.deleteAll();
-    expect(usersDataFetched).toEqual(usersData);
+    const response = await userService.deleteAll();
+    expect(response.data).toEqual(usersData);
   });
 
   test("deleteById", async () => {
@@ -29,8 +29,8 @@ describe("HTTP DELETE Method ", () => {
     mock.onDelete("user/1").reply(200, firstUser);
     mock.onDelete("user/2").reply(200, secondUser);
 
-    const userDataFetched = await userService.deleteById(1);
+    const response = await userService.deleteById(1);
 
-    expect(userDataFetched).toEqual(firstUser);
+    expect(response.data).toEqual(firstUser);
   });
 });
