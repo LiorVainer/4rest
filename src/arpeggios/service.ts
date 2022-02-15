@@ -40,23 +40,24 @@ export interface ServiceConfig {
     patch?: Key;
     put?: Key;
   };
-  instance?: ArpeggiosInstance;
 }
 
-export class ArpeggiosService<ResponseData = any, Payload = ResponseData, IdType = ObjectId> {
+export type ServiceMethodResponse<T> = Promise<AxiosResponse<T>>;
+
+export class ArpeggiosService<ResponseData = any, PayloadData = ResponseData, IdType = ObjectId> {
   private config: ServiceConfig = {};
 
   protected methods: ServiceMethods;
 
-  getAll: () => Promise<AxiosResponse<ResponseData[]>>;
-  getById: (param: IdType) => Promise<AxiosResponse<ResponseData>>;
-  deleteAll: () => Promise<AxiosResponse<ResponseData[]>>;
-  deleteById: (param: IdType) => Promise<AxiosResponse<ResponseData>>;
-  post: (data: Payload) => Promise<AxiosResponse<ResponseData>>;
-  patch: (data: Partial<Payload>) => Promise<AxiosResponse<ResponseData>>;
-  put: (data: Partial<Payload>) => Promise<AxiosResponse<ResponseData>>;
+  getAll: () => ServiceMethodResponse<ResponseData[]>;
+  getById: (param: IdType) => ServiceMethodResponse<ResponseData>;
+  deleteAll: () => ServiceMethodResponse<ResponseData[]>;
+  deleteById: (param: IdType) => ServiceMethodResponse<ResponseData>;
+  post: (data: PayloadData) => ServiceMethodResponse<ResponseData>;
+  patch: (data: Partial<PayloadData>) => ServiceMethodResponse<ResponseData>;
+  put: (data: Partial<PayloadData>) => ServiceMethodResponse<ResponseData>;
 
-  constructor(prefix: string, arpeggiosInstance: ArpeggiosInstance = arpeggios.create(), config?: ServiceConfig) {
+  constructor(prefix: string, arpeggiosInstance: ArpeggiosInstance, config?: ServiceConfig) {
     if (config) {
       this.config = config;
     }
@@ -67,7 +68,8 @@ export class ArpeggiosService<ResponseData = any, Payload = ResponseData, IdType
 
     this.getAll = this.methods.get<ResponseData[]>(
       routes?.getAll,
-      fallback(requestConfigByMethod?.getAll, requestConfig)
+      fallback(requestConfigByMethod?.getAll, requestConfig),
+      fallback(responsePropertiesByMethod?.getAll, responseProperties)
     );
     this.getById = this.methods.getByParam<ResponseData, IdType>(
       routes?.getById,
@@ -81,17 +83,17 @@ export class ArpeggiosService<ResponseData = any, Payload = ResponseData, IdType
       routes?.deleteById,
       fallback(requestConfigByMethod?.deleteById, requestConfig)
     );
-    this.post = this.methods.post<ResponseData, Payload>(
+    this.post = this.methods.post<ResponseData, PayloadData>(
       routes?.post,
       fallback(payloadKeyByMethod?.post, payloadKey),
       fallback(requestConfigByMethod?.post, requestConfig)
     );
-    this.patch = this.methods.patch<ResponseData, Partial<Payload>>(
+    this.patch = this.methods.patch<ResponseData, Partial<PayloadData>>(
       routes?.patch,
       fallback(payloadKeyByMethod?.patch, payloadKey),
       fallback(requestConfigByMethod?.patch, requestConfig)
     );
-    this.put = this.methods.put<ResponseData, Partial<Payload>>(
+    this.put = this.methods.put<ResponseData, Partial<PayloadData>>(
       routes?.put,
       fallback(payloadKeyByMethod?.put, payloadKey),
       fallback(requestConfigByMethod?.put, requestConfig)
