@@ -32,11 +32,15 @@ type DataPayload<T> = T | { [key in Key]: T };
  */
 export const withPayloadRequest =
   ({ cachios, prefix, method }: WithPayloadRequestFactoryProps) =>
-  <ResponseDataType = any, PayloadType = ResponseDataType>(route?: Route, key?: Key, config?: CachiosRequestConfig) => {
+  <ResponseDataType = any, PayloadType = ResponseDataType>(
+    route?: Route,
+    key?: Key,
+    config?: CachiosRequestConfig
+  ): ((data: PayloadType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (data: PayloadType) =>
       cachios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
         routeBuilder(prefix, route),
         payloadBuilder(data, key),
         config
-      ).then((res) => res.data);
+      );
   };
