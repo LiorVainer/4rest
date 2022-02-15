@@ -12,6 +12,11 @@
     "semantic-release": "semantic-release",
     "commit": "git-cz"
   },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
   "author": "Lior Vainer",
   "license": "MIT",
   "devDependencies": {
