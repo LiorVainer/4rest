@@ -34,7 +34,7 @@ Using yarn
 
 <br />
 
-✨ <strong>Custom Services</strong> with option to add additional methods extending out CRUD methods that comes built in with the service
+🎨 <strong>Custom Services</strong> with option to add additional methods extending out CRUD methods that comes built in with the service
 
 🧱 <strong>Services Built On</strong> fully configured `axios` or `cachios` Instances
 
@@ -46,7 +46,7 @@ Using yarn
 
 ## Usage / Examples
 
-### <u>_Basic_</u>
+### 🧱 <u>_Basic_</u>
 
 #### 1) Create Instance
 
@@ -123,7 +123,7 @@ async function updateUser(partialUser: Partial<User>) {
 }
 ```
 
-### <u>_Custom_</u>
+### 🎨 <u>_Custom_</u>
 
 #### 1) Create Extended Service
 
@@ -161,7 +161,7 @@ async function isEmailTaken(email: string) {
 
 ## Configuration
 
-### <u>Arpeggios Instance</u>
+### 📀 <strong>Arpeggios Instance</strong>
 
 <strong>Create Arpeggios Instance based</strong> `axios` or `cachios` Instance with `arpeggios.create()` Function
 
@@ -181,7 +181,7 @@ type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
 ```
 </br>
 
-## <u>Arpeggios Service</u>
+### 📀 <strong>Arpeggios Service</strong>
 
 #### <u>Methods Types:</u>
 
