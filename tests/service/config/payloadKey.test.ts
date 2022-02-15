@@ -9,7 +9,7 @@ export let arpeggiosInstance: ArpeggiosInstance;
 export let userService: ArpeggiosService<UserWithId, User, number>;
 
 beforeAll(() => {
-  arpeggiosInstance = arpeggios.create({ axios });
+  arpeggiosInstance = arpeggios.create(axios);
   userService = arpeggiosInstance.createService<UserWithId, User, number>("user", {
     payloadKey: "update",
     payloadKeyByMethod: { post: "data" },

@@ -17,7 +17,7 @@ export class UserService extends ArpeggiosService<UserWithId, User> {
 }
 
 beforeAll(() => {
-  arpeggiosInstance = arpeggios.create({ axios });
+  arpeggiosInstance = arpeggios.create(axios);
   userService = new UserService();
 });
 

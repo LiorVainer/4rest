@@ -9,7 +9,7 @@ export let arpeggiosInstance: ArpeggiosInstance;
 export let userService: ArpeggiosService<UserWithId, User, number>;
 
 beforeAll(() => {
-  arpeggiosInstance = arpeggios.create({ axios });
+  arpeggiosInstance = arpeggios.create(axios);
   userService = arpeggiosInstance.createService<UserWithId, User, number>("user", {
     requestConfigByMethod: { getAll: { params: { page: 1, size: 10 } }, getById: { maxRedirects: 3 } },
     requestConfig: { headers: { Authentication: "Bearer Header" } },
