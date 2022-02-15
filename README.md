@@ -1,6 +1,6 @@
 # Arpeggios
 
-Promise based HTTP client library built on top of `axios` and `cachios` libraries suggesting easy to use and customizable CRUD service and type safe API requests
+REST promise based HTTP client library built on top of `axios` and `cachios` packages suggesting easy to use and extensively customizable CRUD service and type safe API requests
 
 <br />
 
@@ -22,7 +22,7 @@ Using yarn
 
 ## Features
 
-💎 <strong> Service with built in with CRUD Methods: </strong>
+💎 <strong> Service with built in CRUD Methods: </strong>
 
 - getAll
 - getById
@@ -34,11 +34,11 @@ Using yarn
 
 <br />
 
-✨ <strong>Custom Services</strong> with option to add additional methods extending out of the box CRUD that comes built in
+✨ <strong>Custom Services</strong> with option to add additional methods extending out CRUD methods that comes built in with the service
 
 🧱 <strong>Services Built On</strong> fully configured `axios` or `cachios` Instances
 
-⚙️ <strong>Convenient Configuration</strong> with custom routes and base API requests instance For Service
+⚙️ <strong>Convenient Configuration</strong> with custom routes, request configuration, and payload  data (body property of request) key custom define
 
 🛡️ <strong>Type Safe</strong> API fetching requests, payloads, and responses
 
@@ -46,16 +46,26 @@ Using yarn
 
 ## Usage / Examples
 
-### Create Basic Service
+### _Basic_
+
+#### 1) Create Instance
 
 ```typescript
-import { ArpeggiosService } from "arpeggios";
-import { User } from "./types";
+import arpeggios from "arpeggios";
 
-const userService = new ArpeggiosService<User>("user");
+const instance = arpeggios.create({ baseURL: "http://localhost:5000" });
 ```
 
-### Use Basic Service
+#### 2) Create Service
+
+```typescript
+import { instance } from "./instance";
+import { User } from "./types";
+
+const userService = instance.createService<UserWithId, User>("user");
+```
+
+#### 3) Use Service
 
 #### GET
 
@@ -67,7 +77,8 @@ async function getUsers() {
 
 // GET http://localhost:5000/user/:id
 async function getUserById(id: ObjectId) {
-  const user: User = await userService.getById(id); // default id type is mongodb ObjectId
+  // default id type of service is mongodb ObjectId
+  const user: User = await userService.getById(id); 
 }
 ```
 
@@ -76,12 +87,12 @@ async function getUserById(id: ObjectId) {
 ```typescript
 // DELETE http://localhost:5000/user
 async function deleteAllUsers() {
-  const usersDeleted: User[] = await userService.deleteAll();
+  const usersDeleted: User[] = await (await userService.deleteAll()).data;
 }
 
 // DELETE http://localhost:5000/user/:id
 async function deleteUserById(id: ObjectId) {
-  const userDeleted: User = await userService.deleteById(id);
+  const userDeleted: User = await (await userService.deleteById(id)).data;
 }
 ```
 
@@ -90,7 +101,7 @@ async function deleteUserById(id: ObjectId) {
 ```typescript
 // POST http://localhost:5000/user
 async function createUser(newUser: User) {
-  const userCreated: User = await userService.post(newUser);
+  const userCreated: User = await (await userService.post(newUser)).data;
 }
 ```
 
@@ -99,7 +110,7 @@ async function createUser(newUser: User) {
 ```typescript
 // PATCH http://localhost:5000/user
 async function updateUser(partialUser: Partial<User>) {
-  const updatedUser: User = await userService.patch(partialUser);
+  const updatedUser: User = await (await userService.patch(partialUser)).data;
 }
 ```
 
@@ -108,62 +119,41 @@ async function updateUser(partialUser: Partial<User>) {
 ```typescript
 // PUT http://localhost:5000/user
 async function updateUser(partialUser: Partial<User>) {
-  const updatedUser: User = await userService.put(partialUser);
+  const updatedUser: User = await (await userService.put(partialUser)).data;
 }
 ```
 
-### Custom Service Types
+### _Custom_
 
-#### Arpeggios Service Generic Types
-
-```typescript
-class ArpeggiosService<Response, Payload = Response, IdType = ObjectId>
-```
-
-#### Example
+### 1) Create Extended Service
 
 ```typescript
 import { ArpeggiosService } from "arpeggios";
-import { UserWithId, User } from "./types";
 
-const userService = new ArpeggiosService<UserWithId, User, string>("user");
-
-// Response - UserWithId
-// Payload - User
-// IdType - string
-```
-
-### Create Custom Service
-
-```typescript
-import { ArpeggiosService } from "arpeggios";
+import { instance } from "./arpeggiosInstance";
 
 export class UserService extends ArpeggiosService<UserWithId, User> {
-  constructor(config?: ArpeggiosConfig) {
-    super("user", config); /* prefix for request url is "user" */
+  constructor(config?: ServiceConfig) {
+    super("user", instance, config);
+    /* prefix for request url is "user" */
   }
 
-  public getByFullname = this.service.getByParam<UserWithId, string>(
-    "fullName"
-  );
-  public isEmailTaken = this.service.getByParam<boolean, string>([
-    "email",
-    "taken",
-  ]);
+  public getByFullname = this.methods.getByParam<UserWithId, string>("fullName");
+  public isEmailTaken = this.methods.getByParam<boolean, string>(["email", "taken"]);
 }
 ```
 
-### Use Custom Service
+### 2) Use Extended Service
 
 ```typescript
 const userService = new UserService();
 
 async function getUserByFullname(fullname: string) {
-  const user: User = await userService.getByFullname(fullname);
+  const user: User = await (await userService.getByFullname(fullname)).data;
 }
 
 async function isEmailTaken(email: string) {
-  const isEmailTaken: boolean = await userService.isEmailTaken(email);
+  const isEmailTaken: boolean = await (await userService.isEmailTaken(email)).data;
 }
 ```
 
@@ -171,10 +161,70 @@ async function isEmailTaken(email: string) {
 
 ## Configuration
 
-<strong>CRUD Routes</strong>
+### Arpeggios Instance
+
+<strong>Create Arpeggios Instance based</strong> `axios` or `cachios` Instance with `arpeggios.create()` Function
 
 ```typescript
-const userService = new ArpeggiosService<User>("user", {
+import arpeggios from "arpeggios";
+
+/* Customised Arpeggios Instance can be based on
+   AxiosInstance, AxiosRequestConfig or CachiosInstance */
+
+const arpeggiosInstance = arpeggios.create(/* Here goes instance or config*/);
+```
+
+<strong>Options to configure</strong> `arpeggios.create()`
+
+```typescript
+type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
+```
+</br>
+
+### Arpeggios Service
+
+#### Methods Types:
+
+Set The following Generic Types to control the requests types of response data, payload data, and id param.
+- Response Data
+- Payload Data
+- Id Type
+
+By doing so, Typescript will force you to give it the parameters with matching types when calling the service methods or will recognize alone the response data type for more comfortable auto-completion in future
+```typescript
+class ArpeggiosService<ResponseData = any, PayloadData = Response, IdType = ObjectId>
+```
+
+<strong>Example:</strong>
+
+```typescript
+import { instance } from "./arpeggiosInstance";
+import { UserWithId, User } from "./types";
+
+const userService = instance.createService<UserWithId, User, string>("user");
+
+// ResponseData - UserWithId
+// PayloadData - User
+// IdType - string
+```
+</br>
+
+#### Configure `createService()` Method:
+
+#### 1) Methods REST Routes
+
+You may want to change few of the built in service method *route* to extend the *prefix* based on the API you are working with.
+
+Do it easily by configuring an extended route for each method you want.
+
+_<strong>Note:</strong> method with no configured extended route will send request to basic route: `baseUrl/prefix` or `baseUrl/prefix/param`_
+
+<strong>Example:</strong>
+
+```typescript
+import { instance } from "./arpeggiosInstance";
+
+const userService = instance.createService<User>("user", {
   /* All Service built in CRUD methods route control ( string | string[] ) */
   routes: {
     getAll: ["get", "all"], // GET http://localhost:5000/user/get/all
@@ -187,38 +237,62 @@ const userService = new ArpeggiosService<User>("user", {
 });
 ```
 
-<strong>Create Arpeggios Instance based</strong> `axios` or `cachios` Instance with `arpeggios.create()` Function
+#### 2) Request Config
+
+You can set a `requestConfig` of type `CachiosRequestConfig` for attaching metadata to a request (like headers, params, etc.)
+
+`requestConfig` can be set for each method seperatly or make one general config for all methods
+
+_<strong>Note:</strong> if a method has its own specific `requestConfig`, it will be used over the general one_
+
+<strong>Example:</strong>
 
 ```typescript
-import arpeggios from "arpeggios";
+import { instance } from "./arpeggiosInstance";
 
-/* Customised Arpeggios Instance can be based on
-   AxiosInstance, AxiosRequestConfig or CachiosInstance */
-
-const arpeggiosInstance = arpeggios.create({
-  /* Here goes instance or config*/
+const userService = instance.createService<UserWithId, User, number>("user", {
+  requestConfigByMethod: {
+    /* Request Config Per Method */ getAll: { params: { page: 1, size: 10 } },
+    getById: { maxRedirects: 3 },
+  },
+  requestConfig: {
+    /* Request Config For All Methods */ headers: { Authentication: "Bearer Header" },
+  },
 });
 ```
 
-<strong>Options to configure</strong> `arpeggios.create()`
+#### 3) Payload Data Key
+
+For HTTP methods with payload (Post, Patch, Put) you can set a `payloadKey` for setting the payload data on the key you want inside the body of the request
 
 ```typescript
-interface ArpeggiosCreateProps {
-  axios?: AxiosInstance;
-  cachios?: CachiosInstance;
-  axiosRequestConfig?: AxiosRequestConfig;
+// By Default
+request: {
+  body: data,
+  ...
+}
+
+// After Setting payloadKey
+request: {
+  body: {
+    [payloadKey]: data
+  },
+  ...
 }
 ```
 
-<strong>Use instance to configure</strong> `ArepeggiosService`
+`payloadKey` can be set for each HTTP payload method seperatly or make one general config for all methods
+
+_<strong>Note:</strong> if a method has its own specific `payloadKey`, it will be used over the general one_
+
+<strong>Example:</strong>
 
 ```typescript
-import { ArpeggiosService } from 'arpeggios'
-const userService = new ArpeggiosService<User>("user", {
-  routes: {
-    ...
-  },
-  instance: arpeggiosInstance,
+import { instance } from "./arpeggiosInstance";
+
+const userService = instance.createService<UserWithId, User, number>("user", {
+  payloadKey: "update",
+  payloadKeyByMethod: { post: "data" },
 });
 ```
 
