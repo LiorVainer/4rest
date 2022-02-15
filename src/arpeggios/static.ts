@@ -3,17 +3,18 @@ import axiosLib, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 import { ArpeggiosInstance } from "./instance";
 
-export interface InstanceConfig {
-  axios?: AxiosInstance;
-  cachios?: CachiosInstance;
-  axiosRequestConfig?: AxiosRequestConfig;
-}
+export type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
 
 export class ArpeggiosStatic {
-  create({ axios, axiosRequestConfig, cachios }: InstanceConfig = {}): ArpeggiosInstance {
-    const axiosInstance = axios ? axios : axiosLib.create(axiosRequestConfig);
+  create(config: InstanceConfig): ArpeggiosInstance {
+    let cachiosInstance;
 
-    const cachiosInstance = cachios ? cachios : cachiosLib.create(axiosInstance);
+    if ("cache" in config) {
+      cachiosInstance = config;
+    } else {
+      const axiosInstance = "interceptors" in config ? config : axiosLib.create(config);
+      cachiosInstance = cachiosLib.create(axiosInstance);
+    }
 
     const arpeggiosInstance = new ArpeggiosInstance(cachiosInstance);
 

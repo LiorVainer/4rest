@@ -3,7 +3,6 @@ import { ArpeggiosInstance } from "index";
 
 import { Prefix } from "../types/route";
 
-import { FetchInstance } from "./../types/fetchInstance";
 import { NoPayloadHTTPMethods, noPayloadRequest, noPayloadRequestByParam, noPayloadRequestMethods } from "./noPayload";
 
 import { WithPayloadHTTPMethods, withPayloadRequest, withPayloadRequestMethods } from "./withPayload";
