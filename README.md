@@ -46,7 +46,7 @@ Using yarn
 
 ## Usage / Examples
 
-### _Basic_
+### <u>_Basic_</u>
 
 #### 1) Create Instance
 
@@ -67,7 +67,7 @@ const userService = instance.createService<UserWithId, User>("user");
 
 #### 3) Use Service
 
-#### GET
+- #### GET
 
 ```typescript
 // GET http://localhost:5000/user
@@ -82,7 +82,7 @@ async function getUserById(id: ObjectId) {
 }
 ```
 
-#### DELETE
+- #### DELETE
 
 ```typescript
 // DELETE http://localhost:5000/user
@@ -96,7 +96,7 @@ async function deleteUserById(id: ObjectId) {
 }
 ```
 
-#### POST
+- #### POST
 
 ```typescript
 // POST http://localhost:5000/user
@@ -105,7 +105,7 @@ async function createUser(newUser: User) {
 }
 ```
 
-#### PATCH
+- #### PATCH
 
 ```typescript
 // PATCH http://localhost:5000/user
@@ -114,7 +114,7 @@ async function updateUser(partialUser: Partial<User>) {
 }
 ```
 
-#### PUT
+- #### PUT
 
 ```typescript
 // PUT http://localhost:5000/user
@@ -123,9 +123,9 @@ async function updateUser(partialUser: Partial<User>) {
 }
 ```
 
-### _Custom_
+### <u>_Custom_</u>
 
-### 1) Create Extended Service
+#### 1) Create Extended Service
 
 ```typescript
 import { ArpeggiosService } from "arpeggios";
@@ -143,7 +143,7 @@ export class UserService extends ArpeggiosService<UserWithId, User> {
 }
 ```
 
-### 2) Use Extended Service
+#### 2) Use Extended Service
 
 ```typescript
 const userService = new UserService();
@@ -161,7 +161,7 @@ async function isEmailTaken(email: string) {
 
 ## Configuration
 
-### Arpeggios Instance
+### <u>Arpeggios Instance</u>
 
 <strong>Create Arpeggios Instance based</strong> `axios` or `cachios` Instance with `arpeggios.create()` Function
 
@@ -181,9 +181,9 @@ type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
 ```
 </br>
 
-### Arpeggios Service
+## <u>Arpeggios Service</u>
 
-#### Methods Types:
+#### <u>Methods Types:</u>
 
 Set The following Generic Types to control the requests types of response data, payload data, and id param.
 - Response Data
@@ -209,7 +209,7 @@ const userService = instance.createService<UserWithId, User, string>("user");
 ```
 </br>
 
-#### Configure `createService()` Method:
+#### <u>Configure Service with `createService()` Method:</u>
 
 #### 1) Methods REST Routes
 
