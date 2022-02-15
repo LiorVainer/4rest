@@ -12,6 +12,7 @@ import { fallback } from "../utils/general";
 import { Key } from "../types/payload";
 
 import ArpeggiosInstance from "./instance";
+import { AxiosResponse } from "axios";
 
 export interface ServiceConfig {
   routes?: {
@@ -42,18 +43,18 @@ export interface ServiceConfig {
   instance?: ArpeggiosInstance;
 }
 
-export class ArpeggiosService<Response = any, Payload = Response, IdType = ObjectId> {
+export class ArpeggiosService<ResponseData = any, Payload = ResponseData, IdType = ObjectId> {
   private config: ServiceConfig = {};
 
   protected methods: ServiceMethods;
 
-  getAll: () => Promise<Response[]>;
-  getById: (param: IdType) => Promise<Response>;
-  deleteAll: () => Promise<Response[]>;
-  deleteById: (param: IdType) => Promise<Response>;
-  post: (data: Payload) => Promise<Response>;
-  patch: (data: Partial<Payload>) => Promise<Response>;
-  put: (data: Partial<Payload>) => Promise<Response>;
+  getAll: () => Promise<AxiosResponse<ResponseData[]>>;
+  getById: (param: IdType) => Promise<AxiosResponse<ResponseData>>;
+  deleteAll: () => Promise<AxiosResponse<ResponseData[]>>;
+  deleteById: (param: IdType) => Promise<AxiosResponse<ResponseData>>;
+  post: (data: Payload) => Promise<AxiosResponse<ResponseData>>;
+  patch: (data: Partial<Payload>) => Promise<AxiosResponse<ResponseData>>;
+  put: (data: Partial<Payload>) => Promise<AxiosResponse<ResponseData>>;
 
   constructor(prefix: string, arpeggiosInstance: ArpeggiosInstance = arpeggios.create(), config?: ServiceConfig) {
     if (config) {
@@ -64,30 +65,33 @@ export class ArpeggiosService<Response = any, Payload = Response, IdType = Objec
 
     this.methods = createRequestMethods(prefix, arpeggiosInstance);
 
-    this.getAll = this.methods.get<Response[]>(routes?.getAll, fallback(requestConfig, requestConfigByMethod?.getAll));
-    this.getById = this.methods.getByParam<Response, IdType>(
+    this.getAll = this.methods.get<ResponseData[]>(
+      routes?.getAll,
+      fallback(requestConfigByMethod?.getAll, requestConfig)
+    );
+    this.getById = this.methods.getByParam<ResponseData, IdType>(
       routes?.getById,
       fallback(requestConfigByMethod?.getById, requestConfig)
     );
-    this.deleteAll = this.methods.delete<Response[]>(
+    this.deleteAll = this.methods.delete<ResponseData[]>(
       routes?.deleteAll,
       fallback(requestConfigByMethod?.deleteAll, requestConfig)
     );
-    this.deleteById = this.methods.deleteByParam<Response, IdType>(
+    this.deleteById = this.methods.deleteByParam<ResponseData, IdType>(
       routes?.deleteById,
       fallback(requestConfigByMethod?.deleteById, requestConfig)
     );
-    this.post = this.methods.post<Response, Payload>(
+    this.post = this.methods.post<ResponseData, Payload>(
       routes?.post,
       fallback(payloadKeyByMethod?.post, payloadKey),
       fallback(requestConfigByMethod?.post, requestConfig)
     );
-    this.patch = this.methods.patch<Response, Partial<Payload>>(
+    this.patch = this.methods.patch<ResponseData, Partial<Payload>>(
       routes?.patch,
       fallback(payloadKeyByMethod?.patch, payloadKey),
       fallback(requestConfigByMethod?.patch, requestConfig)
     );
-    this.put = this.methods.put<Response, Partial<Payload>>(
+    this.put = this.methods.put<ResponseData, Partial<Payload>>(
       routes?.put,
       fallback(payloadKeyByMethod?.put, payloadKey),
       fallback(requestConfigByMethod?.put, requestConfig)
