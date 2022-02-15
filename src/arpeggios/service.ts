@@ -68,8 +68,7 @@ export class ArpeggiosService<ResponseData = any, PayloadData = ResponseData, Id
 
     this.getAll = this.methods.get<ResponseData[]>(
       routes?.getAll,
-      fallback(requestConfigByMethod?.getAll, requestConfig),
-      fallback(responsePropertiesByMethod?.getAll, responseProperties)
+      fallback(requestConfigByMethod?.getAll, requestConfig)
     );
     this.getById = this.methods.getByParam<ResponseData, IdType>(
       routes?.getById,
