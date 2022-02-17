@@ -1,7 +1,9 @@
 import { CachiosInstance } from "cachios";
 import { ObjectId } from "mongodb";
 
-import { ArpeggiosService, ServiceConfig } from "./service";
+import { ServiceConfig } from "../types/arpeggios";
+
+import { ArpeggiosService } from "./service";
 
 export class ArpeggiosInstance {
   constructor(readonly cachiosInstance: CachiosInstance) {}
