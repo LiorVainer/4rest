@@ -1,5 +1,5 @@
 import { CachiosInstance } from "cachios";
-import { ArpeggiosInstance } from "index";
+import { PrestInstance } from "index";
 
 import { Prefix } from "../types/route";
 
@@ -26,8 +26,8 @@ export class RequestFactory {
     withPayloadRequest({ cachios: this.cachios, prefix: this.prefix, method });
 }
 
-export const createRequestMethods = (prefix: string, arpeggiosInstance: ArpeggiosInstance) => {
-  const requestFactory = new RequestFactory(arpeggiosInstance.cachiosInstance, prefix);
+export const createRequestMethods = (prefix: string, prestInstance: PrestInstance) => {
+  const requestFactory = new RequestFactory(prestInstance.cachiosInstance, prefix);
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
     getByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.GET),

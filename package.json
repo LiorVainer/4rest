@@ -1,6 +1,6 @@
 {
-  "name": "arpeggios",
-  "version": "1.1.1",
+  "name": "prest",
+  "version": "1.0.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -9,7 +9,6 @@
     "test:cover": "jest --coverage",
     "lint": "npx eslint **/*.{ts,tsx}",
     "lint:fix": "npx eslint **/*.{ts,tsx} --fix",
-    "semantic-release": "semantic-release",
     "commit": "git-cz"
   },
   "release": {
@@ -19,13 +18,19 @@
   },
   "author": "Lior Vainer",
   "license": "MIT",
+  "files": [
+    "node_modules",
+    "dist"
+  ],
   "devDependencies": {
     "@babel/core": "^7.17.2",
+    "@babel/plugin-proposal-decorators": "^7.17.2",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
     "@types/jest": "^27.4.0",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
     "@typescript-eslint/parser": "^4.29.0",
+    "axios-mock-adapter": "^1.20.0",
     "babel-jest": "^27.5.1",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^6.8.0",
@@ -37,31 +42,30 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest": "^27.5.1",
     "semantic-release": "^19.0.2",
+    "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@babel/plugin-proposal-decorators": "^7.17.2",
     "axios": "0.22.0",
-    "axios-mock-adapter": "^1.20.0",
-    "cachios": "^3.1.1",
-    "mongodb": "^4.3.1",
-    "ts-node": "^10.5.0"
+    "cachios": "^3.1.1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/LiorVainer/arpeggios.git"
+    "url": "https://github.com/LiorVainer/prest.git"
   },
   "bugs": {
-    "url": "https://github.com/LiorVainer/arpeggios/issues"
+    "url": "https://github.com/LiorVainer/prest/issues"
   },
-  "homepage": "https://github.com/LiorVainer/arpeggios#readme",
+  "homepage": "https://github.com/LiorVainer/prest#readme",
   "description": "",
   "keywords": [
+    "Typescript",
     "axios",
     "cachios",
-    "mongodb",
     "rest",
-    "restful-api-client",
+    "restful",
+    "crud",
+    "api-client",
     "fetch"
   ],
   "config": {

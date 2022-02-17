@@ -1,6 +1,6 @@
-# Arpeggios
+# Prest
 
-REST promise based HTTP client library built on top of `axios` and `cachios` packages suggesting easy to use and extensively customizable CRUD service and type safe API requests
+<strong>Prest (_"ready"_ in middle english)</strong> is a promise based HTTP REST client library built on top of [`axios`](https://www.npmjs.com/package/axios) and [`cachios`](https://www.npmjs.com/package/cachios) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and a type safe API requests to server.
 
 <br />
 
@@ -9,13 +9,13 @@ REST promise based HTTP client library built on top of `axios` and `cachios` pac
 Using npm
 
 ```bash
-  npm install arpeggios
+  npm install prest
 ```
 
 Using yarn
 
 ```bash
-  yarn add arpeggios
+  yarn add prest
 ```
 
 <br />
@@ -36,11 +36,13 @@ Using yarn
 
 🎨 <strong>Custom Services</strong> with option to add additional methods extending out CRUD methods that comes built in with the service
 
-🧱 <strong>Services Built On</strong> fully configured `axios` or `cachios` Instances
+🧱 <strong>Services Built</strong> on fully configurable `axios` or `cachios` Instances
 
-⚙️ <strong>Convenient Configuration</strong> with custom routes, request configuration, and payload  data (body property of request) key custom define
+⚙️ <strong>Convenient Configuration</strong> with custom routes, request configuration, and payload data (body property of request) key custom define
 
 🛡️ <strong>Type Safe</strong> API fetching requests, payloads, and responses
+
+🧪 <strong>Test Proof</strong> - _prest_ has 100% test coverage
 
 <br />
 
@@ -51,16 +53,16 @@ Using yarn
 #### 1) Create Instance
 
 ```typescript
-import arpeggios from "arpeggios";
+import prest from "prest";
 
-const instance = arpeggios.create({ baseURL: "http://localhost:5000" });
+const instance = prest.create({ baseURL: "http://localhost:5000" });
 ```
 
 #### 2) Create Service
 
 ```typescript
-import { instance } from "./instance";
-import { User } from "./types";
+import { instance } from "./prestInstance";
+import { UserWithId, User } from "./types";
 
 const userService = instance.createService<UserWithId, User>("user");
 ```
@@ -72,13 +74,12 @@ const userService = instance.createService<UserWithId, User>("user");
 ```typescript
 // GET http://localhost:5000/user
 async function getUsers() {
-  const users: User[] = await userService.getAll();
+  const users: User[] = await (await userService.getAll()).data;
 }
 
 // GET http://localhost:5000/user/:id
-async function getUserById(id: ObjectId) {
-  // default id type of service is mongodb ObjectId
-  const user: User = await userService.getById(id); 
+async function getUserById(id: string) {
+  const user: User = await (await userService.getById(id)).data;
 }
 ```
 
@@ -125,14 +126,14 @@ async function updateUser(partialUser: Partial<User>) {
 
 ### 🎨 <u>_Custom_</u>
 
-#### 1) Create Extended Service
+#### 1) Create Custom Service
 
 ```typescript
-import { ArpeggiosService } from "arpeggios";
+import { PrestService } from "prest";
 
-import { instance } from "./arpeggiosInstance";
+import { instance } from "./prestInstance";
 
-export class UserService extends ArpeggiosService<UserWithId, User> {
+export class UserService extends PrestService<UserWithId, User> {
   constructor(config?: ServiceConfig) {
     super("user", instance, config);
     /* prefix for request url is "user" */
@@ -143,7 +144,7 @@ export class UserService extends ArpeggiosService<UserWithId, User> {
 }
 ```
 
-#### 2) Use Extended Service
+#### 2) Use Custom Service
 
 ```typescript
 const userService = new UserService();
@@ -159,46 +160,25 @@ async function isEmailTaken(email: string) {
 
 <br>
 
-## Configuration
+## Types
 
-### 📀 <strong>Arpeggios Instance</strong>
+<strong>Service</strong> has *generic types* to control the following types of the service methods
 
-<strong>Create Arpeggios Instance based</strong> `axios` or `cachios` Instance with `arpeggios.create()` Function
-
-```typescript
-import arpeggios from "arpeggios";
-
-/* Customised Arpeggios Instance can be based on
-   AxiosInstance, AxiosRequestConfig or CachiosInstance */
-
-const arpeggiosInstance = arpeggios.create(/* Here goes instance or config*/);
-```
-
-<strong>Options to configure</strong> `arpeggios.create()`
-
-```typescript
-type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
-```
-</br>
-
-### 📀 <strong>Arpeggios Service</strong>
-
-#### <u>Methods Types:</u>
-
-Set The following Generic Types to control the requests types of response data, payload data, and id param.
 - Response Data
 - Payload Data
 - Id Type
 
-By doing so, Typescript will force you to give it the parameters with matching types when calling the service methods or will recognize alone the response data type for more comfortable auto-completion in future
 ```typescript
-class ArpeggiosService<ResponseData = any, PayloadData = Response, IdType = ObjectId>
+class PrestService<ResponseData = any, PayloadData = Response, IdType = string>
 ```
+By doing so, Typescript will force you to give it the parameters with matching types when calling the service methods or will recognize alone the response data type for more comfortable auto-completion in  the future.
+
+You pass this generic types when creating new service with `createService()` function of a `prestInstance`
 
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./arpeggiosInstance";
+import { instance } from "./prestInstance";
 import { UserWithId, User } from "./types";
 
 const userService = instance.createService<UserWithId, User, string>("user");
@@ -207,13 +187,80 @@ const userService = instance.createService<UserWithId, User, string>("user");
 // PayloadData - User
 // IdType - string
 ```
+<strong>By default</strong> the service takes the types you passed to it and transform them to each service method in the following way:
+
+#### getAll 
+  * Response Data Type: `ResponseData[]`
+
+#### getById 
+  * Response Data Type: `ResponseData`
+  * Id Type: `IdType`
+
+#### DeleteAll
+  * Response Data Type: `ResponseData[]`
+
+#### deleteById 
+  * Response Data Type: `ResponseData`
+  * Id Type: `IdType`
+
+#### post 
+  * Response Data Type: `ResponseData`
+  * Payload Data Type: `PayloadData`
+
+#### patch 
+  * Response Data Type: `ResponseData`
+  * Payload Data Type: `Partial<PayloadData>`
+
+#### put 
+  * Response Data Type: `ResponseData`
+  * Payload Data Type: `Partial<PayloadData>`
+
+if you would like to change one or more of this method types, you can do it when calling the method by passing to it generic types that will be relevant to the this method only, at the place you are calling it.
+
+<br>
+
+<strong>Example:</strong>
+
+Lets say you would like to change the type of the response data that comes back from calling to the post method from `ResponseData` to `boolean` because the API you working with is returns only with data that indicates whether or not an *User* has been created successfully
+
+You can do that in the following way:
+
+```typescript
+const data: boolean = await (await userService.post<boolean>(/* newUserData */)).data
+```
+<br>
+
+## Configuration
+
+### 📀 <strong>Prest Instance</strong>
+
+<strong>Create Prest Instance based</strong> `axios` or `cachios` Instance with `prest.create()` Function
+
+```typescript
+import prest from "prest";
+
+/* Customised Prest Instance can be based on
+   AxiosInstance, AxiosRequestConfig or CachiosInstance */
+
+const prestInstance = prest.create(/* Here goes instance or config*/);
+```
+
+<strong>Options to configure</strong> `prest.create()`
+
+```typescript
+type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
+```
+
 </br>
+
+### 📀 <strong>Prest Service</strong>
+
 
 #### <u>Configure Service with `createService()` Method:</u>
 
 #### 1) Methods REST Routes
 
-You may want to change few of the built in service method *route* to extend the *prefix* based on the API you are working with.
+You may want to change few of the built in service method _route_ to extend the _prefix_ based on the API you are working with.
 
 Do it easily by configuring an extended route for each method you want.
 
@@ -222,7 +269,7 @@ _<strong>Note:</strong> method with no configured extended route will send reque
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./arpeggiosInstance";
+import { instance } from "./prestInstance";
 
 const userService = instance.createService<User>("user", {
   /* All Service built in CRUD methods route control ( string | string[] ) */
@@ -248,15 +295,15 @@ _<strong>Note:</strong> if a method has its own specific `requestConfig`, it wil
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./arpeggiosInstance";
+import { instance } from "./prestInstance";
 
 const userService = instance.createService<UserWithId, User, number>("user", {
-  requestConfigByMethod: {
-    /* Request Config Per Method */ getAll: { params: { page: 1, size: 10 } },
+  requestConfigByMethod: {/* Request Config Per Method */
+    getAll: { params: { page: 1, size: 10 } },
     getById: { maxRedirects: 3 },
   },
-  requestConfig: {
-    /* Request Config For All Methods */ headers: { Authentication: "Bearer Header" },
+  requestConfig: {/* Request Config For All Methods */
+    headers: { Authentication: "Bearer Header" },
   },
 });
 ```
@@ -288,14 +335,13 @@ _<strong>Note:</strong> if a method has its own specific `payloadKey`, it will b
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./arpeggiosInstance";
+import { instance } from "./prestInstance";
 
 const userService = instance.createService<UserWithId, User, number>("user", {
   payloadKey: "update",
   payloadKeyByMethod: { post: "data" },
 });
 ```
-
 ## License
 
-[MIT](https://github.com/LiorVainer/arpeggios/blob/main/LICENSE)
+[MIT](https://github.com/LiorVainer/prest/blob/main/LICENSE)

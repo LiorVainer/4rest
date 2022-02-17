@@ -1,15 +1,16 @@
 import axios from "axios";
 
-import { User, UserWithId } from "../../types/user";
-import arpeggios, { ArpeggiosInstance, ArpeggiosService, Service, ServiceConfig } from "../../../src";
+import cachios from "cachios";
 
-export const arpeggiosInstance: ArpeggiosInstance = arpeggios.create(axios);
+import { User, UserWithId } from "../../types/user";
+import prest, { PrestInstance, PrestService, ServiceConfig } from "../../../src";
+
+export const prestInstance: PrestInstance = prest.create(cachios.create(axios));
 export let userService: UserService;
 
-@Service(arpeggiosInstance, "user")
-export class UserService extends ArpeggiosService<UserWithId, User> {
+export class UserService extends PrestService<UserWithId, User> {
   constructor(config?: ServiceConfig) {
-    super("user", arpeggiosInstance, config);
+    super("user", prestInstance, config);
   }
 
   public getByName = this.methods.getByParam<UserWithId, string>("name");
@@ -20,12 +21,12 @@ beforeAll(() => {
   userService = new UserService();
 });
 
-describe("Arrpegios Classes", () => {
-  test("Arrpegios Instance Defined", () => {
-    expect(arpeggiosInstance).toBeDefined();
+describe("Prest Classes", () => {
+  test("Prest Instance Defined", () => {
+    expect(prestInstance).toBeDefined();
   });
 
-  test("Arpeggios Service Defined", () => {
+  test("Prest Service Defined", () => {
     expect(userService).toBeDefined();
   });
 });

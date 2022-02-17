@@ -1,26 +1,26 @@
-import { ObjectId } from "mongodb";
-
 import { ServiceMethodResponse } from "../types/promise";
 
-import { ServiceConfig, ServiceMethods } from "../types/arpeggios";
+import { ServiceConfig, ServiceMethods } from "../types/prest";
 
 import { createRequestMethods } from "../RequestFactory";
 
 import { fallback } from "../utils/general";
 
-import ArpeggiosInstance from "./instance";
+import PrestInstance from "./instance";
 
-export class ArpeggiosService<ClassResponseData = any, ClassPayloadData = ClassResponseData, ClassIdType = ObjectId> {
+export class PrestService<ClassResponseData = any, ClassPayloadData = ClassResponseData, ClassIdType = string> {
   private config: ServiceConfig = {};
+  private instance: PrestInstance;
 
   protected methods: ServiceMethods;
 
-  constructor(prefix: string, arpeggiosInstance: ArpeggiosInstance, config?: ServiceConfig) {
+  constructor(prefix: string, prestInstance: PrestInstance, config?: ServiceConfig) {
+    this.instance = prestInstance;
     if (config) {
       this.config = config;
     }
 
-    this.methods = createRequestMethods(prefix, arpeggiosInstance);
+    this.methods = createRequestMethods(prefix, this.instance);
   }
 
   getAll<ResponseData = ClassResponseData[]>(): ServiceMethodResponse<ResponseData> {

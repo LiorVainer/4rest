@@ -3,25 +3,25 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
 import { User, UserWithId } from "../../types/user";
-import arpeggios, { ArpeggiosInstance, ArpeggiosService } from "../../../src";
+import prest, { PrestInstance, PrestService } from "../../../src";
 
-export let arpeggiosInstance: ArpeggiosInstance;
-export let userService: ArpeggiosService<UserWithId, User, number>;
+export let prestInstance: PrestInstance;
+export let userService: PrestService<UserWithId, User, number>;
 
 beforeAll(() => {
-  arpeggiosInstance = arpeggios.create(axios);
-  userService = arpeggiosInstance.createService<UserWithId, User, number>("user", {
+  prestInstance = prest.create(axios);
+  userService = prestInstance.createService<UserWithId, User, number>("user", {
     requestConfigByMethod: { getAll: { params: { page: 1, size: 10 } }, getById: { maxRedirects: 3 } },
     requestConfig: { headers: { Authentication: "Bearer Header" } },
   });
 });
 
-describe("Arrpegios Classes", () => {
-  test("Arrpegios Instance Defined", () => {
-    expect(arpeggiosInstance).toBeDefined();
+describe("Prest Classes", () => {
+  test("Prest Instance Defined", () => {
+    expect(prestInstance).toBeDefined();
   });
 
-  test("Arpeggios Service Defined", () => {
+  test("Prest Service Defined", () => {
     expect(userService).toBeDefined();
   });
 });
