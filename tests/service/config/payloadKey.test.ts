@@ -16,6 +16,7 @@ beforeAll(() => {
   });
 });
 
+
 describe("Arrpegios Classes", () => {
   test("Arrpegios Instance Defined", () => {
     expect(arpeggiosInstance).toBeDefined();

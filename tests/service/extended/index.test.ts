@@ -1,23 +1,22 @@
 import axios from "axios";
 
 import { User, UserWithId } from "../../types/user";
-import arpeggios, { ArpeggiosInstance, ArpeggiosService, ServiceConfig } from "../../../src";
+import arpeggios, { ArpeggiosInstance, ArpeggiosService, Service, ServiceConfig } from "../../../src";
 
-export let arpeggiosInstance: ArpeggiosInstance;
+export const arpeggiosInstance: ArpeggiosInstance = arpeggios.create(axios);
 export let userService: UserService;
 
+@Service(arpeggiosInstance, "user")
 export class UserService extends ArpeggiosService<UserWithId, User> {
   constructor(config?: ServiceConfig) {
     super("user", arpeggiosInstance, config);
   }
 
-  public getAll = this.methods.get<UserWithId[]>();
   public getByName = this.methods.getByParam<UserWithId, string>("name");
   public isEmailTaken = this.methods.getByParam<boolean, string>(["email", "taken"]);
 }
 
 beforeAll(() => {
-  arpeggiosInstance = arpeggios.create(axios);
   userService = new UserService();
 });
 
