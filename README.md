@@ -1,6 +1,9 @@
 # Restigo
+[![test coverage](https://badgen.net/badge/coverage/100%25/green?icon=github)](https://github.com/LiorVainer/restigo)
+[![npm version](https://badgen.net/badge/npm/v1.0.3/red?icon=https://www.svgrepo.com/show/354126/npm-icon.svg)](https://www.npmjs.com/package/restigo)
+[![install size](https://packagephobia.com/badge?p=restigo)](https://packagephobia.com/result?p=restigo)
 
-<strong>restigo</strong> is a promise based, HTTP REST client package built on top of [`axios`](https://www.npmjs.com/package/axios) and [`cachios`](https://www.npmjs.com/package/cachios) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
+<strong>Restigo</strong> is a promise based, HTTP REST client package built on top of [`axios`](https://www.npmjs.com/package/axios) and [`cachios`](https://www.npmjs.com/package/cachios) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
 
 <br />
 
@@ -36,7 +39,7 @@ Using yarn
 
 🎨 <strong>Custom Services</strong> with option to add additional methods extending out CRUD methods that comes built in with the service
 
-🧱 <strong>Services Built</strong> on fully configurable [`axios`](https://www.npmjs.com/package/axios) or [`cachios` Instances
+🧱 <strong>Services Built</strong> on fully configurable [`axios`](https://www.npmjs.com/package/axios) or [`cachios`](https://www.npmjs.com/package/cachios) Instances
 
 ⚙️ <strong>Convenient Configuration</strong> with custom routes, request configuration, and payload data (body property of request) key custom define
 
