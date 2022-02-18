@@ -35,17 +35,12 @@ jobs:
         run: yarn
         
       - name: Typescript Compile To JS
-        run: yarn run build
+        run: yarn build
         
-      - name:  Automated Version Bump
-        uses:  'phips28/gh-action-bump-version@master'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag-prefix:  'v'
+      - name: Testing including coverage
+        run: yarn test:cover
         
-      - name: Publish new version to NPM
-        run: npm publish --access public
-        env: 
-          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+      - name: Coveralls GitHub Action
+        uses: coverallsapp/github-action@1.1.3
+
   
