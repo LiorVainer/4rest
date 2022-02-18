@@ -1,12 +1,12 @@
 import cachiosLib, { CachiosInstance } from "cachios";
 import axiosLib, { AxiosInstance, AxiosRequestConfig } from "axios";
 
-import { PrestInstance } from "./instance";
+import { RestigoInstance } from "./instance";
 
 export type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
 
-export class PrestStatic {
-  create(config: InstanceConfig): PrestInstance {
+export class RestigoStatic {
+  create(config: InstanceConfig): RestigoInstance {
     let cachiosInstance;
 
     if ("cache" in config) {
@@ -16,8 +16,8 @@ export class PrestStatic {
       cachiosInstance = cachiosLib.create(axiosInstance);
     }
 
-    const prestInstance = new PrestInstance(cachiosInstance);
+    const restigoInstance = new RestigoInstance(cachiosInstance);
 
-    return prestInstance;
+    return restigoInstance;
   }
 }

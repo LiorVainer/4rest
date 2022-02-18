@@ -3,14 +3,14 @@ import axios from "axios";
 import cachios from "cachios";
 
 import { User, UserWithId } from "../../types/user";
-import prest, { PrestInstance, PrestService, ServiceConfig } from "../../../src";
+import restigo, { RestigoInstance, RestigoService, ServiceConfig } from "../../../src";
 
-export const prestInstance: PrestInstance = prest.create(cachios.create(axios));
+export const restigoInstance: RestigoInstance = restigo.create(cachios.create(axios));
 export let userService: UserService;
 
-export class UserService extends PrestService<UserWithId, User> {
+export class UserService extends RestigoService<UserWithId, User> {
   constructor(config?: ServiceConfig) {
-    super("user", prestInstance, config);
+    super("user", restigoInstance, config);
   }
 
   public getByName = this.methods.getByParam<UserWithId, string>("name");
@@ -21,12 +21,12 @@ beforeAll(() => {
   userService = new UserService();
 });
 
-describe("Prest Classes", () => {
-  test("Prest Instance Defined", () => {
-    expect(prestInstance).toBeDefined();
+describe("Restigo Classes", () => {
+  test("Restigo Instance Defined", () => {
+    expect(restigoInstance).toBeDefined();
   });
 
-  test("Prest Service Defined", () => {
+  test("Restigo Service Defined", () => {
     expect(userService).toBeDefined();
   });
 });

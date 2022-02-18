@@ -1,10 +1,10 @@
 import axios from "axios";
 import cachios from "cachios";
 
-import prest, { PrestInstance } from "../../src";
+import restigo, { RestigoInstance } from "../../src";
 
-export const prestInstance: PrestInstance = prest.create(cachios.create(axios));
+export const restigoInstance: RestigoInstance = restigo.create(cachios.create(axios));
 
-test("Prest Instance Defined", () => {
-  expect(prestInstance).toBeDefined();
+test("Restigo Instance Defined", () => {
+  expect(restigoInstance).toBeDefined();
 });

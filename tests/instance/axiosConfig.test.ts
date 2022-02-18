@@ -1,7 +1,7 @@
-import prest, { PrestInstance } from "../../src";
+import restigo, { RestigoInstance } from "../../src";
 
-export const prestInstance: PrestInstance = prest.create({ headers: { "X-Custom-Header": "Custom Value" } });
+export const restigoInstance: RestigoInstance = restigo.create({ headers: { "X-Custom-Header": "Custom Value" } });
 
-test("Prest Instance Defined", () => {
-  expect(prestInstance).toBeDefined();
+test("Restigo Instance Defined", () => {
+  expect(restigoInstance).toBeDefined();
 });

@@ -1,6 +1,6 @@
 {
-  "name": "prest",
-  "version": "1.0.0",
+  "name": "restigo",
+  "version": "1.0.1",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -51,12 +51,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/LiorVainer/prest.git"
+    "url": "https://github.com/LiorVainer/restigo.git"
   },
   "bugs": {
-    "url": "https://github.com/LiorVainer/prest/issues"
+    "url": "https://github.com/LiorVainer/restigo/issues"
   },
-  "homepage": "https://github.com/LiorVainer/prest#readme",
+  "homepage": "https://github.com/LiorVainer/restigo#readme",
   "description": "",
   "keywords": [
     "Typescript",

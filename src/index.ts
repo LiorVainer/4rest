@@ -1,11 +1,11 @@
-import { PrestStatic } from "./prest/static";
+import { RestigoStatic } from "./restigo/static";
 
-export { PrestInstance } from "./prest/instance";
-export { ServiceMethods } from "./types/prest";
-export { InstanceConfig, PrestStatic } from "./prest/static";
-export { PrestService } from "./prest/service";
-export { ServiceConfig } from "./types/prest";
+export { RestigoInstance } from "./restigo/instance";
+export { ServiceMethods } from "./types/restigo";
+export { InstanceConfig, RestigoStatic } from "./restigo/static";
+export { RestigoService } from "./restigo/service";
+export { ServiceConfig } from "./types/restigo";
 
-export const prest = new PrestStatic();
+export const restigo = new RestigoStatic();
 
-export default prest;
+export default restigo;

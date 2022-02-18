@@ -1,6 +1,6 @@
-# Prest
+# Restigo
 
-<strong>Prest (_"ready"_ in middle english)</strong> is a promise based HTTP REST client library built on top of [`axios`](https://www.npmjs.com/package/axios) and [`cachios`](https://www.npmjs.com/package/cachios) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and a type safe API requests to server.
+<strong>restigo</strong> is a promise based, HTTP REST client package built on top of [`axios`](https://www.npmjs.com/package/axios) and [`cachios`](https://www.npmjs.com/package/cachios) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
 
 <br />
 
@@ -9,13 +9,13 @@
 Using npm
 
 ```bash
-  npm install prest
+  npm install restigo
 ```
 
 Using yarn
 
 ```bash
-  yarn add prest
+  yarn add restigo
 ```
 
 <br />
@@ -36,13 +36,13 @@ Using yarn
 
 🎨 <strong>Custom Services</strong> with option to add additional methods extending out CRUD methods that comes built in with the service
 
-🧱 <strong>Services Built</strong> on fully configurable `axios` or `cachios` Instances
+🧱 <strong>Services Built</strong> on fully configurable [`axios`](https://www.npmjs.com/package/axios) or [`cachios` Instances
 
 ⚙️ <strong>Convenient Configuration</strong> with custom routes, request configuration, and payload data (body property of request) key custom define
 
 🛡️ <strong>Type Safe</strong> API fetching requests, payloads, and responses
 
-🧪 <strong>Test Proof</strong> - _prest_ has 100% test coverage
+🧪 <strong>Test Proof</strong> - _restigo_ has 100% test coverage
 
 <br />
 
@@ -53,15 +53,15 @@ Using yarn
 #### 1) Create Instance
 
 ```typescript
-import prest from "prest";
+import restigo from "restigo";
 
-const instance = prest.create({ baseURL: "http://localhost:5000" });
+const instance = restigo.create({ baseURL: "http://localhost:5000" });
 ```
 
 #### 2) Create Service
 
 ```typescript
-import { instance } from "./prestInstance";
+import { instance } from "./restigoInstance";
 import { UserWithId, User } from "./types";
 
 const userService = instance.createService<UserWithId, User>("user");
@@ -129,11 +129,11 @@ async function updateUser(partialUser: Partial<User>) {
 #### 1) Create Custom Service
 
 ```typescript
-import { PrestService } from "prest";
+import { RestigoService } from "restigo";
 
-import { instance } from "./prestInstance";
+import { instance } from "./restigoInstance";
 
-export class UserService extends PrestService<UserWithId, User> {
+export class UserService extends RestigoService<UserWithId, User> {
   constructor(config?: ServiceConfig) {
     super("user", instance, config);
     /* prefix for request url is "user" */
@@ -162,23 +162,24 @@ async function isEmailTaken(email: string) {
 
 ## Types
 
-<strong>Service</strong> has *generic types* to control the following types of the service methods
+<strong>Service</strong> has _generic types_ to control the following types of the service methods
 
 - Response Data
 - Payload Data
 - Id Type
 
 ```typescript
-class PrestService<ResponseData = any, PayloadData = Response, IdType = string>
+class RestigoService<ResponseData = any, PayloadData = Response, IdType = string>
 ```
-By doing so, Typescript will force you to give it the parameters with matching types when calling the service methods or will recognize alone the response data type for more comfortable auto-completion in  the future.
 
-You pass this generic types when creating new service with `createService()` function of a `prestInstance`
+By doing so, Typescript will force you to give it the parameters with matching types when calling the service methods or will recognize alone the response data type for more comfortable auto-completion in the future.
+
+You pass this generic types when creating new service with `createService()` function of a `restigoInstance`
 
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./prestInstance";
+import { instance } from "./restigoInstance";
 import { UserWithId, User } from "./types";
 
 const userService = instance.createService<UserWithId, User, string>("user");
@@ -187,33 +188,41 @@ const userService = instance.createService<UserWithId, User, string>("user");
 // PayloadData - User
 // IdType - string
 ```
+
 <strong>By default</strong> the service takes the types you passed to it and transform them to each service method in the following way:
 
-#### getAll 
-  * Response Data Type: `ResponseData[]`
+#### getAll
 
-#### getById 
-  * Response Data Type: `ResponseData`
-  * Id Type: `IdType`
+- Response Data Type: `ResponseData[]`
+
+#### getById
+
+- Response Data Type: `ResponseData`
+- Id Type: `IdType`
 
 #### DeleteAll
-  * Response Data Type: `ResponseData[]`
 
-#### deleteById 
-  * Response Data Type: `ResponseData`
-  * Id Type: `IdType`
+- Response Data Type: `ResponseData[]`
 
-#### post 
-  * Response Data Type: `ResponseData`
-  * Payload Data Type: `PayloadData`
+#### deleteById
 
-#### patch 
-  * Response Data Type: `ResponseData`
-  * Payload Data Type: `Partial<PayloadData>`
+- Response Data Type: `ResponseData`
+- Id Type: `IdType`
 
-#### put 
-  * Response Data Type: `ResponseData`
-  * Payload Data Type: `Partial<PayloadData>`
+#### post
+
+- Response Data Type: `ResponseData`
+- Payload Data Type: `PayloadData`
+
+#### patch
+
+- Response Data Type: `ResponseData`
+- Payload Data Type: `Partial<PayloadData>`
+
+#### put
+
+- Response Data Type: `ResponseData`
+- Payload Data Type: `Partial<PayloadData>`
 
 if you would like to change one or more of this method types, you can do it when calling the method by passing to it generic types that will be relevant to the this method only, at the place you are calling it.
 
@@ -221,31 +230,32 @@ if you would like to change one or more of this method types, you can do it when
 
 <strong>Example:</strong>
 
-Lets say you would like to change the type of the response data that comes back from calling to the post method from `ResponseData` to `boolean` because the API you working with is returns only with data that indicates whether or not an *User* has been created successfully
+Lets say you would like to change the type of the response data that comes back from calling to the post method from `ResponseData` to `boolean` because the API you working with is returns only with data that indicates whether or not an _User_ has been created successfully
 
 You can do that in the following way:
 
 ```typescript
-const data: boolean = await (await userService.post<boolean>(/* newUserData */)).data
+const data: boolean = await(await userService.post<boolean>(/* newUserData */)).data;
 ```
+
 <br>
 
 ## Configuration
 
-### 📀 <strong>Prest Instance</strong>
+### 📀 <strong>Restigo Instance</strong>
 
-<strong>Create Prest Instance based</strong> `axios` or `cachios` Instance with `prest.create()` Function
+<strong>Create Restigo Instance based</strong> `axios` or `cachios` Instance with `restigo.create()` Function
 
 ```typescript
-import prest from "prest";
+import restigo from "restigo";
 
-/* Customised Prest Instance can be based on
+/* Customised Restigo Instance can be based on
    AxiosInstance, AxiosRequestConfig or CachiosInstance */
 
-const prestInstance = prest.create(/* Here goes instance or config*/);
+const restigoInstance = restigo.create(/* Here goes instance or config*/);
 ```
 
-<strong>Options to configure</strong> `prest.create()`
+<strong>Options to configure</strong> `restigo.create()`
 
 ```typescript
 type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
@@ -253,8 +263,7 @@ type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
 
 </br>
 
-### 📀 <strong>Prest Service</strong>
-
+### 📀 <strong>Restigo Service</strong>
 
 #### <u>Configure Service with `createService()` Method:</u>
 
@@ -269,7 +278,7 @@ _<strong>Note:</strong> method with no configured extended route will send reque
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./prestInstance";
+import { instance } from "./restigoInstance";
 
 const userService = instance.createService<User>("user", {
   /* All Service built in CRUD methods route control ( string | string[] ) */
@@ -295,15 +304,15 @@ _<strong>Note:</strong> if a method has its own specific `requestConfig`, it wil
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./prestInstance";
+import { instance } from "./restigoInstance";
 
 const userService = instance.createService<UserWithId, User, number>("user", {
-  requestConfigByMethod: {/* Request Config Per Method */
-    getAll: { params: { page: 1, size: 10 } },
+  requestConfigByMethod: {
+    /* Request Config Per Method */ getAll: { params: { page: 1, size: 10 } },
     getById: { maxRedirects: 3 },
   },
-  requestConfig: {/* Request Config For All Methods */
-    headers: { Authentication: "Bearer Header" },
+  requestConfig: {
+    /* Request Config For All Methods */ headers: { Authentication: "Bearer Header" },
   },
 });
 ```
@@ -335,13 +344,14 @@ _<strong>Note:</strong> if a method has its own specific `payloadKey`, it will b
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./prestInstance";
+import { instance } from "./restigoInstance";
 
 const userService = instance.createService<UserWithId, User, number>("user", {
   payloadKey: "update",
   payloadKeyByMethod: { post: "data" },
 });
 ```
+
 ## License
 
-[MIT](https://github.com/LiorVainer/prest/blob/main/LICENSE)
+[MIT](https://github.com/LiorVainer/restigo/blob/main/LICENSE)

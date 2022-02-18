@@ -1,21 +1,21 @@
 import { ServiceMethodResponse } from "../types/promise";
 
-import { ServiceConfig, ServiceMethods } from "../types/prest";
+import { ServiceConfig, ServiceMethods } from "../types/restigo";
 
 import { createRequestMethods } from "../RequestFactory";
 
 import { fallback } from "../utils/general";
 
-import PrestInstance from "./instance";
+import RestigoInstance from "./instance";
 
-export class PrestService<ClassResponseData = any, ClassPayloadData = ClassResponseData, ClassIdType = string> {
+export class RestigoService<ClassResponseData = any, ClassPayloadData = ClassResponseData, ClassIdType = string> {
   private config: ServiceConfig = {};
-  private instance: PrestInstance;
+  private instance: RestigoInstance;
 
   protected methods: ServiceMethods;
 
-  constructor(prefix: string, prestInstance: PrestInstance, config?: ServiceConfig) {
-    this.instance = prestInstance;
+  constructor(prefix: string, restigoInstance: RestigoInstance, config?: ServiceConfig) {
+    this.instance = restigoInstance;
     if (config) {
       this.config = config;
     }
