@@ -3,7 +3,7 @@
 [![npm version](https://badgen.net/badge/npm/v1.0.3/red?icon=https://www.svgrepo.com/show/354126/npm-icon.svg)](https://www.npmjs.com/package/restigo)
 [![install size](https://packagephobia.com/badge?p=restigo)](https://packagephobia.com/result?p=restigo)
 
-<strong>Restigo</strong> is a promise based, HTTP REST client package built on top of [`axios`](https://www.npmjs.com/package/axios) and [`cachios`](https://www.npmjs.com/package/cachios) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
+<strong>Restigo</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) and [`cachios`](https://www.npmjs.com/package/cachios) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
 
 <br />
 

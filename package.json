@@ -1,6 +1,6 @@
 {
   "name": "restigo",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -57,7 +57,7 @@
     "url": "https://github.com/LiorVainer/restigo/issues"
   },
   "homepage": "https://github.com/LiorVainer/restigo#readme",
-  "description": "",
+  "description": "REST Client built on top of axios and cachios",
   "keywords": [
     "Typescript",
     "axios",
@@ -65,6 +65,7 @@
     "rest",
     "restful",
     "crud",
+    "client",
     "api-client",
     "fetch"
   ],
