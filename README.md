@@ -5,7 +5,7 @@
 
 [![test coverage](https://badgen.net/badge/coverage/100%25/green?icon=github)](https://github.com/LiorVainer/forest)
 [![npm version](https://badgen.net/badge/npm/v1.0.0/red?icon=https://www.svgrepo.com/show/354126/npm-icon.svg)](https://www.npmjs.com/package/forest)
-[![install size](https://packagephobia.com/badge?p=forest)](https://packagephobia.com/result?p=forest)
+[![install size](https://packagephobia.com/badge?p=4rest)](https://packagephobia.com/result?p=4rest)
 
 ## Description
 
