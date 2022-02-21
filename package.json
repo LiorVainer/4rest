@@ -1,6 +1,6 @@
 {
   "name": "4rest",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -51,12 +51,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/LiorVainer/forest.git"
+    "url": "https://github.com/LiorVainer/4rest.git"
   },
   "bugs": {
-    "url": "https://github.com/LiorVainer/forest/issues"
+    "url": "https://github.com/LiorVainer/4rest/issues"
   },
-  "homepage": "https://github.com/LiorVainer/forest#readme",
+  "homepage": "https://github.com/LiorVainer/4rest#readme",
   "description": "REST Client built on top of axios and cachios",
   "keywords": [
     "Typescript",
