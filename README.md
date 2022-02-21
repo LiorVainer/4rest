@@ -3,8 +3,8 @@
 </br>
 </br>
 
-[![test coverage](https://badgen.net/badge/coverage/100%25/green?icon=github)](https://github.com/LiorVainer/forest)
-[![npm version](https://badgen.net/badge/npm/v1.0.0/red?icon=https://www.svgrepo.com/show/354126/npm-icon.svg)](https://www.npmjs.com/package/forest)
+[![test coverage](https://badgen.net/badge/coverage/100%25/green?icon=github)](https://github.com/LiorVainer/4rest)
+[![npm version](https://badgen.net/badge/npm/v1.0.4/red?icon=https://www.svgrepo.com/show/354126/npm-icon.svg)](https://www.npmjs.com/package/4rest)
 [![install size](https://packagephobia.com/badge?p=4rest)](https://packagephobia.com/result?p=4rest)
 
 ## Description
