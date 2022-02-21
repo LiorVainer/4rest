@@ -1,25 +1,25 @@
 import axios from "axios";
 
 import { User, UserWithId } from "../../types/user";
-import restigo, { RestigoInstance, RestigoService } from "../../../src";
+import forest, { ForestInstance, ForestService } from "../../../src";
 import MockAdapter from "axios-mock-adapter";
 
-export let restigoInstance: RestigoInstance;
-export let userService: RestigoService<UserWithId, User, number>;
+export let forestInstance: ForestInstance;
+export let userService: ForestService<UserWithId, User, number>;
 
 beforeAll(() => {
-  restigoInstance = restigo.create(axios);
-  userService = restigoInstance.createService<UserWithId, User, number>("user", {
+  forestInstance = forest.create(axios);
+  userService = forestInstance.createService<UserWithId, User, number>("user", {
     routes: { getAll: ["get", "all"], post: "create", deleteAll: "reset" },
   });
 });
 
-describe("Restigo Classes", () => {
-  test("Restigo Instance Defined", () => {
-    expect(restigoInstance).toBeDefined();
+describe("Forest Classes", () => {
+  test("Forest Instance Defined", () => {
+    expect(forestInstance).toBeDefined();
   });
 
-  test("Restigo Service Defined", () => {
+  test("Forest Service Defined", () => {
     expect(userService).toBeDefined();
   });
 });

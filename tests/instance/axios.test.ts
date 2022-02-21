@@ -1,9 +1,9 @@
 import axios from "axios";
 
-import restigo, { RestigoInstance } from "../../src";
+import forest, { ForestInstance } from "../../src";
 
-const restigoInstance: RestigoInstance = restigo.create(axios);
+const forestInstance: ForestInstance = forest.create(axios);
 
-test("Restigo Instance Defined", () => {
-  expect(restigoInstance).toBeDefined();
+test("Forest Instance Defined", () => {
+  expect(forestInstance).toBeDefined();
 });

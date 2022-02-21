@@ -1,11 +1,11 @@
-import { RestigoStatic } from "./restigo/static";
+import { ForestStatic } from "./forest/static";
 
-export { RestigoInstance } from "./restigo/instance";
-export { ServiceMethods } from "./types/restigo";
-export { InstanceConfig, RestigoStatic } from "./restigo/static";
-export { RestigoService } from "./restigo/service";
-export { ServiceConfig } from "./types/restigo";
+export { ForestInstance } from "./forest/instance";
+export { ServiceMethods } from "./types/forest";
+export { InstanceConfig, ForestStatic } from "./forest/static";
+export { ForestService } from "./forest/service";
+export { ServiceConfig } from "./types/forest";
 
-export const restigo = new RestigoStatic();
+export const forest = new ForestStatic();
 
-export default restigo;
+export default forest;

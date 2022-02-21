@@ -1,21 +1,29 @@
 import { ServiceMethodResponse } from "../types/promise";
 
-import { ServiceConfig, ServiceMethods } from "../types/restigo";
+import { ServiceConfig, ServiceMethods } from "../types/forest";
 
 import { createRequestMethods } from "../RequestFactory";
 
 import { fallback } from "../utils/general";
 
-import RestigoInstance from "./instance";
+import ForestInstance from "./instance";
 
-export class RestigoService<ClassResponseData = any, ClassPayloadData = ClassResponseData, ClassIdType = string> {
-  private config: ServiceConfig = {};
-  private instance: RestigoInstance;
+export class ForestService<
+  ClassResponseData = any,
+  ClassPayloadData = ClassResponseData,
+  ClassIdType = string
+> {
+  config: ServiceConfig = {};
+  private instance: ForestInstance;
 
-  protected methods: ServiceMethods;
+  methods: ServiceMethods;
 
-  constructor(prefix: string, restigoInstance: RestigoInstance, config?: ServiceConfig) {
-    this.instance = restigoInstance;
+  constructor(
+    prefix: string,
+    forestInstance: ForestInstance,
+    config?: ServiceConfig
+  ) {
+    this.instance = forestInstance;
     if (config) {
       this.config = config;
     }
@@ -23,24 +31,39 @@ export class RestigoService<ClassResponseData = any, ClassPayloadData = ClassRes
     this.methods = createRequestMethods(prefix, this.instance);
   }
 
-  getAll<ResponseData = ClassResponseData[]>(): ServiceMethodResponse<ResponseData> {
+  getAll<
+    ResponseData = ClassResponseData[]
+  >(): ServiceMethodResponse<ResponseData> {
     return this.methods.get<ResponseData>(
       this.config.routes?.getAll,
-      fallback(this.config.requestConfigByMethod?.getAll, this.config.requestConfig)
+      fallback(
+        this.config.requestConfigByMethod?.getAll,
+        this.config.requestConfig
+      )
     )();
   }
 
-  getById<ResponseData = ClassResponseData, IdType = ClassIdType>(param: IdType): ServiceMethodResponse<ResponseData> {
+  getById<ResponseData = ClassResponseData, IdType = ClassIdType>(
+    param: IdType
+  ): ServiceMethodResponse<ResponseData> {
     return this.methods.getByParam<ResponseData, IdType>(
       this.config.routes?.getById,
-      fallback(this.config.requestConfigByMethod?.getById, this.config.requestConfig)
+      fallback(
+        this.config.requestConfigByMethod?.getById,
+        this.config.requestConfig
+      )
     )(param);
   }
 
-  deleteAll<ResponseData = ClassResponseData[]>(): ServiceMethodResponse<ResponseData> {
+  deleteAll<
+    ResponseData = ClassResponseData[]
+  >(): ServiceMethodResponse<ResponseData> {
     return this.methods.delete<ResponseData>(
       this.config.routes?.deleteAll,
-      fallback(this.config.requestConfigByMethod?.deleteAll, this.config.requestConfig)
+      fallback(
+        this.config.requestConfigByMethod?.deleteAll,
+        this.config.requestConfig
+      )
     )();
   }
 
@@ -49,7 +72,10 @@ export class RestigoService<ClassResponseData = any, ClassPayloadData = ClassRes
   ): ServiceMethodResponse<ResponseData> {
     return this.methods.deleteByParam<ResponseData, IdType>(
       this.config.routes?.deleteById,
-      fallback(this.config.requestConfigByMethod?.deleteById, this.config.requestConfig)
+      fallback(
+        this.config.requestConfigByMethod?.deleteById,
+        this.config.requestConfig
+      )
     )(param);
   }
 
@@ -59,7 +85,10 @@ export class RestigoService<ClassResponseData = any, ClassPayloadData = ClassRes
     return this.methods.post<ResponseData, PayloadData>(
       this.config.routes?.post,
       fallback(this.config.payloadKeyByMethod?.post, this.config.payloadKey),
-      fallback(this.config.requestConfigByMethod?.post, this.config.requestConfig)
+      fallback(
+        this.config.requestConfigByMethod?.post,
+        this.config.requestConfig
+      )
     )(data);
   }
 
@@ -69,7 +98,10 @@ export class RestigoService<ClassResponseData = any, ClassPayloadData = ClassRes
     return this.methods.patch<ResponseData, PayloadData>(
       this.config.routes?.patch,
       fallback(this.config.payloadKeyByMethod?.patch, this.config.payloadKey),
-      fallback(this.config.requestConfigByMethod?.patch, this.config.requestConfig)
+      fallback(
+        this.config.requestConfigByMethod?.patch,
+        this.config.requestConfig
+      )
     )(data);
   }
 
@@ -79,7 +111,10 @@ export class RestigoService<ClassResponseData = any, ClassPayloadData = ClassRes
     return this.methods.put<ResponseData, PayloadData>(
       this.config.routes?.put,
       fallback(this.config.payloadKeyByMethod?.put, this.config.payloadKey),
-      fallback(this.config.requestConfigByMethod?.put, this.config.requestConfig)
+      fallback(
+        this.config.requestConfigByMethod?.put,
+        this.config.requestConfig
+      )
     )(data);
   }
 }

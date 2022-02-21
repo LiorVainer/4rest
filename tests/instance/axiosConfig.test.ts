@@ -1,7 +1,9 @@
-import restigo, { RestigoInstance } from "../../src";
+import forest, { ForestInstance } from "../../src";
 
-export const restigoInstance: RestigoInstance = restigo.create({ headers: { "X-Custom-Header": "Custom Value" } });
+export const forestInstance: ForestInstance = forest.create({
+  headers: { "X-Custom-Header": "Custom Value" },
+});
 
-test("Restigo Instance Defined", () => {
-  expect(restigoInstance).toBeDefined();
+test("Forest Instance Defined", () => {
+  expect(forestInstance).toBeDefined();
 });

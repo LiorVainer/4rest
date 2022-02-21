@@ -1,10 +1,12 @@
 import axios from "axios";
 import cachios from "cachios";
 
-import restigo, { RestigoInstance } from "../../src";
+import forest, { ForestInstance } from "../../src";
 
-export const restigoInstance: RestigoInstance = restigo.create(cachios.create(axios));
+export const forestInstance: ForestInstance = forest.create(
+  cachios.create(axios)
+);
 
-test("Restigo Instance Defined", () => {
-  expect(restigoInstance).toBeDefined();
+test("Forest Instance Defined", () => {
+  expect(forestInstance).toBeDefined();
 });

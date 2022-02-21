@@ -3,25 +3,28 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
 import { User, UserWithId } from "../../types/user";
-import restigo, { RestigoInstance, RestigoService } from "../../../src";
+import forest, { ForestInstance, ForestService } from "../../../src";
 
-export let restigoInstance: RestigoInstance;
-export let userService: RestigoService<UserWithId, User, number>;
+export let forestInstance: ForestInstance;
+export let userService: ForestService<UserWithId, User, number>;
 
 beforeAll(() => {
-  restigoInstance = restigo.create(axios);
-  userService = restigoInstance.createService<UserWithId, User, number>("user", {
-    requestConfigByMethod: { getAll: { params: { page: 1, size: 10 } }, getById: { maxRedirects: 3 } },
+  forestInstance = forest.create(axios);
+  userService = forestInstance.createService<UserWithId, User, number>("user", {
+    requestConfigByMethod: {
+      getAll: { params: { page: 1, size: 10 } },
+      getById: { maxRedirects: 3 },
+    },
     requestConfig: { headers: { Authentication: "Bearer Header" } },
   });
 });
 
-describe("Restigo Classes", () => {
-  test("Restigo Instance Defined", () => {
-    expect(restigoInstance).toBeDefined();
+describe("Forest Classes", () => {
+  test("Forest Instance Defined", () => {
+    expect(forestInstance).toBeDefined();
   });
 
-  test("Restigo Service Defined", () => {
+  test("Forest Service Defined", () => {
     expect(userService).toBeDefined();
   });
 });
@@ -39,7 +42,9 @@ describe("Custom Requests Config ", () => {
 
   test("getAll", async () => {
     mock.onGet("user").reply((config) => {
-      expect(config.headers).toEqual({ Accept: "application/json, text/plain, */*" });
+      expect(config.headers).toEqual({
+        Accept: "application/json, text/plain, */*",
+      });
 
       expect(config.params).toEqual({ page: 1, size: 10 });
 
@@ -53,7 +58,9 @@ describe("Custom Requests Config ", () => {
 
   test("getById", async () => {
     mock.onGet("user/36").reply((config) => {
-      expect(config.headers).toEqual({ Accept: "application/json, text/plain, */*" });
+      expect(config.headers).toEqual({
+        Accept: "application/json, text/plain, */*",
+      });
       expect(config.maxRedirects).toEqual(3);
 
       return [200];

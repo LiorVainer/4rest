@@ -1,11 +1,20 @@
 import { CachiosInstance } from "cachios";
-import { RestigoInstance } from "index";
+import { ForestInstance } from "index";
 
 import { Prefix } from "../types/route";
 
-import { NoPayloadHTTPMethods, noPayloadRequest, noPayloadRequestByParam, noPayloadRequestMethods } from "./noPayload";
+import {
+  NoPayloadHTTPMethods,
+  noPayloadRequest,
+  noPayloadRequestByParam,
+  noPayloadRequestMethods,
+} from "./noPayload";
 
-import { WithPayloadHTTPMethods, withPayloadRequest, withPayloadRequestMethods } from "./withPayload";
+import {
+  WithPayloadHTTPMethods,
+  withPayloadRequest,
+  withPayloadRequestMethods,
+} from "./withPayload";
 
 export class RequestFactory {
   private cachios: CachiosInstance;
@@ -20,19 +29,33 @@ export class RequestFactory {
     noPayloadRequest({ cachios: this.cachios, prefix: this.prefix, method });
 
   public noPayloadRequestByParam = (method: NoPayloadHTTPMethods) =>
-    noPayloadRequestByParam({ cachios: this.cachios, prefix: this.prefix, method });
+    noPayloadRequestByParam({
+      cachios: this.cachios,
+      prefix: this.prefix,
+      method,
+    });
 
   public withPayloadRequest = (method: WithPayloadHTTPMethods) =>
     withPayloadRequest({ cachios: this.cachios, prefix: this.prefix, method });
 }
 
-export const createRequestMethods = (prefix: string, restigoInstance: RestigoInstance) => {
-  const requestFactory = new RequestFactory(restigoInstance.cachiosInstance, prefix);
+export const createRequestMethods = (
+  prefix: string,
+  forestInstance: ForestInstance
+) => {
+  const requestFactory = new RequestFactory(
+    forestInstance.cachiosInstance,
+    prefix
+  );
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
-    getByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.GET),
+    getByParam: requestFactory.noPayloadRequestByParam(
+      noPayloadRequestMethods.GET
+    ),
     delete: requestFactory.noPayloadRequest(noPayloadRequestMethods.DELETE),
-    deleteByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.DELETE),
+    deleteByParam: requestFactory.noPayloadRequestByParam(
+      noPayloadRequestMethods.DELETE
+    ),
     post: requestFactory.withPayloadRequest(withPayloadRequestMethods.POST),
     put: requestFactory.withPayloadRequest(withPayloadRequestMethods.PUT),
     patch: requestFactory.withPayloadRequest(withPayloadRequestMethods.PATCH),

@@ -1,9 +1,17 @@
-# Restigo
-[![test coverage](https://badgen.net/badge/coverage/100%25/green?icon=github)](https://github.com/LiorVainer/restigo)
-[![npm version](https://badgen.net/badge/npm/v1.0.3/red?icon=https://www.svgrepo.com/show/354126/npm-icon.svg)](https://www.npmjs.com/package/restigo)
-[![install size](https://packagephobia.com/badge?p=restigo)](https://packagephobia.com/result?p=restigo)
+</br>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 362.33 83.13"><defs><style>.a{fill:#276336;}</style></defs><path class="a" d="M98.92,20.6a173,173,0,0,1,25.77-1.74c12.29,0,21.07,1.73,27.1,6.3,5.11,3.93,7.88,9.66,7.88,17.48,0,10.07-7.5,17.21-13.88,19.54v.42c5.39,2.29,8.32,7.47,10.38,14.53,2.44,8.33,5.06,19.87,6.62,23H141.23c-1.22-2.33-3.3-8.67-5.63-18.6-2.19-9.72-5.22-11.83-12-11.84H119.8v30.44H98.92ZM119.8,54.52h5.85c8.27,0,13.07-4.07,13.07-10.26s-4.14-9.73-11.49-9.79a35.1,35.1,0,0,0-7.43.5Z" transform="translate(0 -18.24)"/><path class="a" d="M222.4,67.37H193.32v15.5h32.5v17.24H172.24V19.49h51.9V36.73H193.32V50.3H222.4Z" transform="translate(0 -18.24)"/><path class="a" d="M239.21,79A48.84,48.84,0,0,0,260,84c7.53,0,11.3-2.7,11.3-7,0-4-3.66-6.39-12.86-9.54-13.55-4.81-22.57-12.29-22.57-24.25,0-14.18,12-25,32.1-25,9.56,0,16.4,1.79,21.62,4.11l-4.45,16.86a42,42,0,0,0-17.41-3.83c-6.79,0-10.43,2.61-10.43,6.23,0,4.25,4.3,6,14.51,9.81,14.5,5.32,21,13,21,24.28,0,13.87-10.75,25.67-34.08,25.67-9.64,0-19-2.54-23.58-4.92Z" transform="translate(0 -18.24)"/><path class="a" d="M320.15,37.19H299.42V19.49h62.91v17.7h-21.1v62.92H320.15Z" transform="translate(0 -18.24)"/><path class="a" d="M57.53,18.36h0Z" transform="translate(0 -18.24)"/><path class="a" d="M84.35,82.58l-22.3.12-4.35,0v17.36H37.86V82.5H10.69A10.69,10.69,0,0,1,1.48,66.38L13.16,33.66H30.23l-.74,1.43L19.29,66.65l-.08.24H39l-.13-43.78a4.89,4.89,0,0,1,4.89-4.75h14a3.72,3.72,0,0,1,2.56,1.19l19.07,24.7c1.92,2.09.28,5.27-2.73,5.27H75.08l8.53,10a4.21,4.21,0,0,1-3.21,6.94H78.26L88,74.73A4.73,4.73,0,0,1,84.35,82.58Z" transform="translate(0 -18.24)"/></svg>
+</br>
+</br>
 
-<strong>Restigo</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) and [`cachios`](https://www.npmjs.com/package/cachios) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
+[![test coverage](https://badgen.net/badge/coverage/100%25/green?icon=github)](https://github.com/LiorVainer/forest)
+[![npm version](https://badgen.net/badge/npm/v1.0.0/red?icon=https://www.svgrepo.com/show/354126/npm-icon.svg)](https://www.npmjs.com/package/forest)
+[![install size](https://packagephobia.com/badge?p=forest)](https://packagephobia.com/result?p=forest)
+
+## Description
+
+<strong>4rest (Forest)</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) and [`cachios`](https://www.npmjs.com/package/cachios) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
+
+<br />
 
 <br />
 
@@ -12,13 +20,13 @@
 Using npm
 
 ```bash
-  npm install restigo
+  npm install 4rest
 ```
 
 Using yarn
 
 ```bash
-  yarn add restigo
+  yarn add 4rest
 ```
 
 <br />
@@ -45,7 +53,7 @@ Using yarn
 
 🛡️ <strong>Type Safe</strong> API fetching requests, payloads, and responses
 
-🧪 <strong>Test Proof</strong> - _restigo_ has 100% test coverage
+🧪 <strong>Test Proof</strong> - _4rest_ has 100% test coverage
 
 <br />
 
@@ -56,15 +64,15 @@ Using yarn
 #### 1) Create Instance
 
 ```typescript
-import restigo from "restigo";
+import forest from "4rest";
 
-const instance = restigo.create({ baseURL: "http://localhost:5000" });
+const instance = forest.create({ baseURL: "http://localhost:5000" });
 ```
 
 #### 2) Create Service
 
 ```typescript
-import { instance } from "./restigoInstance";
+import { instance } from "./forestInstance";
 import { UserWithId, User } from "./types";
 
 const userService = instance.createService<UserWithId, User>("user");
@@ -132,18 +140,23 @@ async function updateUser(partialUser: Partial<User>) {
 #### 1) Create Custom Service
 
 ```typescript
-import { RestigoService } from "restigo";
+import { ForestService } from "4rest";
 
-import { instance } from "./restigoInstance";
+import { instance } from "./forestInstance";
 
-export class UserService extends RestigoService<UserWithId, User> {
+export class UserService extends ForestService<UserWithId, User> {
   constructor(config?: ServiceConfig) {
     super("user", instance, config);
     /* prefix for request url is "user" */
   }
 
-  public getByFullname = this.methods.getByParam<UserWithId, string>("fullName");
-  public isEmailTaken = this.methods.getByParam<boolean, string>(["email", "taken"]);
+  public getByFullname = this.methods.getByParam<UserWithId, string>(
+    "fullName"
+  );
+  public isEmailTaken = this.methods.getByParam<boolean, string>([
+    "email",
+    "taken",
+  ]);
 }
 ```
 
@@ -157,7 +170,9 @@ async function getUserByFullname(fullname: string) {
 }
 
 async function isEmailTaken(email: string) {
-  const isEmailTaken: boolean = await (await userService.isEmailTaken(email)).data;
+  const isEmailTaken: boolean = await (
+    await userService.isEmailTaken(email)
+  ).data;
 }
 ```
 
@@ -172,17 +187,17 @@ async function isEmailTaken(email: string) {
 - Id Type
 
 ```typescript
-class RestigoService<ResponseData = any, PayloadData = Response, IdType = string>
+class ForestService<ResponseData = any, PayloadData = Response, IdType = string>
 ```
 
 By doing so, Typescript will force you to give it the parameters with matching types when calling the service methods or will recognize alone the response data type for more comfortable auto-completion in the future.
 
-You pass this generic types when creating new service with `createService()` function of a `restigoInstance`
+You pass this generic types when creating new service with `createService()` function of a `forestInstance`
 
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./restigoInstance";
+import { instance } from "./forestInstance";
 import { UserWithId, User } from "./types";
 
 const userService = instance.createService<UserWithId, User, string>("user");
@@ -238,27 +253,29 @@ Lets say you would like to change the type of the response data that comes back 
 You can do that in the following way:
 
 ```typescript
-const data: boolean = await(await userService.post<boolean>(/* newUserData */)).data;
+const data: boolean = await(
+  await userService.post<boolean>(/* newUserData */)
+).data;
 ```
 
 <br>
 
 ## Configuration
 
-### 📀 <strong>Restigo Instance</strong>
+### 📀 <strong>Forest Instance</strong>
 
-<strong>Create Restigo Instance based</strong> `axios` or `cachios` Instance with `restigo.create()` Function
+<strong>Create Forest Instance based</strong> `axios` or `cachios` Instance with `forest.create()` Function
 
 ```typescript
-import restigo from "restigo";
+import forest from "4rest";
 
-/* Customised Restigo Instance can be based on
+/* Customised Forest Instance can be based on
    AxiosInstance, AxiosRequestConfig or CachiosInstance */
 
-const restigoInstance = restigo.create(/* Here goes instance or config*/);
+const forestInstance = forest.create(/* Here goes instance or config*/);
 ```
 
-<strong>Options to configure</strong> `restigo.create()`
+<strong>Options to configure</strong> `forest.create()`
 
 ```typescript
 type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
@@ -266,7 +283,7 @@ type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
 
 </br>
 
-### 📀 <strong>Restigo Service</strong>
+### 📀 <strong>Forest Service</strong>
 
 #### <u>Configure Service with `createService()` Method:</u>
 
@@ -281,7 +298,7 @@ _<strong>Note:</strong> method with no configured extended route will send reque
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./restigoInstance";
+import { instance } from "./forestInstance";
 
 const userService = instance.createService<User>("user", {
   /* All Service built in CRUD methods route control ( string | string[] ) */
@@ -307,7 +324,7 @@ _<strong>Note:</strong> if a method has its own specific `requestConfig`, it wil
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./restigoInstance";
+import { instance } from "./forestInstance";
 
 const userService = instance.createService<UserWithId, User, number>("user", {
   requestConfigByMethod: {
@@ -315,7 +332,9 @@ const userService = instance.createService<UserWithId, User, number>("user", {
     getById: { maxRedirects: 3 },
   },
   requestConfig: {
-    /* Request Config For All Methods */ headers: { Authentication: "Bearer Header" },
+    /* Request Config For All Methods */ headers: {
+      Authentication: "Bearer Header",
+    },
   },
 });
 ```
@@ -347,7 +366,7 @@ _<strong>Note:</strong> if a method has its own specific `payloadKey`, it will b
 <strong>Example:</strong>
 
 ```typescript
-import { instance } from "./restigoInstance";
+import { instance } from "./forestInstance";
 
 const userService = instance.createService<UserWithId, User, number>("user", {
   payloadKey: "update",
@@ -357,4 +376,4 @@ const userService = instance.createService<UserWithId, User, number>("user", {
 
 ## License
 
-[MIT](https://github.com/LiorVainer/restigo/blob/main/LICENSE)
+[MIT](https://github.com/LiorVainer/forest/blob/main/LICENSE)
