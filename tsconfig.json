@@ -5,15 +5,15 @@
     "outDir": "dist",
     "baseUrl": "src",
     "module": "commonjs",
-    "experimentalDecorators": true,
     "strict": true,
     "declaration": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
+    "experimentalDecorators": true,
     "useUnknownInCatchVariables": false
   },
-  "include": ["src"],
+  "include": ["src", "tests"],
   "exclude": ["node_modules"]
 }
