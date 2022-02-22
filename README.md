@@ -4,8 +4,10 @@
 </br>
 
 [![test coverage](https://badgen.net/badge/coverage/100%25/green?icon=github)](https://github.com/LiorVainer/4rest)
-[![npm version](https://badgen.net/badge/npm/v1.0.4/red?icon=https://www.svgrepo.com/show/354126/npm-icon.svg)](https://www.npmjs.com/package/4rest)
+[![npm version](https://img.shields.io/npm/v/4rest?color=f00e0e&logo=npm&style=flat)](https://www.npmjs.com/package/4rest)
 [![install size](https://packagephobia.com/badge?p=4rest)](https://packagephobia.com/result?p=4rest)
+[![minizipped size](https://img.shields.io/bundlephobia/minzip/4rest)](https://packagephobia.com/result?p=4rest)
+[![License](https://img.shields.io/github/license/liorvainer/4rest?color=orange)](https://www.npmjs.com/package/4rest)
 
 ## Description
 
