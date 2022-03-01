@@ -74,31 +74,31 @@ describe("Custom Requests Config ", () => {
   test("Rest Methods", async () => {
     mock.onDelete("user").reply((config) => {
       expect(config.maxRedirects).toEqual(undefined);
-      expect(config.headers.Authentication).toEqual("Bearer Header");
+      expect(config.headers?.Authentication).toEqual("Bearer Header");
       return [200];
     });
 
     mock.onDelete("user/3").reply((config) => {
       expect(config.maxRedirects).toEqual(undefined);
-      expect(config.headers.Authentication).toEqual("Bearer Header");
+      expect(config.headers?.Authentication).toEqual("Bearer Header");
       return [200];
     });
 
     mock.onPost("user").reply((config) => {
       expect(config.maxRedirects).toEqual(undefined);
-      expect(config.headers.Authentication).toEqual("Bearer Header");
+      expect(config.headers?.Authentication).toEqual("Bearer Header");
       return [200];
     });
 
     mock.onPatch("user").reply((config) => {
       expect(config.maxRedirects).toEqual(undefined);
-      expect(config.headers.Authentication).toEqual("Bearer Header");
+      expect(config.headers?.Authentication).toEqual("Bearer Header");
       return [200];
     });
 
     mock.onPut("user").reply((config) => {
       expect(config.maxRedirects).toEqual(undefined);
-      expect(config.headers.Authentication).toEqual("Bearer Header");
+      expect(config.headers?.Authentication).toEqual("Bearer Header");
       return [200];
     });
 
