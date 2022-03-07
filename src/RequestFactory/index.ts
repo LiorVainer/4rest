@@ -1,5 +1,5 @@
+import { AxiosInstance } from "axios";
 import { ResponseHandleFunction } from "./../types/responseHandleFunction";
-import { CachiosInstance } from "cachios";
 import { ForestInstance } from "index";
 
 import { CatchFunction } from "../types/catchFunction";
@@ -20,18 +20,18 @@ import {
 } from "./withPayload";
 
 export class RequestFactory {
-  private cachios: CachiosInstance;
+  private axios: AxiosInstance;
   private prefix: Prefix;
   private catchFunction: CatchFunction | undefined;
   private responseHandleFunction: ResponseHandleFunction | undefined;
 
   constructor(
-    cachios: CachiosInstance,
+    axios: AxiosInstance,
     prefix: Prefix,
     responseHandleFunction?: ResponseHandleFunction,
     catchFunction?: CatchFunction
   ) {
-    this.cachios = cachios;
+    this.axios = axios;
     this.prefix = prefix;
     this.responseHandleFunction = responseHandleFunction;
     this.catchFunction = catchFunction;
@@ -39,7 +39,7 @@ export class RequestFactory {
 
   public noPayloadRequest = (method: NoPayloadHTTPMethods) =>
     noPayloadRequest({
-      cachios: this.cachios,
+      axios: this.axios,
       prefix: this.prefix,
       method,
       responseHandleFunction: this.responseHandleFunction,
@@ -48,7 +48,7 @@ export class RequestFactory {
 
   public noPayloadRequestByParam = (method: NoPayloadHTTPMethods) =>
     noPayloadRequestByParam({
-      cachios: this.cachios,
+      axios: this.axios,
       prefix: this.prefix,
       method,
       responseHandleFunction: this.responseHandleFunction,
@@ -57,7 +57,7 @@ export class RequestFactory {
 
   public withPayloadRequest = (method: WithPayloadHTTPMethods) =>
     withPayloadRequest({
-      cachios: this.cachios,
+      axios: this.axios,
       prefix: this.prefix,
       method,
       responseHandleFunction: this.responseHandleFunction,
@@ -72,7 +72,7 @@ export const createRequestMethods = (
   catchFunction?: CatchFunction
 ) => {
   const requestFactory = new RequestFactory(
-    forestInstance.cachiosInstance,
+    forestInstance.axiosInsance,
     prefix,
     responseHandleFunction,
     catchFunction

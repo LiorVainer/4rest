@@ -1,11 +1,8 @@
 import axios from "axios";
-import cachios from "cachios";
 
 import forest, { ForestInstance } from "../../src";
 
-export const forestInstance: ForestInstance = forest.create(
-  cachios.create(axios)
-);
+export const forestInstance: ForestInstance = forest.create(axios);
 
 test("Forest Instance Defined", () => {
   expect(forestInstance).toBeDefined();

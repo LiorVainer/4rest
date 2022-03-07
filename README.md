@@ -11,7 +11,7 @@
 
 ## Description
 
-<strong>4rest (Forest)</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) and [`cachios`](https://www.npmjs.com/package/cachios) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
+<strong>4rest (Forest)</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) package suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
 
 <br />
 
@@ -49,7 +49,7 @@ Using yarn
 
 🎨 <strong>Custom Services</strong> with option to add additional methods extending out CRUD methods that comes built in with the service
 
-🧱 <strong>Services Built</strong> on fully configurable [`axios`](https://www.npmjs.com/package/axios) or [`cachios`](https://www.npmjs.com/package/cachios) Instances
+🧱 <strong>Services Built</strong> on fully configurable [`axios`](https://www.npmjs.com/package/axios) Instance
 
 ⚙️ <strong>Convenient Configuration</strong> with custom routes, request configuration, and payload data (body property of request) key custom define
 
@@ -266,13 +266,13 @@ const data: boolean = await(
 
 ### 📀 <strong>Forest Instance</strong>
 
-<strong>Create Forest Instance based</strong> `axios` or `cachios` Instance with `forest.create()` Function
+<strong>Create Forest Instance based</strong> `axios` Instance with `forest.create()` Function
 
 ```typescript
 import forest from "4rest";
 
 /* Customised Forest Instance can be based on
-   AxiosInstance, AxiosRequestConfig or CachiosInstance */
+   AxiosInstance, AxiosRequestConfig */
 
 const forestInstance = forest.create(/* Here goes instance or config*/);
 ```
@@ -280,7 +280,7 @@ const forestInstance = forest.create(/* Here goes instance or config*/);
 <strong>Options to configure</strong> `forest.create()`
 
 ```typescript
-type InstanceConfig = AxiosInstance | CachiosInstance | AxiosRequestConfig;
+type InstanceConfig = AxiosInstance | AxiosRequestConfig;
 ```
 
 </br>
@@ -317,7 +317,7 @@ const userService = instance.createService<User>("user", {
 
 #### 2) Request Config
 
-You can set a `requestConfig` of type `CachiosRequestConfig` for attaching metadata to a request (like headers, params, etc.)
+You can set a `requestConfig` of type `AxiosRequestConfig` for attaching metadata to a request (like headers, params, etc.)
 
 `requestConfig` can be set for each method seperatly or make one general config for all methods
 

@@ -1,11 +1,11 @@
-import { CachiosInstance } from "cachios";
+import { AxiosInstance } from "axios";
 
 import { ServiceConfig } from "../types/forest";
 
 import { ForestService } from "./service";
 
 export class ForestInstance {
-  constructor(readonly cachiosInstance: CachiosInstance) {}
+  constructor(readonly axiosInsance: AxiosInstance) {}
 
   public createService = <Response, Payload = Response, IdType = string>(
     prefix: string,

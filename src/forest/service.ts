@@ -13,10 +13,9 @@ export class ForestService<
   ClassPayloadData = ClassResponseData,
   ClassIdType = string
 > {
-  config: ServiceConfig = {};
+  protected config: ServiceConfig = {};
   private instance: ForestInstance;
-
-  methods: ServiceMethods;
+  protected methods: ServiceMethods;
 
   constructor(
     prefix: string,
@@ -28,7 +27,12 @@ export class ForestService<
       this.config = config;
     }
 
-    this.methods = createRequestMethods(prefix, this.instance);
+    this.methods = createRequestMethods(
+      prefix,
+      this.instance,
+      this.config.responseHandleFunction,
+      this.config.catchFunction
+    );
   }
 
   getAll<

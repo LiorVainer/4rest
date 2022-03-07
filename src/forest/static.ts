@@ -1,26 +1,20 @@
-import cachiosLib, { CachiosInstance } from "cachios";
-import axiosLib, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axiosLib, { Axios, AxiosInstance, AxiosRequestConfig } from "axios";
 
 import { ForestInstance } from "./instance";
 
-export type InstanceConfig =
-  | AxiosInstance
-  | CachiosInstance
-  | AxiosRequestConfig;
+export type InstanceConfig = AxiosInstance | AxiosRequestConfig;
 
 export class ForestStatic {
   create(config: InstanceConfig): ForestInstance {
-    let cachiosInstance;
+    let axiosInstance: AxiosInstance;
 
-    if ("cache" in config) {
-      cachiosInstance = config;
+    if ("request" in config) {
+      axiosInstance = config;
     } else {
-      const axiosInstance =
-        "request" in config ? config : axiosLib.create(config);
-      cachiosInstance = cachiosLib.create(axiosInstance);
+      axiosInstance = axiosLib.create(config);
     }
 
-    const forestInstance = new ForestInstance(cachiosInstance);
+    const forestInstance = new ForestInstance(axiosInstance);
 
     return forestInstance;
   }

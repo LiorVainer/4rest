@@ -1,7 +1,9 @@
-import { CachiosRequestConfig } from "cachios";
+import { CatchFunction } from "types/catchFunction";
+import { ResponseHandleFunction } from "./responseHandleFunction";
 import { createRequestMethods } from "../RequestFactory";
 import { Key } from "./payload";
 import { Route } from "./route";
+import { AxiosRequestConfig } from "axios";
 
 export type ServiceMethods = ReturnType<typeof createRequestMethods>;
 export interface ServiceConfig {
@@ -14,15 +16,15 @@ export interface ServiceConfig {
     patch?: Route;
     put?: Route;
   };
-  requestConfig?: CachiosRequestConfig;
+  requestConfig?: AxiosRequestConfig;
   requestConfigByMethod?: {
-    getAll?: CachiosRequestConfig;
-    getById?: CachiosRequestConfig;
-    deleteAll?: CachiosRequestConfig;
-    deleteById?: CachiosRequestConfig;
-    post?: CachiosRequestConfig;
-    patch?: CachiosRequestConfig;
-    put?: CachiosRequestConfig;
+    getAll?: AxiosRequestConfig;
+    getById?: AxiosRequestConfig;
+    deleteAll?: AxiosRequestConfig;
+    deleteById?: AxiosRequestConfig;
+    post?: AxiosRequestConfig;
+    patch?: AxiosRequestConfig;
+    put?: AxiosRequestConfig;
   };
   payloadKey?: Key;
   payloadKeyByMethod?: {
@@ -30,4 +32,6 @@ export interface ServiceConfig {
     patch?: Key;
     put?: Key;
   };
+  responseHandleFunction?: ResponseHandleFunction;
+  catchFunction?: CatchFunction;
 }

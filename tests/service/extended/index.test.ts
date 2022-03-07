@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import cachios from "cachios";
-
 import { User, UserWithId } from "../../types/user";
 import forest, {
   ForestInstance,
@@ -9,9 +7,7 @@ import forest, {
   ServiceConfig,
 } from "../../../src";
 
-export const forestInstance: ForestInstance = forest.create(
-  cachios.create(axios)
-);
+export const forestInstance: ForestInstance = forest.create(axios);
 export let userService: UserService;
 
 export class UserService extends ForestService<UserWithId, User> {

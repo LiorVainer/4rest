@@ -3,8 +3,7 @@ import {
   ResponseHandleFunction,
 } from "./../types/responseHandleFunction";
 import { defaultCatchFunction } from "./../types/catchFunction";
-import { CachiosInstance, CachiosRequestConfig } from "cachios";
-import { AxiosResponse } from "axios";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { BaseParamType, Route } from "../types/route";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
@@ -22,45 +21,42 @@ export const noPayloadRequestMethods: Record<string, NoPayloadHTTPMethods> = {
 export interface NoPayloadRequestFactoryProps {
   catchFunction?: CatchFunction;
   responseHandleFunction?: ResponseHandleFunction;
-  cachios: CachiosInstance;
+  axios: AxiosInstance;
   prefix: string;
   method: NoPayloadHTTPMethods;
 }
 
 /**
  * Util Method For Sending HTTP Requests
- * @param cachios - Cachios Instance
+ * @param axios - Axios Instance
  * @param prefix - Request Route Prefix
  * @param method - HTTP Method without Payload
  * @returns - Request Function of selected method with route: "prefix/route"
  */
 export const noPayloadRequest =
   ({
-    cachios,
+    axios,
     prefix,
     method,
     catchFunction = defaultCatchFunction,
     responseHandleFunction = defaultResponseHandleFunction,
   }: NoPayloadRequestFactoryProps) =>
-  <ResponseDataType = any>(
-    route?: Route,
-    config?: CachiosRequestConfig
-  ): (() => Promise<AxiosResponse<ResponseDataType>>) => {
+  <ResponseDataType = any>(route?: Route, config?: AxiosRequestConfig) => {
     return async () =>
-      cachios[method]<ResponseDataType>(routeBuilder(prefix, route), config)
+      axios[method]<ResponseDataType>(routeBuilder(prefix, route), config)
         .then(responseHandleFunction)
         .catch(catchFunction);
   };
 
 /**
  * Util Method For Sending Requests
- * @param cachios - Cachios Instance
+ * @param axios - Axios Instance
  * @param prefix - Request Route Prefix
  * @returns - Request Function of selected method with route: "prefix/route/:param"
  */
 export const noPayloadRequestByParam =
   ({
-    cachios,
+    axios,
     prefix,
     method,
     catchFunction = defaultCatchFunction,
@@ -68,10 +64,10 @@ export const noPayloadRequestByParam =
   }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any, ParamType extends BaseParamType = string>(
     route?: Route,
-    config?: CachiosRequestConfig
+    config?: AxiosRequestConfig
   ): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType) =>
-      cachios[method]<ResponseDataType>(
+      axios[method]<ResponseDataType>(
         routeBuilderWithParam(prefix, param, route),
         config
       )
