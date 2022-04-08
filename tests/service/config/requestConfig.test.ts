@@ -72,13 +72,14 @@ describe("Custom Requests Config ", () => {
   });
 
   test("Rest Methods", async () => {
+    const id = 1;
     mock.onDelete("user").reply((config) => {
       expect(config.maxRedirects).toEqual(undefined);
       expect(config.headers?.Authentication).toEqual("Bearer Header");
       return [200];
     });
 
-    mock.onDelete("user/3").reply((config) => {
+    mock.onDelete(`user/${id}`).reply((config) => {
       expect(config.maxRedirects).toEqual(undefined);
       expect(config.headers?.Authentication).toEqual("Bearer Header");
       return [200];
@@ -90,22 +91,27 @@ describe("Custom Requests Config ", () => {
       return [200];
     });
 
-    mock.onPatch("user").reply((config) => {
+    mock.onPatch(`user/${id}`).reply((config) => {
       expect(config.maxRedirects).toEqual(undefined);
       expect(config.headers?.Authentication).toEqual("Bearer Header");
       return [200];
     });
 
-    mock.onPut("user").reply((config) => {
+    mock.onPut(`user/${id}`).reply((config) => {
       expect(config.maxRedirects).toEqual(undefined);
       expect(config.headers?.Authentication).toEqual("Bearer Header");
       return [200];
     });
 
-    await userService.deleteAll();
-    await userService.deleteById(3);
-    await userService.put({} as User);
-    await userService.post({} as User);
-    await userService.patch({} as User);
+    const methodsPromises = [];
+    methodsPromises.push(userService.deleteAll());
+    methodsPromises.push(await userService.deleteById(id));
+    methodsPromises.push(await userService.post({} as User));
+    methodsPromises.push(await userService.put(id, {} as User));
+    methodsPromises.push(await userService.patch(id, {} as User));
+
+    const res = await Promise.all(methodsPromises);
+
+    expect(res.map((res) => res.status)).toEqual([200, 200, 200, 200, 200]);
   });
 });

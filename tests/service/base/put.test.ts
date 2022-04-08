@@ -16,14 +16,15 @@ describe("HTTP PUT Method", () => {
   });
 
   test("put", async () => {
+    const id = 1;
     const userPutData: Partial<User> = { name: "John Smith", email: "john.smith@gmail.com" };
 
-    mock.onPut("user").reply((request) => {
+    mock.onPut(`user/${id}`).reply((request) => {
       expect(JSON.parse(request.data)).toEqual(userPutData);
       return [200];
     });
 
-    const response = await userService.put(userPutData);
+    const response = await userService.put(id, userPutData);
 
     expect(response.status).toBe(200);
   });

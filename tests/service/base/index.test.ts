@@ -11,7 +11,6 @@ beforeAll(() => {
   userService = forestInstance.createService<UserWithId, User, number>("user", {
     responseHandleFunction: (response) => response,
   });
-  userService.getAll();
 });
 
 describe("Forest Classes", () => {

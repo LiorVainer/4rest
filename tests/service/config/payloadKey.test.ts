@@ -50,25 +50,29 @@ describe("Custom Payload Body Key Config ", () => {
   });
 
   test("patch", async () => {
-    mock.onPatch("user").reply((config) => {
+    const id = 1;
+
+    mock.onPatch(`user/${id}`).reply((config) => {
       expect(JSON.parse(config.data)).toEqual({ update: {} });
 
       return [200];
     });
 
-    const response = await userService.patch({} as User);
+    const response = await userService.patch(id, {} as User);
 
     expect(response.status).toEqual(200);
   });
 
   test("put", async () => {
-    mock.onPut("user").reply((config) => {
+    const id = 1;
+
+    mock.onPut(`user/${id}`).reply((config) => {
       expect(JSON.parse(config.data)).toEqual({ update: {} });
 
       return [200];
     });
 
-    const response = await userService.put({} as User);
+    const response = await userService.put(id, {} as User);
 
     expect(response.status).toEqual(200);
   });

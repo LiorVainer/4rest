@@ -1,11 +1,7 @@
 import axios from "axios";
 
 import { User, UserWithId } from "../../types/user";
-import forest, {
-  ForestInstance,
-  ForestService,
-  ServiceConfig,
-} from "../../../src";
+import forest, { ForestInstance, ForestService, ServiceConfig } from "../../../src";
 
 export const forestInstance: ForestInstance = forest.create(axios);
 export let userService: UserService;
@@ -18,10 +14,7 @@ export class UserService extends ForestService<UserWithId, User> {
   // @GetAll<User>()
   // public override getAll() {}
   public getByName = this.methods.getByParam<UserWithId, string>("name");
-  public isEmailTaken = this.methods.getByParam<boolean, string>([
-    "email",
-    "taken",
-  ]);
+  public isEmailTaken = this.methods.getByParam<boolean, string>(["email", "taken"]);
 }
 
 beforeAll(() => {
