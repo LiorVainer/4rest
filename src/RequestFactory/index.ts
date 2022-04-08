@@ -6,16 +6,12 @@ import { CatchFunction } from "../types/catchFunction";
 
 import { Prefix } from "../types/route";
 
-import {
-  NoPayloadHTTPMethods,
-  noPayloadRequest,
-  noPayloadRequestByParam,
-  noPayloadRequestMethods,
-} from "./noPayload";
+import { NoPayloadHTTPMethods, noPayloadRequest, noPayloadRequestByParam, noPayloadRequestMethods } from "./noPayload";
 
 import {
   WithPayloadHTTPMethods,
   withPayloadRequest,
+  withPayloadRequestByParam,
   withPayloadRequestMethods,
 } from "./withPayload";
 
@@ -63,6 +59,15 @@ export class RequestFactory {
       responseHandleFunction: this.responseHandleFunction,
       catchFunction: this.catchFunction,
     });
+
+  public withPayloadRequestByParam = (method: WithPayloadHTTPMethods) =>
+    withPayloadRequestByParam({
+      axios: this.axios,
+      prefix: this.prefix,
+      method,
+      responseHandleFunction: this.responseHandleFunction,
+      catchFunction: this.catchFunction,
+    });
 }
 
 export const createRequestMethods = (
@@ -71,23 +76,14 @@ export const createRequestMethods = (
   responseHandleFunction?: ResponseHandleFunction,
   catchFunction?: CatchFunction
 ) => {
-  const requestFactory = new RequestFactory(
-    forestInstance.axiosInsance,
-    prefix,
-    responseHandleFunction,
-    catchFunction
-  );
+  const requestFactory = new RequestFactory(forestInstance.axiosInsance, prefix, responseHandleFunction, catchFunction);
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
-    getByParam: requestFactory.noPayloadRequestByParam(
-      noPayloadRequestMethods.GET
-    ),
+    getByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.GET),
     delete: requestFactory.noPayloadRequest(noPayloadRequestMethods.DELETE),
-    deleteByParam: requestFactory.noPayloadRequestByParam(
-      noPayloadRequestMethods.DELETE
-    ),
+    deleteByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.DELETE),
     post: requestFactory.withPayloadRequest(withPayloadRequestMethods.POST),
-    put: requestFactory.withPayloadRequest(withPayloadRequestMethods.PUT),
-    patch: requestFactory.withPayloadRequest(withPayloadRequestMethods.PATCH),
+    put: requestFactory.withPayloadRequestByParam(withPayloadRequestMethods.PUT),
+    patch: requestFactory.withPayloadRequestByParam(withPayloadRequestMethods.PATCH),
   };
 };
