@@ -6,14 +6,7 @@ import { BaseParamType, Route } from "../types/route";
 import { Key } from "types/payload";
 import { CatchFunction, defaultCatchFunction } from "../types/catchFunction";
 import { defaultResponseHandleFunction, ResponseHandleFunction } from "../types/responseHandleFunction";
-
-export type WithPayloadHTTPMethods = "post" | "put" | "patch";
-
-export const withPayloadRequestMethods: Record<string, WithPayloadHTTPMethods> = {
-  POST: "post",
-  PUT: "put",
-  PATCH: "patch",
-};
+import { WithPayloadHTTPMethods } from "constants/methods.const";
 
 export interface WithPayloadRequestFactoryProps {
   catchFunction?: CatchFunction;

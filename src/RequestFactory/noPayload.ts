@@ -8,15 +8,8 @@ import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { BaseParamType, Route } from "../types/route";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 import { CatchFunction } from "types/catchFunction";
+import { NoPayloadHTTPMethods } from "constants/methods.const";
 
-export type NoPayloadHTTPMethods = "get" | "delete" | "head" | "options";
-
-export const noPayloadRequestMethods: Record<string, NoPayloadHTTPMethods> = {
-  GET: "get",
-  DELETE: "delete",
-  HEAD: "head",
-  OPTIONS: "options",
-};
 
 export interface NoPayloadRequestFactoryProps {
   catchFunction?: CatchFunction;

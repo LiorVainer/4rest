@@ -6,14 +6,15 @@ import { CatchFunction } from "../types/catchFunction";
 
 import { Prefix } from "../types/route";
 
-import { NoPayloadHTTPMethods, noPayloadRequest, noPayloadRequestByParam, noPayloadRequestMethods } from "./noPayload";
+import { noPayloadRequest, noPayloadRequestByParam } from "./noPayload";
 
+import { withPayloadRequest, withPayloadRequestByParam } from "./withPayload";
 import {
+  NoPayloadHTTPMethods,
+  noPayloadRequestMethods,
   WithPayloadHTTPMethods,
-  withPayloadRequest,
-  withPayloadRequestByParam,
   withPayloadRequestMethods,
-} from "./withPayload";
+} from "constants/methods.const";
 
 export class RequestFactory {
   private axios: AxiosInstance;
@@ -76,7 +77,12 @@ export const createRequestMethods = (
   responseHandleFunction?: ResponseHandleFunction,
   catchFunction?: CatchFunction
 ) => {
-  const requestFactory = new RequestFactory(forestInstance.axiosInstance, prefix, responseHandleFunction, catchFunction);
+  const requestFactory = new RequestFactory(
+    forestInstance.axiosInstance,
+    prefix,
+    responseHandleFunction,
+    catchFunction
+  );
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
     getByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.GET),
