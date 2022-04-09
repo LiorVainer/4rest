@@ -5,7 +5,7 @@ import { ServiceConfig } from "../types/forest";
 import { ForestService } from "./service";
 
 export class ForestInstance {
-  constructor(readonly axiosInsance: AxiosInstance) {}
+  constructor(readonly axiosInstance: AxiosInstance) {}
 
   public createService = <Response, Payload = Response, IdType = string>(
     prefix: string,

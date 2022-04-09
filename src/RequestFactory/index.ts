@@ -76,7 +76,7 @@ export const createRequestMethods = (
   responseHandleFunction?: ResponseHandleFunction,
   catchFunction?: CatchFunction
 ) => {
-  const requestFactory = new RequestFactory(forestInstance.axiosInsance, prefix, responseHandleFunction, catchFunction);
+  const requestFactory = new RequestFactory(forestInstance.axiosInstance, prefix, responseHandleFunction, catchFunction);
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
     getByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.GET),
