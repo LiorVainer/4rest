@@ -1,5 +1,5 @@
 </br>
-<img src="https://raw.github.com/LiorVainer/4rest/main/assets/icon.svg">
+<img src="https://raw.github.com/LiorVainer/4rest/main/assets/4rest.svg">
 </br>
 </br>
 
@@ -43,7 +43,9 @@ Using yarn
 - deleteById
 - post
 - patch
+- patchById
 - put
+- putById
 
 <br />
 
@@ -126,6 +128,11 @@ async function createUser(newUser: User) {
 async function updateUser(partialUser: Partial<User>) {
   const updatedUser: User = await (await userService.patch(partialUser)).data;
 }
+
+// PATCH http://localhost:5000/user/:id
+async function updateUserById(id: ObjectId, partialUser: Partial<User>) {
+  const updatedUser: User = await (await userService.patchById(id, partialUser)).data;
+}
 ```
 
 - #### PUT
@@ -134,6 +141,11 @@ async function updateUser(partialUser: Partial<User>) {
 // PUT http://localhost:5000/user
 async function updateUser(partialUser: Partial<User>) {
   const updatedUser: User = await (await userService.put(partialUser)).data;
+}
+
+// PUT http://localhost:5000/user/:id
+async function updateUserById(id: ObjectId, partialUser: Partial<User>) {
+  const updatedUser: User = await (await userService.putById(id, partialUser)).data;
 }
 ```
 
@@ -152,13 +164,8 @@ export class UserService extends ForestService<UserWithId, User> {
     /* prefix for request url is "user" */
   }
 
-  public getByFullname = this.methods.getByParam<UserWithId, string>(
-    "fullName"
-  );
-  public isEmailTaken = this.methods.getByParam<boolean, string>([
-    "email",
-    "taken",
-  ]);
+  public getByFullname = this.methods.getByParam<UserWithId, string>("fullName");
+  public isEmailTaken = this.methods.getByParam<boolean, string>(["email", "taken"]);
 }
 ```
 
@@ -172,9 +179,7 @@ async function getUserByFullname(fullname: string) {
 }
 
 async function isEmailTaken(email: string) {
-  const isEmailTaken: boolean = await (
-    await userService.isEmailTaken(email)
-  ).data;
+  const isEmailTaken: boolean = await (await userService.isEmailTaken(email)).data;
 }
 ```
 
@@ -239,10 +244,22 @@ const userService = instance.createService<UserWithId, User, string>("user");
 - Response Data Type: `ResponseData`
 - Payload Data Type: `Partial<PayloadData>`
 
+#### patchById
+
+- Response Data Type: `ResponseData`
+- Payload Data Type: `Partial<PayloadData>`
+- Id Type: `IdType`
+
 #### put
 
 - Response Data Type: `ResponseData`
 - Payload Data Type: `Partial<PayloadData>`
+
+#### putById
+
+- Response Data Type: `ResponseData`
+- Payload Data Type: `Partial<PayloadData>`
+- Id Type: `IdType`
 
 if you would like to change one or more of this method types, you can do it when calling the method by passing to it generic types that will be relevant to the this method only, at the place you are calling it.
 
@@ -255,9 +272,7 @@ Lets say you would like to change the type of the response data that comes back 
 You can do that in the following way:
 
 ```typescript
-const data: boolean = await(
-  await userService.post<boolean>(/* newUserData */)
-).data;
+const data: boolean = await(await userService.post<boolean>(/* newUserData */)).data;
 ```
 
 <br>
@@ -281,6 +296,19 @@ const forestInstance = forest.create(/* Here goes instance or config*/);
 
 ```typescript
 type InstanceConfig = AxiosInstance | AxiosRequestConfig;
+```
+
+</br>
+
+<strong>Access to the totally regular `AxiosInstance` that the `ForestInstance` is based contains all of [`axios`](https://www.npmjs.com/package/axios) methods on it:</strong>
+</br>
+</br>
+you can access it using the `axiosInstance` property on created `ForestInstance`
+
+```typescript
+import { forestInstance } from "./instance";
+
+const response = forestInstance.axiosInstance.get("localhost:5000/users" /* Here goes axios config*/);
 ```
 
 </br>
@@ -310,7 +338,8 @@ const userService = instance.createService<User>("user", {
     deleteById: "id",       // DELETE http://localhost:5000/user/id/:id
     ...,
     post: "create",         // POST http://localhost:5000/user/create
-    patch: "update"         // POST http://localhost:5000/user/update
+    patch: "update"         // PATCH http://localhost:5000/user/update
+    patchById: "update"         // PATCH http://localhost:5000/user/update/:id
   }
 });
 ```
