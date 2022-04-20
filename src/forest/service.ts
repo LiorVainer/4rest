@@ -62,22 +62,42 @@ export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResp
     )(data);
   }
 
-  patch<ResponseData = ClassResponseData, PayloadData = ClassPayloadData, IdType = ClassIdType>(
+  patch<ResponseData = ClassResponseData, PayloadData = ClassPayloadData>(
+    data: PayloadData
+  ): ServiceMethodResponse<Partial<ResponseData>> {
+    return this.methods.patch<ResponseData, PayloadData>(
+      this.config.routes?.patch,
+      fallback(this.config.payloadKeyByMethod?.patch, this.config.payloadKey),
+      fallback(this.config.requestConfigByMethod?.patch, this.config.requestConfig)
+    )(data);
+  }
+
+  patchById<ResponseData = ClassResponseData, PayloadData = ClassPayloadData, IdType = ClassIdType>(
     param: IdType,
     data: PayloadData
   ): ServiceMethodResponse<Partial<ResponseData>> {
-    return this.methods.patch<ResponseData, PayloadData, IdType>(
+    return this.methods.patchByParam<ResponseData, PayloadData, IdType>(
       this.config.routes?.patch,
       fallback(this.config.payloadKeyByMethod?.patch, this.config.payloadKey),
       fallback(this.config.requestConfigByMethod?.patch, this.config.requestConfig)
     )(param, data);
   }
 
-  put<ResponseData = ClassResponseData, PayloadData = ClassPayloadData, IdType = ClassIdType>(
+  put<ResponseData = ClassResponseData, PayloadData = ClassPayloadData>(
+    data: PayloadData
+  ): ServiceMethodResponse<Partial<ResponseData>> {
+    return this.methods.put<ResponseData, PayloadData>(
+      this.config.routes?.put,
+      fallback(this.config.payloadKeyByMethod?.put, this.config.payloadKey),
+      fallback(this.config.requestConfigByMethod?.put, this.config.requestConfig)
+    )(data);
+  }
+
+  putById<ResponseData = ClassResponseData, PayloadData = ClassPayloadData, IdType = ClassIdType>(
     param: IdType,
     data: PayloadData
   ): ServiceMethodResponse<Partial<ResponseData>> {
-    return this.methods.put<ResponseData, PayloadData, IdType>(
+    return this.methods.putByParam<ResponseData, PayloadData, IdType>(
       this.config.routes?.put,
       fallback(this.config.payloadKeyByMethod?.put, this.config.payloadKey),
       fallback(this.config.requestConfigByMethod?.put, this.config.requestConfig)

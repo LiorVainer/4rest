@@ -16,6 +16,19 @@ describe("HTTP PATCH Method", () => {
   });
 
   test("patch", async () => {
+    const userPatchData: Partial<User> = { name: "John Smith" };
+
+    mock.onPatch("user").reply((request) => {
+      expect(JSON.parse(request.data)).toEqual(userPatchData);
+      return [200];
+    });
+
+    const response = await userService.patch(userPatchData);
+
+    expect(response.status).toBe(200);
+  });
+
+  test("patchById", async () => {
     const id = 1;
     const userPatchData: Partial<User> = { name: "John Smith" };
 
@@ -24,7 +37,7 @@ describe("HTTP PATCH Method", () => {
       return [200];
     });
 
-    const response = await userService.patch(id, userPatchData);
+    const response = await userService.patchById(id, userPatchData);
 
     expect(response.status).toBe(200);
   });

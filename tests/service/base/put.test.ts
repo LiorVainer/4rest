@@ -16,6 +16,19 @@ describe("HTTP PUT Method", () => {
   });
 
   test("put", async () => {
+    const userPatchData: Partial<User> = { name: "John Smith" };
+
+    mock.onPut("user").reply((request) => {
+      expect(JSON.parse(request.data)).toEqual(userPatchData);
+      return [200];
+    });
+
+    const response = await userService.put(userPatchData);
+
+    expect(response.status).toBe(200);
+  });
+
+  test("putById", async () => {
     const id = 1;
     const userPutData: Partial<User> = { name: "John Smith", email: "john.smith@gmail.com" };
 
@@ -24,7 +37,7 @@ describe("HTTP PUT Method", () => {
       return [200];
     });
 
-    const response = await userService.put(id, userPutData);
+    const response = await userService.putById(id, userPutData);
 
     expect(response.status).toBe(200);
   });

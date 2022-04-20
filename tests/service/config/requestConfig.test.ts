@@ -91,7 +91,19 @@ describe("Custom Requests Config ", () => {
       return [200];
     });
 
+    mock.onPatch(`user`).reply((config) => {
+      expect(config.maxRedirects).toEqual(undefined);
+      expect(config.headers?.Authentication).toEqual("Bearer Header");
+      return [200];
+    });
+
     mock.onPatch(`user/${id}`).reply((config) => {
+      expect(config.maxRedirects).toEqual(undefined);
+      expect(config.headers?.Authentication).toEqual("Bearer Header");
+      return [200];
+    });
+
+    mock.onPut(`user`).reply((config) => {
       expect(config.maxRedirects).toEqual(undefined);
       expect(config.headers?.Authentication).toEqual("Bearer Header");
       return [200];
@@ -107,11 +119,13 @@ describe("Custom Requests Config ", () => {
     methodsPromises.push(userService.deleteAll());
     methodsPromises.push(await userService.deleteById(id));
     methodsPromises.push(await userService.post({} as User));
-    methodsPromises.push(await userService.put(id, {} as User));
-    methodsPromises.push(await userService.patch(id, {} as User));
+    methodsPromises.push(await userService.put({} as User));
+    methodsPromises.push(await userService.patch({} as User));
+    methodsPromises.push(await userService.putById(id, {} as User));
+    methodsPromises.push(await userService.patchById(id, {} as User));
 
     const res = await Promise.all(methodsPromises);
 
-    expect(res.map((res) => res.status)).toEqual([200, 200, 200, 200, 200]);
+    expect(res.map((res) => res.status)).toEqual([200, 200, 200, 200, 200, 200, 200]);
   });
 });

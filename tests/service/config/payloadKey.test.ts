@@ -50,6 +50,18 @@ describe("Custom Payload Body Key Config ", () => {
   });
 
   test("patch", async () => {
+    mock.onPatch("user").reply((config) => {
+      expect(JSON.parse(config.data)).toEqual({ update: {} });
+
+      return [200];
+    });
+
+    const response = await userService.patch({} as User);
+
+    expect(response.status).toEqual(200);
+  });
+
+  test("patchById", async () => {
     const id = 1;
 
     mock.onPatch(`user/${id}`).reply((config) => {
@@ -58,12 +70,24 @@ describe("Custom Payload Body Key Config ", () => {
       return [200];
     });
 
-    const response = await userService.patch(id, {} as User);
+    const response = await userService.patchById(id, {} as User);
 
     expect(response.status).toEqual(200);
   });
 
   test("put", async () => {
+    mock.onPut("user").reply((config) => {
+      expect(JSON.parse(config.data)).toEqual({ update: {} });
+
+      return [200];
+    });
+
+    const response = await userService.put({} as User);
+
+    expect(response.status).toEqual(200);
+  });
+
+  test("putById", async () => {
     const id = 1;
 
     mock.onPut(`user/${id}`).reply((config) => {
@@ -72,7 +96,7 @@ describe("Custom Payload Body Key Config ", () => {
       return [200];
     });
 
-    const response = await userService.put(id, {} as User);
+    const response = await userService.putById(id, {} as User);
 
     expect(response.status).toEqual(200);
   });

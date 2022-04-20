@@ -79,7 +79,9 @@ export const createRequestMethods = (
     delete: requestFactory.noPayloadRequest(noPayloadRequestMethods.DELETE),
     deleteByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.DELETE),
     post: requestFactory.withPayloadRequest(withPayloadRequestMethods.POST),
-    put: requestFactory.withPayloadRequestByParam(withPayloadRequestMethods.PUT),
-    patch: requestFactory.withPayloadRequestByParam(withPayloadRequestMethods.PATCH),
+    putByParam: requestFactory.withPayloadRequestByParam(withPayloadRequestMethods.PUT),
+    put: requestFactory.withPayloadRequest(withPayloadRequestMethods.PUT),
+    patchByParam: requestFactory.withPayloadRequestByParam(withPayloadRequestMethods.PATCH),
+    patch: requestFactory.withPayloadRequest(withPayloadRequestMethods.PATCH),
   };
 };
