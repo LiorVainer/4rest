@@ -24,13 +24,17 @@ export interface ServiceConfig {
     deleteById?: AxiosRequestConfig;
     post?: AxiosRequestConfig;
     patch?: AxiosRequestConfig;
+    patchById?: AxiosRequestConfig;
     put?: AxiosRequestConfig;
+    putById?: AxiosRequestConfig;
   };
   payloadKey?: Key;
   payloadKeyByMethod?: {
     post?: Key;
     patch?: Key;
+    patchById?: Key;
     put?: Key;
+    putById?: Key;
   };
   onSuccess?: OnSuccessFunction;
   onError?: OnErrorFunction;

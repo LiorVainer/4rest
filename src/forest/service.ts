@@ -78,8 +78,8 @@ export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResp
   ): ServiceMethodResponse<Partial<ResponseData>> {
     return this.methods.patchByParam<ResponseData, PayloadData, IdType>(
       this.config.routes?.patch,
-      fallback(this.config.payloadKeyByMethod?.patch, this.config.payloadKey),
-      fallback(this.config.requestConfigByMethod?.patch, this.config.requestConfig)
+      fallback(this.config.payloadKeyByMethod?.patchById, this.config.payloadKey),
+      fallback(this.config.requestConfigByMethod?.patchById, this.config.requestConfig)
     )(param, data);
   }
 
@@ -99,8 +99,8 @@ export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResp
   ): ServiceMethodResponse<Partial<ResponseData>> {
     return this.methods.putByParam<ResponseData, PayloadData, IdType>(
       this.config.routes?.put,
-      fallback(this.config.payloadKeyByMethod?.put, this.config.payloadKey),
-      fallback(this.config.requestConfigByMethod?.put, this.config.requestConfig)
+      fallback(this.config.payloadKeyByMethod?.putById, this.config.payloadKey),
+      fallback(this.config.requestConfigByMethod?.putById, this.config.requestConfig)
     )(param, data);
   }
 }
