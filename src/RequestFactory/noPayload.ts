@@ -1,5 +1,5 @@
 import { defaultOnSuccessFunction, OnSuccessFunction } from "./../types/onSuccess";
-import { defaultErrorHandleFunction, ErrorHandleFunction } from "../types/errorHandleFunction";
+import { defaultOnErrorFunction, OnErrorFunction } from "../types/onError";
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { BaseParamType, Route } from "../types/route";
@@ -7,7 +7,7 @@ import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 import { NoPayloadHTTPMethods } from "constants/methods.const";
 
 export interface NoPayloadRequestFactoryProps {
-  errorHandleFunction?: ErrorHandleFunction;
+  onError?: OnErrorFunction;
   onSuccess?: OnSuccessFunction;
   axios: AxiosInstance;
   prefix: string;
@@ -26,12 +26,12 @@ export const noPayloadRequest =
     axios,
     prefix,
     method,
-    errorHandleFunction = defaultErrorHandleFunction,
+    onError = defaultOnErrorFunction,
     onSuccess = defaultOnSuccessFunction,
   }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any>(route?: Route, config?: AxiosRequestConfig) => {
     return async () =>
-      axios[method]<ResponseDataType>(routeBuilder(prefix, route), config).then(onSuccess).catch(errorHandleFunction);
+      axios[method]<ResponseDataType>(routeBuilder(prefix, route), config).then(onSuccess).catch(onError);
   };
 
 /**
@@ -45,7 +45,7 @@ export const noPayloadRequestByParam =
     axios,
     prefix,
     method,
-    errorHandleFunction = defaultErrorHandleFunction,
+    onError = defaultOnErrorFunction,
     onSuccess = defaultOnSuccessFunction,
   }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any, ParamType extends BaseParamType = string>(
@@ -55,5 +55,5 @@ export const noPayloadRequestByParam =
     return async (param: ParamType) =>
       axios[method]<ResponseDataType>(routeBuilderWithParam(prefix, param, route), config)
         .then(onSuccess)
-        .catch(errorHandleFunction);
+        .catch(onError);
   };

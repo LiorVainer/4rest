@@ -1,4 +1,4 @@
-import { ErrorHandleFunction } from "types/errorHandleFunction";
+import { OnErrorFunction } from "types/onError";
 import { OnSuccessFunction } from "./onSuccess";
 import { createRequestMethods } from "../RequestFactory";
 import { Key } from "./payload";
@@ -33,5 +33,5 @@ export interface ServiceConfig {
     put?: Key;
   };
   onSuccess?: OnSuccessFunction;
-  errorHandleFunction?: ErrorHandleFunction;
+  onError?: OnErrorFunction;
 }
