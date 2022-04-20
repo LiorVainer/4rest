@@ -8,9 +8,7 @@ export let userService: ForestService<UserWithId, User, number>;
 
 beforeAll(() => {
   forestInstance = forest.create(axios);
-  userService = forestInstance.createService<UserWithId, User, number>("user", {
-    responseHandleFunction: (response) => response,
-  });
+  userService = forestInstance.createService<UserWithId, User, number>("user");
 });
 
 describe("Forest Classes", () => {
