@@ -5,12 +5,12 @@ import { payloadBuilder } from "../utils/payload";
 import { BaseParamType, Route } from "../types/route";
 import { Key } from "types/payload";
 import { ErrorHandleFunction, defaultErrorHandleFunction } from "../types/errorHandleFunction";
-import { defaultResponseHandleFunction, ResponseHandleFunction } from "../types/responseHandleFunction";
+import { defaultOnSuccessFunction, OnSuccessFunction } from "../types/onSuccess";
 import { WithPayloadHTTPMethods } from "constants/methods.const";
 
 export interface WithPayloadRequestFactoryProps {
   errorHandleFunction?: ErrorHandleFunction;
-  responseHandleFunction?: ResponseHandleFunction;
+  onSuccess?: OnSuccessFunction;
   axios: AxiosInstance;
   prefix: string;
   method: WithPayloadHTTPMethods;
@@ -31,7 +31,7 @@ export const withPayloadRequest =
     prefix,
     method,
     errorHandleFunction = defaultErrorHandleFunction,
-    responseHandleFunction = defaultResponseHandleFunction,
+    onSuccess = defaultOnSuccessFunction,
   }: WithPayloadRequestFactoryProps) =>
   <ResponseDataType = any, PayloadType = ResponseDataType>(
     route?: Route,
@@ -44,7 +44,7 @@ export const withPayloadRequest =
         payloadBuilder(data, key),
         config
       )
-        .then(responseHandleFunction)
+        .then(onSuccess)
         .catch(errorHandleFunction);
   };
 
@@ -61,7 +61,7 @@ export const withPayloadRequestByParam =
     prefix,
     method,
     errorHandleFunction = defaultErrorHandleFunction,
-    responseHandleFunction = defaultResponseHandleFunction,
+    onSuccess = defaultOnSuccessFunction,
   }: WithPayloadRequestFactoryProps) =>
   <ResponseDataType = any, PayloadType = ResponseDataType, ParamType extends BaseParamType = string>(
     route?: Route,
@@ -74,6 +74,6 @@ export const withPayloadRequestByParam =
         payloadBuilder(data, key),
         config
       )
-        .then(responseHandleFunction)
+        .then(onSuccess)
         .catch(errorHandleFunction);
   };

@@ -1,4 +1,4 @@
-import { defaultResponseHandleFunction, ResponseHandleFunction } from "./../types/responseHandleFunction";
+import { defaultOnSuccessFunction, OnSuccessFunction } from "./../types/onSuccess";
 import { defaultErrorHandleFunction, ErrorHandleFunction } from "../types/errorHandleFunction";
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
@@ -8,7 +8,7 @@ import { NoPayloadHTTPMethods } from "constants/methods.const";
 
 export interface NoPayloadRequestFactoryProps {
   errorHandleFunction?: ErrorHandleFunction;
-  responseHandleFunction?: ResponseHandleFunction;
+  onSuccess?: OnSuccessFunction;
   axios: AxiosInstance;
   prefix: string;
   method: NoPayloadHTTPMethods;
@@ -27,13 +27,11 @@ export const noPayloadRequest =
     prefix,
     method,
     errorHandleFunction = defaultErrorHandleFunction,
-    responseHandleFunction = defaultResponseHandleFunction,
+    onSuccess = defaultOnSuccessFunction,
   }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any>(route?: Route, config?: AxiosRequestConfig) => {
     return async () =>
-      axios[method]<ResponseDataType>(routeBuilder(prefix, route), config)
-        .then(responseHandleFunction)
-        .catch(errorHandleFunction);
+      axios[method]<ResponseDataType>(routeBuilder(prefix, route), config).then(onSuccess).catch(errorHandleFunction);
   };
 
 /**
@@ -48,7 +46,7 @@ export const noPayloadRequestByParam =
     prefix,
     method,
     errorHandleFunction = defaultErrorHandleFunction,
-    responseHandleFunction = defaultResponseHandleFunction,
+    onSuccess = defaultOnSuccessFunction,
   }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any, ParamType extends BaseParamType = string>(
     route?: Route,
@@ -56,6 +54,6 @@ export const noPayloadRequestByParam =
   ): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType) =>
       axios[method]<ResponseDataType>(routeBuilderWithParam(prefix, param, route), config)
-        .then(responseHandleFunction)
+        .then(onSuccess)
         .catch(errorHandleFunction);
   };

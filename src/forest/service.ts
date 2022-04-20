@@ -19,12 +19,7 @@ export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResp
       this.config = config;
     }
 
-    this.methods = createRequestMethods(
-      prefix,
-      this.instance,
-      this.config.responseHandleFunction,
-      this.config.errorHandleFunction
-    );
+    this.methods = createRequestMethods(prefix, this.instance, this.config.onSuccess, this.config.errorHandleFunction);
   }
 
   getAll<ResponseData = ClassResponseData[]>(): ServiceMethodResponse<ResponseData> {
