@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="7.4226975in"
-   height="1.9578627in"
-   viewBox="0 0 188.53651 49.729713"
+   width="6.7857881in"
+   height="1.8111988in"
+   viewBox="0 0 172.35902 46.004451"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
@@ -24,21 +24,21 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.0230033"
-     inkscape:cx="204.78916"
-     inkscape:cy="50.341966"
+     inkscape:zoom="1"
+     inkscape:cx="276.5"
+     inkscape:cy="98.5"
      inkscape:window-width="1920"
      inkscape:window-height="1001"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g21557"
+     inkscape:current-layer="g22696"
      inkscape:snap-smooth-nodes="true"
      units="in"
-     fit-margin-top="0.05"
-     fit-margin-left="0.05"
-     fit-margin-right="0.05"
-     fit-margin-bottom="0.05"
+     fit-margin-top="0.06"
+     fit-margin-left="0.06"
+     fit-margin-right="0.06"
+     fit-margin-bottom="0.06"
      lock-margins="true" />
   <defs
      id="defs2">
@@ -186,7 +186,7 @@
        xlink:href="#linearGradient61572"
        id="linearGradient3403"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.4887487,0,0,1.2268085,-174.78362,43.07436)"
+       gradientTransform="matrix(1.3551951,0,0,1.1167532,-154.12628,61.772983)"
        x1="169.43997"
        y1="190.01416"
        x2="144.38516"
@@ -196,7 +196,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0.09802349,0.30632063)">
+     transform="translate(0.35202298,0.56036937)">
     <g
        aria-label="4"
        transform="translate(15.259399,64.658471)"
@@ -254,7 +254,7 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1984);fill:#000000;fill-opacity:1;stroke:none"><tspan
            x="220.91797"
            y="524.27251"
-           id="tspan22858">4</tspan></text>
+           id="tspan23662">4</tspan></text>
       <text
          xml:space="preserve"
          style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0700042"
@@ -298,7 +298,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Layer 2"
-     transform="translate(0.09802349,0.30632063)">
+     transform="translate(0.35202298,0.56036937)">
     <path
        style="fill:#008000;stroke:#000000;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        d="m 317.02021,236.02172 c 9.59514,0 9.63188,-1.43985 9.63188,-1.43985 l -4.07247,-3.55514 c 1.23414,0.13174 2.80594,-0.13974 3.2763,-0.69082 l -4.27248,-3.6478 c 1.05993,0.0648 1.74463,-0.42827 2.66019,-0.99949 l -7.24024,-6.5091 z"
@@ -322,7 +322,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Layer 3"
-     transform="translate(0.09802349,0.30632063)">
+     transform="translate(0.35202298,0.56036937)">
     <g
        id="g21613"
        transform="translate(194.95197,-33.650247)">
@@ -461,27 +461,30 @@
       <g
          id="g22696"
          transform="matrix(1.7322657,0,0,1.7322657,-40.631863,-184.17342)">
-        <text
-           xml:space="preserve"
-           style="font-style:normal;font-weight:normal;font-size:35.3422px;line-height:1.25;font-family:sans-serif;fill:#008300;fill-opacity:0.803922;stroke:none;stroke-width:0.12267;stroke-miterlimit:4;stroke-dasharray:none"
-           x="82.526939"
-           y="278.25854"
-           id="text12805"><tspan
-             sodipodi:role="line"
-             id="tspan12803"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:35.3422px;font-family:Dubai;-inkscape-font-specification:'Dubai, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#008300;fill-opacity:0.803922;stroke:#000000;stroke-width:0.12267;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-             x="82.526939"
-             y="278.25854">REST</tspan></text>
-        <path
-           style="fill:#bcddb0;fill-opacity:0.765714;stroke:#000000;stroke-width:0.12267;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           d="m 68.365676,270.40943 -0.07544,7.84451 -3.234963,3e-5 -0.01852,-7.79173 -9.487554,0.0444 4.805873,-15.06615 3.346911,0.0329 -3.779801,11.80114 8.417897,-0.0296 z"
-           id="path3399"
-           sodipodi:nodetypes="cccccccccc" />
-        <path
-           style="fill:url(#linearGradient3403);fill-opacity:1;stroke:#000000;stroke-width:0.12267;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
-           d="m 68.365676,270.40943 -0.09139,7.84522 3.358025,-0.0425 0.07556,-7.88596 9.495036,0.0155 -5.291816,-5.51858 4.249074,0.0126 -5.264179,-4.86499 3.38749,0.0292 -9.940463,-8.42687 z"
-           id="path3401"
-           sodipodi:nodetypes="ccccccccccc" />
+        <g
+           id="g23580">
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-weight:normal;font-size:32.1717px;line-height:1.25;font-family:sans-serif;fill:#008300;fill-opacity:0.803922;stroke:none;stroke-width:0.111665;stroke-miterlimit:4;stroke-dasharray:none"
+             x="80.101303"
+             y="275.85913"
+             id="text12805"><tspan
+               sodipodi:role="line"
+               id="tspan12803"
+               style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:32.1717px;font-family:Dubai;-inkscape-font-specification:'Dubai, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#008300;fill-opacity:0.803922;stroke:#000000;stroke-width:0.111665;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               x="80.101303"
+               y="275.85913">REST</tspan></text>
+          <path
+             style="fill:#bcddb0;fill-opacity:0.765714;stroke:#000000;stroke-width:0.111665;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+             d="m 67.210425,268.71414 -0.06867,7.14079 -2.944759,2e-5 -0.01686,-7.09274 -8.636439,0.0404 4.374745,-13.71459 3.046664,0.0299 -3.44072,10.74247 7.662739,-0.0269 z"
+             id="path3399"
+             sodipodi:nodetypes="cccccccccc" />
+          <path
+             style="fill:url(#linearGradient3403);fill-opacity:1;stroke:#000000;stroke-width:0.111665;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+             d="m 67.210425,268.71414 -0.0859,7.14089 3.063842,9.1e-4 0.06444,-7.21763 8.64325,0.0141 -4.817095,-5.02352 3.867896,0.0115 -4.791937,-4.42856 3.083603,0.0266 -9.048718,-7.67091 z"
+             id="path3401"
+             sodipodi:nodetypes="ccccccccccc" />
+        </g>
       </g>
     </g>
   </g>
