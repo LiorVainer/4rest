@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="3.8450413in"
+   height="1.2733982in"
+   viewBox="0 0 97.664043 32.344313"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
@@ -24,16 +24,21 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="2.8934904"
-     inkscape:cx="196.99391"
-     inkscape:cy="99.360966"
+     inkscape:zoom="1.4467452"
+     inkscape:cx="-5.8752571"
+     inkscape:cy="177.98573"
      inkscape:window-width="1920"
      inkscape:window-height="1001"
-     inkscape:window-x="1911"
-     inkscape:window-y="-7"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer3"
-     inkscape:snap-smooth-nodes="true" />
+     inkscape:snap-smooth-nodes="true"
+     units="in"
+     fit-margin-top="0.2"
+     fit-margin-left="0.2"
+     fit-margin-right="0.2"
+     fit-margin-bottom="0.2" />
   <defs
      id="defs2">
     <linearGradient
@@ -74,15 +79,15 @@
     </linearGradient>
     <rect
        x="220.91814"
-       y="487.77944"
-       width="49.853209"
-       height="46.920667"
+       y="487.77945"
+       width="49.85321"
+       height="46.920666"
        id="rect1984" />
     <rect
        x="172.04245"
        y="427.17358"
        width="43.010612"
-       height="65.493432"
+       height="65.493431"
        id="rect1516" />
     <inkscape:path-effect
        effect="spiro"
@@ -131,9 +136,9 @@
        xlink:href="#linearGradient37822"
        id="linearGradient37824"
        x1="128.1109"
-       y1="176.51925"
-       x2="138.4596"
-       y2="176.51925"
+       y1="176.51926"
+       x2="138.45959"
+       y2="176.51926"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(0.91164021,0,0,0.91164021,11.319852,16.409694)" />
     <linearGradient
@@ -143,9 +148,9 @@
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(0.91164021,0,0,0.91164021,46.747832,43.224911)"
        x1="128.1109"
-       y1="176.51925"
-       x2="138.4596"
-       y2="176.51925" />
+       y1="176.51926"
+       x2="138.45959"
+       y2="176.51926" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient54869"
@@ -189,7 +194,8 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(3.8830261,4.0933474)">
     <g
        aria-label="4"
        transform="translate(15.259399,64.658471)"
@@ -197,11 +203,11 @@
        clip-path="url(#clipPath18704)"
        style="font-size:105.833px;line-height:1.25;stroke-width:0.264583">
       <path
-         style="fill:none;stroke:#002300;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+         style="fill:none;stroke:#002300;stroke-width:0.765;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          d="m 100.47926,118.45432 c -36.596692,6.20721 26.38066,-11.89716 26.38066,-11.89716"
          id="path20688" />
       <path
-         style="fill:#000f74;stroke:#003c00;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:0.68285716"
+         style="fill:#000f74;fill-opacity:0.682857;stroke:#003c00;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          d="m 121.68724,75.779725 c 3.20374,1.42388 5.8486,4.064807 7.27724,7.266429 1.42864,3.201622 1.62767,6.933931 0.54764,10.269335 -1.08004,3.335403 -3.42902,6.24264 -6.46316,7.999171 -3.03414,1.75653 -6.72499,2.3459 -10.15527,1.62162 -3.2612,-0.68858 -6.26076,-2.55438 -8.32002,-5.175256 -2.05926,-2.620877 -3.16242,-5.976714 -3.05987,-9.308236 0.14411,-4.681762 2.74417,-9.219356 6.71045,-11.710996 3.96628,-2.491639 9.18271,-2.864406 13.46299,-0.962067 z"
          id="path21360"
          inkscape:path-effect="#path-effect21362"
@@ -239,7 +245,7 @@
          xml:space="preserve"
          transform="matrix(0.26458333,0,0,0.26458333,-15.259399,-64.658471)"
          id="text1514"
-         style="fill:black;fill-opacity:1;line-height:1.25;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;white-space:pre;shape-inside:url(#rect1516)" />
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1516);fill:#000000;fill-opacity:1;stroke:none" />
       <text
          xml:space="preserve"
          transform="matrix(0.26458333,0,0,0.26458333,-15.259399,-64.658471)"
@@ -247,7 +253,7 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1984);fill:#000000;fill-opacity:1;stroke:none"><tspan
            x="220.91797"
            y="524.27251"
-           id="tspan22093">4</tspan></text>
+           id="tspan22173">4</tspan></text>
       <text
          xml:space="preserve"
          style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0700042"
@@ -256,7 +262,9 @@
          id="text5096"><tspan
            sodipodi:role="line"
            id="tspan5094"
-           style="stroke-width:0.0700042" /></text>
+           style="stroke-width:0.0700042"
+           x="39.312351"
+           y="60.520329" /></text>
     </g>
     <text
        xml:space="preserve"
@@ -288,7 +296,8 @@
   <g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="Layer 2">
+     inkscape:label="Layer 2"
+     transform="translate(3.8830261,4.0933474)">
     <path
        style="fill:#008000;stroke:#000000;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        d="m 317.02021,236.02172 c 9.59514,0 9.63188,-1.43985 9.63188,-1.43985 l -4.07247,-3.55514 c 1.23414,0.13174 2.80594,-0.13974 3.2763,-0.69082 l -4.27248,-3.6478 c 1.05993,0.0648 1.74463,-0.42827 2.66019,-0.99949 l -7.24024,-6.5091 z"
@@ -311,7 +320,8 @@
   <g
      inkscape:groupmode="layer"
      id="layer3"
-     inkscape:label="Layer 3">
+     inkscape:label="Layer 3"
+     transform="translate(3.8830261,4.0933474)">
     <g
        id="g21613"
        transform="translate(194.95197,-33.650247)">
