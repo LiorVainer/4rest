@@ -1,4 +1,4 @@
-import axiosLib, { Axios, AxiosInstance, AxiosRequestConfig } from "axios";
+import axiosLib, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 import { ForestInstance } from "./instance";
 

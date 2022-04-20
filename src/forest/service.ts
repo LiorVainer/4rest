@@ -23,7 +23,7 @@ export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResp
       prefix,
       this.instance,
       this.config.responseHandleFunction,
-      this.config.catchFunction
+      this.config.errorHandleFunction
     );
   }
 

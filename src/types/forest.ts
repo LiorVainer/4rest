@@ -1,4 +1,4 @@
-import { CatchFunction } from "types/catchFunction";
+import { ErrorHandleFunction } from "types/errorHandleFunction";
 import { ResponseHandleFunction } from "./responseHandleFunction";
 import { createRequestMethods } from "../RequestFactory";
 import { Key } from "./payload";
@@ -33,5 +33,5 @@ export interface ServiceConfig {
     put?: Key;
   };
   responseHandleFunction?: ResponseHandleFunction;
-  catchFunction?: CatchFunction;
+  errorHandleFunction?: ErrorHandleFunction;
 }

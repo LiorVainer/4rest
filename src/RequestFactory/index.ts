@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 import { ResponseHandleFunction } from "./../types/responseHandleFunction";
 import { ForestInstance } from "index";
 
-import { CatchFunction } from "../types/catchFunction";
+import { ErrorHandleFunction } from "../types/errorHandleFunction";
 
 import { Prefix } from "../types/route";
 
@@ -14,24 +14,24 @@ import {
   noPayloadRequestMethods,
   WithPayloadHTTPMethods,
   withPayloadRequestMethods,
-} from "constants/methods.const";
+} from "../constants/methods.const";
 
 export class RequestFactory {
   private axios: AxiosInstance;
   private prefix: Prefix;
-  private catchFunction: CatchFunction | undefined;
+  private errorHandleFunction: ErrorHandleFunction | undefined;
   private responseHandleFunction: ResponseHandleFunction | undefined;
 
   constructor(
     axios: AxiosInstance,
     prefix: Prefix,
     responseHandleFunction?: ResponseHandleFunction,
-    catchFunction?: CatchFunction
+    errorHandleFunction?: ErrorHandleFunction
   ) {
     this.axios = axios;
     this.prefix = prefix;
     this.responseHandleFunction = responseHandleFunction;
-    this.catchFunction = catchFunction;
+    this.errorHandleFunction = errorHandleFunction;
   }
 
   public noPayloadRequest = (method: NoPayloadHTTPMethods) =>
@@ -40,7 +40,7 @@ export class RequestFactory {
       prefix: this.prefix,
       method,
       responseHandleFunction: this.responseHandleFunction,
-      catchFunction: this.catchFunction,
+      errorHandleFunction: this.errorHandleFunction,
     });
 
   public noPayloadRequestByParam = (method: NoPayloadHTTPMethods) =>
@@ -49,7 +49,7 @@ export class RequestFactory {
       prefix: this.prefix,
       method,
       responseHandleFunction: this.responseHandleFunction,
-      catchFunction: this.catchFunction,
+      errorHandleFunction: this.errorHandleFunction,
     });
 
   public withPayloadRequest = (method: WithPayloadHTTPMethods) =>
@@ -58,7 +58,7 @@ export class RequestFactory {
       prefix: this.prefix,
       method,
       responseHandleFunction: this.responseHandleFunction,
-      catchFunction: this.catchFunction,
+      errorHandleFunction: this.errorHandleFunction,
     });
 
   public withPayloadRequestByParam = (method: WithPayloadHTTPMethods) =>
@@ -67,7 +67,7 @@ export class RequestFactory {
       prefix: this.prefix,
       method,
       responseHandleFunction: this.responseHandleFunction,
-      catchFunction: this.catchFunction,
+      errorHandleFunction: this.errorHandleFunction,
     });
 }
 
@@ -75,13 +75,13 @@ export const createRequestMethods = (
   prefix: string,
   forestInstance: ForestInstance,
   responseHandleFunction?: ResponseHandleFunction,
-  catchFunction?: CatchFunction
+  errorHandleFunction?: ErrorHandleFunction
 ) => {
   const requestFactory = new RequestFactory(
     forestInstance.axiosInstance,
     prefix,
     responseHandleFunction,
-    catchFunction
+    errorHandleFunction
   );
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),

@@ -1,18 +1,13 @@
-import {
-  defaultResponseHandleFunction,
-  ResponseHandleFunction,
-} from "./../types/responseHandleFunction";
-import { defaultCatchFunction } from "./../types/catchFunction";
+import { defaultResponseHandleFunction, ResponseHandleFunction } from "./../types/responseHandleFunction";
+import { defaultErrorHandleFunction, ErrorHandleFunction } from "../types/errorHandleFunction";
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { BaseParamType, Route } from "../types/route";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
-import { CatchFunction } from "types/catchFunction";
 import { NoPayloadHTTPMethods } from "constants/methods.const";
 
-
 export interface NoPayloadRequestFactoryProps {
-  catchFunction?: CatchFunction;
+  errorHandleFunction?: ErrorHandleFunction;
   responseHandleFunction?: ResponseHandleFunction;
   axios: AxiosInstance;
   prefix: string;
@@ -31,14 +26,14 @@ export const noPayloadRequest =
     axios,
     prefix,
     method,
-    catchFunction = defaultCatchFunction,
+    errorHandleFunction = defaultErrorHandleFunction,
     responseHandleFunction = defaultResponseHandleFunction,
   }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any>(route?: Route, config?: AxiosRequestConfig) => {
     return async () =>
       axios[method]<ResponseDataType>(routeBuilder(prefix, route), config)
         .then(responseHandleFunction)
-        .catch(catchFunction);
+        .catch(errorHandleFunction);
   };
 
 /**
@@ -52,7 +47,7 @@ export const noPayloadRequestByParam =
     axios,
     prefix,
     method,
-    catchFunction = defaultCatchFunction,
+    errorHandleFunction = defaultErrorHandleFunction,
     responseHandleFunction = defaultResponseHandleFunction,
   }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any, ParamType extends BaseParamType = string>(
@@ -60,10 +55,7 @@ export const noPayloadRequestByParam =
     config?: AxiosRequestConfig
   ): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType) =>
-      axios[method]<ResponseDataType>(
-        routeBuilderWithParam(prefix, param, route),
-        config
-      )
+      axios[method]<ResponseDataType>(routeBuilderWithParam(prefix, param, route), config)
         .then(responseHandleFunction)
-        .catch(catchFunction);
+        .catch(errorHandleFunction);
   };
