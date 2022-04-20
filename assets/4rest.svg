@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="4.3272367in"
-   height="1.1725044in"
-   viewBox="0 0 109.9118 29.781612"
+   width="7.4226975in"
+   height="1.9578627in"
+   viewBox="0 0 188.53651 49.729713"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
@@ -26,7 +26,7 @@
      showgrid="false"
      inkscape:zoom="1.0230033"
      inkscape:cx="204.78916"
-     inkscape:cy="-106.06026"
+     inkscape:cy="50.341966"
      inkscape:window-width="1920"
      inkscape:window-height="1001"
      inkscape:window-x="-9"
@@ -196,7 +196,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0.09802173,0.30630788)">
+     transform="translate(0.09802349,0.30632063)">
     <g
        aria-label="4"
        transform="translate(15.259399,64.658471)"
@@ -254,7 +254,7 @@
          style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1984);fill:#000000;fill-opacity:1;stroke:none"><tspan
            x="220.91797"
            y="524.27251"
-           id="tspan22777">4</tspan></text>
+           id="tspan22858">4</tspan></text>
       <text
          xml:space="preserve"
          style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0700042"
@@ -298,7 +298,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Layer 2"
-     transform="translate(0.09802173,0.30630788)">
+     transform="translate(0.09802349,0.30632063)">
     <path
        style="fill:#008000;stroke:#000000;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        d="m 317.02021,236.02172 c 9.59514,0 9.63188,-1.43985 9.63188,-1.43985 l -4.07247,-3.55514 c 1.23414,0.13174 2.80594,-0.13974 3.2763,-0.69082 l -4.27248,-3.6478 c 1.05993,0.0648 1.74463,-0.42827 2.66019,-0.99949 l -7.24024,-6.5091 z"
@@ -322,7 +322,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Layer 3"
-     transform="translate(0.09802173,0.30630788)">
+     transform="translate(0.09802349,0.30632063)">
     <g
        id="g21613"
        transform="translate(194.95197,-33.650247)">
@@ -459,7 +459,8 @@
        id="g21557"
        transform="translate(-54.315888,-250.54803)">
       <g
-         id="g22696">
+         id="g22696"
+         transform="matrix(1.7322657,0,0,1.7322657,-40.631863,-184.17342)">
         <text
            xml:space="preserve"
            style="font-style:normal;font-weight:normal;font-size:35.3422px;line-height:1.25;font-family:sans-serif;fill:#008300;fill-opacity:0.803922;stroke:none;stroke-width:0.12267;stroke-miterlimit:4;stroke-dasharray:none"
