@@ -19,7 +19,6 @@
   "author": "Lior Vainer",
   "license": "MIT",
   "files": [
-    "node_modules",
     "dist"
   ],
   "devDependencies": {
