@@ -3,6 +3,8 @@ import { AxiosSettings } from "../types/axios";
 
 import { ServiceConfig } from "../types/forest";
 import { createAxiosInstance } from "../utils/axios";
+import { mergeConfigs } from "../utils/config";
+
 
 import { ForestService } from "./service";
 
@@ -24,7 +26,7 @@ export class ForestInstance {
     new ForestService<Response, Payload, IdType>(
       prefix,
       this,
-      config ? { ...this.globalServiceConfig, ...config } : this.globalServiceConfig
+      mergeConfigs(config, this.globalServiceConfig)
     );
 }
 
