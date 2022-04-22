@@ -21,7 +21,11 @@ export class ForestInstance {
   }
 
   public createService = <Response, Payload = Response, IdType = string>(prefix: string, config?: ServiceConfig) =>
-    new ForestService<Response, Payload, IdType>(prefix, this, config);
+    new ForestService<Response, Payload, IdType>(
+      prefix,
+      this,
+      config ? { ...this.globalServiceConfig, ...config } : this.globalServiceConfig
+    );
 }
 
 export default ForestInstance;
