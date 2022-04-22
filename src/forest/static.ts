@@ -2,13 +2,15 @@ import axiosLib, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 import { ForestInstance } from "./instance";
 
-export type InstanceConfig = AxiosInstance | AxiosRequestConfig;
+export type ForestInstanceConfig = AxiosInstance | AxiosRequestConfig;
 
 export class ForestStatic {
-  create(config: InstanceConfig): ForestInstance {
+  create(config?: ForestInstanceConfig): ForestInstance {
     let axiosInstance: AxiosInstance;
 
-    if ("request" in config) {
+    if (config === undefined) {
+      axiosInstance = axiosLib.create();
+    } else if ("request" in config) {
       axiosInstance = config;
     } else {
       axiosInstance = axiosLib.create(config);
