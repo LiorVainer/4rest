@@ -1,5 +1,3 @@
-import merge from "deepmerge";
-
 import { ServiceConfig } from "../types/forest";
 
 export const mergeConfigs = (
@@ -11,8 +9,13 @@ export const mergeConfigs = (
   } else if (!serviceConfig && globalServiceConfig) {
     return globalServiceConfig;
   } else if (serviceConfig && globalServiceConfig) {
-    const mergedConfig = merge(globalServiceConfig, serviceConfig);
-    return { ...mergedConfig, routes: { ...globalServiceConfig.routes, ...serviceConfig.routes } };
+    const mergedConfig = {
+      ...globalServiceConfig,
+      ...serviceConfig,
+      routes: { ...globalServiceConfig.routes, ...serviceConfig.routes },
+    };
+
+    return mergedConfig;
   }
 
   return undefined;
