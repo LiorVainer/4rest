@@ -14,7 +14,9 @@ export interface ServiceConfig {
     deleteById?: Route;
     post?: Route;
     patch?: Route;
+    patchById?: Route;
     put?: Route;
+    putById?: Route;
   };
   requestConfig?: AxiosRequestConfig;
   requestConfigByMethod?: {
