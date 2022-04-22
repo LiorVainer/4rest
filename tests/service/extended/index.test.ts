@@ -1,13 +1,13 @@
 import axios from "axios";
 
 import { User, UserWithId } from "../../types/user";
-import forest, { ForestInstance, ForestService, ServiceConfig } from "../../../src";
+import forest, { ForestInstance, ForestService, ForestServiceConfig } from "../../../src";
 
-export const forestInstance: ForestInstance = forest.create(axios);
+export const forestInstance: ForestInstance = forest.create();
 export let userService: UserService;
 
 export class UserService extends ForestService<UserWithId, User> {
-  constructor(config?: ServiceConfig) {
+  constructor(config?: ForestServiceConfig) {
     super("user", forestInstance, config);
   }
 

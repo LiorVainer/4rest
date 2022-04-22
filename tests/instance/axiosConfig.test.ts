@@ -1,8 +1,10 @@
 import forest, { ForestInstance } from "../../src";
 
 export const forestInstance: ForestInstance = forest.create({
-  headers: { "X-Custom-Header": "Custom Value" },
-  baseURL: "http://localhost:5000",
+  axiosSettings: {
+    headers: { "X-Custom-Header": "Custom Value" },
+    baseURL: "http://localhost:5000",
+  },
 });
 
 test("Forest Instance Defined", () => {

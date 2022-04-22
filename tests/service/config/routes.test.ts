@@ -8,7 +8,7 @@ export let forestInstance: ForestInstance;
 export let userService: ForestService<UserWithId, User, number>;
 
 beforeAll(() => {
-  forestInstance = forest.create(axios);
+  forestInstance = forest.create();
   userService = forestInstance.createService<UserWithId, User, number>("user", {
     routes: { getAll: ["get", "all"], post: "create", deleteAll: "reset" },
   });

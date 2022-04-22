@@ -2,7 +2,7 @@ import axios from "axios";
 
 import forest, { ForestInstance } from "../../src";
 
-const forestInstance: ForestInstance = forest.create(axios);
+const forestInstance: ForestInstance = forest.create();
 
 test("Forest Instance Defined", () => {
   expect(forestInstance).toBeDefined();

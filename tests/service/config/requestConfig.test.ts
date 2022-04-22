@@ -9,7 +9,7 @@ export let forestInstance: ForestInstance;
 export let userService: ForestService<UserWithId, User, number>;
 
 beforeAll(() => {
-  forestInstance = forest.create(axios);
+  forestInstance = forest.create();
   userService = forestInstance.createService<UserWithId, User, number>("user", {
     requestConfigByMethod: {
       getAll: { params: { page: 1, size: 10 } },
@@ -124,7 +124,12 @@ describe("Custom Requests Config ", () => {
     methodsPromises.push(await userService.putById(id, {} as User));
     methodsPromises.push(await userService.patchById(id, {} as User));
 
-    const res = await Promise.all(methodsPromises);
+    let res;
+    try {
+      res = await Promise.all(methodsPromises);
+    } catch (e) {
+      console.log(e);
+    }
 
     expect(res.map((res) => res.status)).toEqual([200, 200, 200, 200, 200, 200, 200]);
   });
