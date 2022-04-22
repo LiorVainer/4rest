@@ -11,7 +11,9 @@ export let userService: ForestService<UserWithId, User, number>;
 beforeAll(() => {
   forestInstance = forest.create();
   userService = forestInstance.createService<UserWithId, User, number>("user", {
-    onError: (error) => error,
+    onError: (error) => {
+      return { error, msg: "error" };
+    },
     onSuccess: (response) => response.data,
   });
 });
@@ -37,11 +39,19 @@ describe("Custom Response and Error Handling", () => {
     mock.reset();
   });
 
-  test("Response Handle", async () => {
+  test("onSuccess Handle", async () => {
     const usersData = [{ id: 1, name: "John Smith" }];
     mock.onGet("user").reply(200, usersData);
     const response = await userService.getAll();
 
     expect(response).toEqual(usersData);
+  });
+
+  test("onError Handle", async () => {
+    mock.onGet("user").reply(500);
+    const response: any = await userService.getAll();
+
+    expect(response.error instanceof Error).toEqual(true);
+    expect(response.msg).toEqual("error");
   });
 });
