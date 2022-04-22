@@ -1,12 +1,12 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { Axios, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 import { payloadBuilder } from "../utils/payload";
 import { BaseParamType, Route } from "../types/route";
-import { Key } from "types/payload";
 import { OnErrorFunction, defaultOnErrorFunction } from "../types/onError";
 import { defaultOnSuccessFunction, OnSuccessFunction } from "../types/onSuccess";
-import { WithPayloadHTTPMethods } from "constants/methods.const";
+import { Key } from "../types/payload";
+import { WithPayloadHTTPMethods } from "../constants/methods.const";
 
 export interface WithPayloadRequestFactoryProps {
   onError?: OnErrorFunction;

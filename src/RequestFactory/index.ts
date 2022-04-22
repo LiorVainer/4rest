@@ -1,6 +1,5 @@
 import { AxiosInstance } from "axios";
 import { OnSuccessFunction } from "./../types/onSuccess";
-import { ForestInstance } from "index";
 
 import { OnErrorFunction } from "../types/onError";
 
@@ -15,6 +14,7 @@ import {
   WithPayloadHTTPMethods,
   withPayloadRequestMethods,
 } from "../constants/methods.const";
+import ForestInstance from "../forest/instance";
 
 export class RequestFactory {
   private axios: AxiosInstance;

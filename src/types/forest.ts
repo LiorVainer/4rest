@@ -1,9 +1,9 @@
-import { OnErrorFunction } from "types/onError";
 import { OnSuccessFunction } from "./onSuccess";
 import { createRequestMethods } from "../RequestFactory";
 import { Key } from "./payload";
 import { Route } from "./route";
 import { AxiosRequestConfig } from "axios";
+import { OnErrorFunction } from "./onError";
 
 export type ServiceMethods = ReturnType<typeof createRequestMethods>;
 export interface ServiceConfig {

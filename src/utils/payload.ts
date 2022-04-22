@@ -1,4 +1,4 @@
-import { Key } from "types/payload";
+import { Key } from "../types/payload";
 
 export const payloadBuilder = <T = any>(data: T, key?: Key) =>
   key

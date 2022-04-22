@@ -4,7 +4,7 @@ import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { BaseParamType, Route } from "../types/route";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
-import { NoPayloadHTTPMethods } from "constants/methods.const";
+import { NoPayloadHTTPMethods } from "../constants/methods.const";
 
 export interface NoPayloadRequestFactoryProps {
   onError?: OnErrorFunction;
