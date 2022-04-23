@@ -1,9 +1,9 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import { UserWithId } from "../../types/user";
+import { UserWithId } from "../../../types/user";
 
-import { userService } from "./index.test";
+import { Authorization, userService } from "./index.test";
 
 describe("Custom Service Method ", () => {
   let mock: MockAdapter;
@@ -18,11 +18,15 @@ describe("Custom Service Method ", () => {
 
   test("getAll", async () => {
     const responseDataUsersData: string[] = ["John Smith", "Jane Doe"];
-    mock.onGet("user").reply(200, responseDataUsersData);
+    mock.onGet("user").reply((config) => {
+      expect(config.headers?.Authorization).toEqual(Authorization);
+
+      return [200, responseDataUsersData];
+    });
 
     const response = await userService.getAll();
-    expect("id" in response.data).toBeFalsy();
-    expect("length" in response.data).toBeTruthy();
+    expect("id" in response).toBeFalsy();
+    expect("length" in response).toBeTruthy();
   });
 
   test("getByName", async () => {
@@ -33,14 +37,14 @@ describe("Custom Service Method ", () => {
 
     const name = "John Smith";
     const matchUser = { _id: 1, name: "John Smith", email: "john.smith@gmail.com" };
-    mock.onGet(`user/name/${name}`).reply(
-      200,
-      usersData.find((user) => user.name === name)
-    );
+    mock.onGet(`user/name/${name}`).reply((config) => {
+      expect(config.headers?.Authorization).toEqual(Authorization);
+      return [200, usersData.find((user) => user.name === name)];
+    });
 
     const response = await userService.getByName("John Smith");
 
-    expect(response.data).toEqual(matchUser);
+    expect(response).toEqual(matchUser);
   });
 
   test("isEmailTaken", async () => {
@@ -52,17 +56,20 @@ describe("Custom Service Method ", () => {
     const trueEmail = "john.smith@gmail.com";
     const falseEmail = "liorvainer@gmail.com";
 
-    mock
-      .onGet(`user/email/taken/${trueEmail}`)
-      .reply(200, usersData.find((user) => user.email === trueEmail) ? true : false);
-    mock
-      .onGet(`user/email/taken/${falseEmail}`)
-      .reply(200, usersData.find((user) => user.email === falseEmail) ? true : false);
+    mock.onGet(`user/email/taken/${trueEmail}`).reply((config) => {
+      expect(config.headers?.Authorization).toEqual(Authorization);
+      return [200, usersData.find((user) => user.email === trueEmail) ? true : false];
+    });
+
+    mock.onGet(`user/email/taken/${falseEmail}`).reply((config) => {
+      expect(config.headers?.Authorization).toEqual(Authorization);
+      return [200, usersData.find((user) => user.email === falseEmail) ? true : false];
+    });
 
     const isEmailTakenTrue = await userService.isEmailTaken(trueEmail);
     const isEmailTakenFalse = await userService.isEmailTaken(falseEmail);
 
-    expect(isEmailTakenTrue.data).toBeTruthy();
-    expect(isEmailTakenFalse.data).toBeFalsy();
+    expect(isEmailTakenTrue).toBeTruthy();
+    expect(isEmailTakenFalse).toBeFalsy();
   });
 });
