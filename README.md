@@ -15,8 +15,6 @@
 
 <br />
 
-<br />
-
 ## Installation
 
 Using npm
@@ -33,7 +31,25 @@ Using yarn
 
 <br />
 
-## Features
+<h2>Table of contents</h2>
+
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#usage">Usage / Examples</a>
+<ul><li><a href="#usage/basic">Basic Service</a></li></ul>
+<ul><li><a href="#usage/custom">Custom Service</a></li></ul>
+<li><a href="#types">Service Types</a></li>
+<li><a href="#config">Configuration</a>
+<ul><li><a href="#config/instance">Instance</a><ul><li><a href="#config/instance/axios-instance-access">Instance Creation</a></li><li><a href="#config/instance/axios-instance-access">Axios Instance Access</a></li></ul></li></ul>
+<ul><li><a href="#config/service">Service</a></li><ul><li><a href="#config/service/routes">Methods Routes</a></li></ul>
+<ul><li><a href="#config/service/request-config">Request Config</a></li>
+<li><a href="#config/service/payload-key">Payload Data Key</a></li></ul></ul>
+
+</ul>
+
+<br />
+
+<a id="features"> <h2>Features</h2></a>
 
 💎 <strong> Service with built in CRUD Methods: </strong>
 
@@ -61,9 +77,9 @@ Using yarn
 
 <br />
 
-## Usage / Examples
+<a id="usage"> <h2>Usage / Examples</h2></a>
 
-### 🧱 <u>_Basic_</u>
+<a id="usage/basic"> <h3>🧱<u>_Basic_</u></h3></a>
 
 #### 1) Create Instance
 
@@ -149,7 +165,7 @@ async function updateUserById(id: ObjectId, partialUser: Partial<User>) {
 }
 ```
 
-### 🎨 <u>_Custom_</u>
+<a id="usage/custom"> <h3>🎨 <u>_Custom_</u></h3></a>
 
 #### 1) Create Custom Service
 
@@ -169,6 +185,8 @@ export class UserService extends ForestService<UserWithId, User> {
 }
 ```
 
+_<strong>Note:</strong> you must include constructor in the structure that is shown above in your custom service in order for it to work properly_
+
 #### 2) Use Custom Service
 
 ```typescript
@@ -185,7 +203,7 @@ async function isEmailTaken(email: string) {
 
 <br>
 
-## Types
+<a id="types"> <h2>Types</h2></a>
 
 <strong>Service</strong> has _generic types_ to control the following types of the service methods
 
@@ -277,10 +295,11 @@ const data: boolean = await(await userService.post<boolean>(/* newUserData */)).
 
 <br>
 
-## Configuration
+<a id="config"> <h2>Configuration</h2></a>
 
-### 📀 <strong>Forest Instance</strong>
+<a id="config/instance"> <h3>📀 <strong>Forest Instance</strong></h3></a>
 
+<a id="config/instance/instance-creation"><h4><strong><u>Instance Creation</u></strong></h4></a>
 <strong>Create Forest Instance based</strong> `axios` Instance with `forest.create()` Function
 
 ```typescript
@@ -289,21 +308,36 @@ import forest from "4rest";
 /* Customised Forest Instance can be based on
    AxiosInstance, AxiosRequestConfig */
 
-const forestInstance = forest.create(/* Here goes instance or config*/);
+const forestInstance = forest.create({
+    axiosSettings: /* Here goes instance or config*/,
+    globalServiceConfig: /* Here goes service configuration that will be applied by default to
+                            all created service from these ForestInstance*/
+  });
 ```
+
+_<strong>Note:</strong> if a created service will have a config of it's own, it's config properties will be overriding the global service config properties, which means the more specific property is the one that will be in use eventually_
+
+<br/>
 
 <strong>Options to configure</strong> `forest.create()`
 
 ```typescript
-type InstanceConfig = AxiosInstance | AxiosRequestConfig;
+export interface InstanceConfig {
+  axiosSettings?: AxiosSettings;
+  globalServiceConfig?: ServiceConfig;
+}
 ```
 
+_<strong>Note:</strong> Configuration is completly optional, and if `axiosSettings` are empty the forest instance will be based on the base `AxiosInstance`_
+
 </br>
 
-<strong>Access to the totally regular `AxiosInstance` that the `ForestInstance` is based contains all of [`axios`](https://www.npmjs.com/package/axios) methods on it:</strong>
+<a id="config/instance/axios-instance-access"><h4><strong><u>Axios Instance Access</u></strong></h4></a>
+
+<strong>you can access the totally regular `AxiosInstance` that the `ForestInstance` is based on which contains all of [`axios`](https://www.npmjs.com/package/axios) methods on it:</strong>
 </br>
 </br>
-you can access it using the `axiosInstance` property on created `ForestInstance`
+access it using the `axiosInstance` property on created `ForestInstance`
 
 ```typescript
 import { forestInstance } from "./instance";
@@ -313,11 +347,11 @@ const response = forestInstance.axiosInstance.get("localhost:5000/users" /* Here
 
 </br>
 
-### 📀 <strong>Forest Service</strong>
+<a id="config/service"> <h3>📀 <strong>Forest Service</strong></h3></a>
 
 #### <u>Configure Service with `createService()` Method:</u>
 
-#### 1) Methods REST Routes
+<a id="config/service/routes"> <h4>1) Methods REST Routes</h4></a>
 
 You may want to change few of the built in service method _route_ to extend the _prefix_ based on the API you are working with.
 
@@ -339,12 +373,12 @@ const userService = instance.createService<User>("user", {
     ...,
     post: "create",         // POST http://localhost:5000/user/create
     patch: "update"         // PATCH http://localhost:5000/user/update
-    patchById: "update"         // PATCH http://localhost:5000/user/update/:id
+    patchById: "update"     // PATCH http://localhost:5000/user/update/:id
   }
 });
 ```
 
-#### 2) Request Config
+<a id="config/service/request-config"> <h4>2) Request Config</h4></a>
 
 You can set a `requestConfig` of type `AxiosRequestConfig` for attaching metadata to a request (like headers, params, etc.)
 
@@ -359,18 +393,20 @@ import { instance } from "./forestInstance";
 
 const userService = instance.createService<UserWithId, User, number>("user", {
   requestConfigByMethod: {
-    /* Request Config Per Method */ getAll: { params: { page: 1, size: 10 } },
+    /* Request Config Per Method */
+    getAll: { params: { page: 1, size: 10 } },
     getById: { maxRedirects: 3 },
   },
   requestConfig: {
-    /* Request Config For All Methods */ headers: {
+    /* Request Config For All Methods */
+    headers: {
       Authentication: "Bearer Header",
     },
   },
 });
 ```
 
-#### 3) Payload Data Key
+<a id="config/service/payload-key"> <h4>3) Payload Data Key</h4></a>
 
 For HTTP methods with payload (Post, Patch, Put) you can set a `payloadKey` for setting the payload data on the key you want inside the body of the request
 
@@ -390,7 +426,7 @@ request: {
 }
 ```
 
-`payloadKey` can be set for each HTTP payload method seperatly or make one general config for all methods
+`payloadKey` can be set for each HTTP payload method seperatly or set one general config for all methods
 
 _<strong>Note:</strong> if a method has its own specific `payloadKey`, it will be used over the general one_
 
