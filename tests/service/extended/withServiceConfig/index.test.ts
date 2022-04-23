@@ -11,8 +11,9 @@ export class UserService extends ForestService<UserWithId, User> {
     super("user", forestInstance, config);
   }
 
-  public getByName = this.methods.getByParam<UserWithId, string>("name");
-  public isEmailTaken = this.methods.getByParam<boolean, string>(["email", "taken"]);
+  public getByName = (name: string) => this.methods.getByParam<UserWithId, string>("name")(name);
+  public getByNameWithQuery = (name: string) => this.methods.get<UserWithId>("name", { params: { name } })();
+  public isEmailTaken = (email: string) => this.methods.getByParam<boolean, string>(["email", "taken"])(email);
 }
 
 export const Authorization = "Bearer 123";

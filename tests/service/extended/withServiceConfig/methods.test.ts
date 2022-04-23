@@ -47,6 +47,27 @@ describe("Custom Service Method ", () => {
     expect(response).toEqual(matchUser);
   });
 
+  test("getByNameWithQuery", async () => {
+    const usersData: UserWithId[] = [
+      { _id: 1, name: "John Smith", email: "john.smith@gmail.com" },
+      { _id: 2, name: "Jane Doe", email: "jane.doe@gmail.com" },
+    ];
+
+    const name = "John Smith";
+    const matchUser = { _id: 1, name: "John Smith", email: "john.smith@gmail.com" };
+
+    mock.onGet(`user/name`).reply((config) => {
+      expect(config.headers?.Authorization).toEqual(Authorization);
+      console.log("config.params", config.params.name);
+
+      return [200, usersData.find((user) => user.name === config.params.name)];
+    });
+
+    const response = await userService.getByNameWithQuery(name);
+
+    expect(response).toEqual(matchUser);
+  });
+
   test("isEmailTaken", async () => {
     const usersData: UserWithId[] = [
       { _id: 1, name: "John Smith", email: "john.smith@gmail.com" },

@@ -50,9 +50,7 @@ describe("Custom Requests Config ", () => {
 
   test("getAll", async () => {
     mock.onGet("user").reply((config) => {
-      expect(config.headers).toEqual({
-        Accept: "application/json, text/plain, */*",
-      });
+      expect(config.headers?.Authentication).toEqual("No Bearer Header");
 
       expect(config.params).toEqual({ page: 5, size: 7 });
 
@@ -66,9 +64,7 @@ describe("Custom Requests Config ", () => {
 
   test("getById", async () => {
     mock.onGet("user/36").reply((config) => {
-      expect(config.headers).toEqual({
-        Accept: "application/json, text/plain, */*",
-      });
+      expect(config.headers?.Authentication).toEqual("No Bearer Header");
       expect(config.maxRedirects).toEqual(2);
 
       return [200];
