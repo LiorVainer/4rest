@@ -7,13 +7,13 @@ import { OnErrorFunction, defaultOnErrorFunction } from "../types/onError";
 import { defaultOnSuccessFunction, OnSuccessFunction } from "../types/onSuccess";
 import { Key } from "../types/payload";
 import { WithPayloadHTTPMethods } from "../constants/methods.const";
+import { ServiceConfig } from "../types/forest";
 
 export interface WithPayloadRequestFactoryProps {
-  onError?: OnErrorFunction;
-  onSuccess?: OnSuccessFunction;
   axios: AxiosInstance;
   prefix: string;
   method: WithPayloadHTTPMethods;
+  serviceConfig?: ServiceConfig;
 }
 
 type DataPayload<T> = T | { [key in Key]: T };
@@ -23,16 +23,11 @@ type DataPayload<T> = T | { [key in Key]: T };
  * @param axios - Axios Instance
  * @param prefix - Request Route Prefix
  * @param method - HTTP Method with Payload
+ * @param serviceConfig - Upper Level Multiple Methods Service Configuration
  * @returns - Request Function of selected method with route: "prefix/route"
  */
 export const withPayloadRequest =
-  ({
-    axios,
-    prefix,
-    method,
-    onError = defaultOnErrorFunction,
-    onSuccess = defaultOnSuccessFunction,
-  }: WithPayloadRequestFactoryProps) =>
+  ({ axios, prefix, method, serviceConfig }: WithPayloadRequestFactoryProps) =>
   <ResponseDataType = any, PayloadType = ResponseDataType>(
     route?: Route,
     key?: Key,
@@ -41,11 +36,11 @@ export const withPayloadRequest =
     return async (data: PayloadType) =>
       axios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
         routeBuilder(prefix, route),
-        payloadBuilder(data, key),
-        config
+        payloadBuilder(data, key ? key : serviceConfig?.payloadKey),
+        config ? config : serviceConfig?.requestConfig
       )
-        .then(onSuccess)
-        .catch(onError);
+        .then(serviceConfig?.onSuccess ?? defaultOnSuccessFunction)
+        .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
   };
 
 /**
@@ -53,16 +48,11 @@ export const withPayloadRequest =
  * @param axios - Axios Instance
  * @param prefix - Request Route Prefix
  * @param method - HTTP Method with Payload
+ * @param serviceConfig - Upper Level Multiple Methods Service Configuration
  * @returns - Request Function of selected method with route: "prefix/route"
  */
 export const withPayloadRequestByParam =
-  ({
-    axios,
-    prefix,
-    method,
-    onError = defaultOnErrorFunction,
-    onSuccess = defaultOnSuccessFunction,
-  }: WithPayloadRequestFactoryProps) =>
+  ({ axios, prefix, method, serviceConfig }: WithPayloadRequestFactoryProps) =>
   <ResponseDataType = any, PayloadType = ResponseDataType, ParamType extends BaseParamType = string>(
     route?: Route,
     key?: Key,
@@ -71,9 +61,9 @@ export const withPayloadRequestByParam =
     return async (param: ParamType, data: PayloadType) =>
       axios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
         routeBuilderWithParam(prefix, param, route),
-        payloadBuilder(data, key),
-        config
+        payloadBuilder(data, key ? key : serviceConfig?.payloadKey),
+        config ? config : serviceConfig?.requestConfig
       )
-        .then(onSuccess)
-        .catch(onError);
+        .then(serviceConfig?.onSuccess ?? defaultOnSuccessFunction)
+        .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
   };

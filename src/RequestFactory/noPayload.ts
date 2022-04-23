@@ -5,10 +5,10 @@ import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { BaseParamType, Route } from "../types/route";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 import { NoPayloadHTTPMethods } from "../constants/methods.const";
+import { ServiceConfig } from "../types/forest";
 
 export interface NoPayloadRequestFactoryProps {
-  onError?: OnErrorFunction;
-  onSuccess?: OnSuccessFunction;
+  serviceConfig?: ServiceConfig;
   axios: AxiosInstance;
   prefix: string;
   method: NoPayloadHTTPMethods;
@@ -19,41 +19,36 @@ export interface NoPayloadRequestFactoryProps {
  * @param axios - Axios Instance
  * @param prefix - Request Route Prefix
  * @param method - HTTP Method without Payload
+ * @param serviceConfig - Upper Level Multiple Methods Service Configuration
  * @returns - Request Function of selected method with route: "prefix/route"
  */
 export const noPayloadRequest =
-  ({
-    axios,
-    prefix,
-    method,
-    onError = defaultOnErrorFunction,
-    onSuccess = defaultOnSuccessFunction,
-  }: NoPayloadRequestFactoryProps) =>
+  ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any>(route?: Route, config?: AxiosRequestConfig) => {
     return async () =>
-      axios[method]<ResponseDataType>(routeBuilder(prefix, route), config).then(onSuccess).catch(onError);
+      axios[method]<ResponseDataType>(routeBuilder(prefix, route), config ? config : serviceConfig?.requestConfig)
+        .then(serviceConfig?.onSuccess ?? defaultOnSuccessFunction)
+        .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
   };
 
 /**
  * Util Method For Sending Requests
  * @param axios - Axios Instance
  * @param prefix - Request Route Prefix
+ * @param serviceConfig - Upper Level Multiple Methods Service Configuration
  * @returns - Request Function of selected method with route: "prefix/route/:param"
  */
 export const noPayloadRequestByParam =
-  ({
-    axios,
-    prefix,
-    method,
-    onError = defaultOnErrorFunction,
-    onSuccess = defaultOnSuccessFunction,
-  }: NoPayloadRequestFactoryProps) =>
+  ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any, ParamType extends BaseParamType = string>(
     route?: Route,
     config?: AxiosRequestConfig
   ): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType) =>
-      axios[method]<ResponseDataType>(routeBuilderWithParam(prefix, param, route), config)
-        .then(onSuccess)
-        .catch(onError);
+      axios[method]<ResponseDataType>(
+        routeBuilderWithParam(prefix, param, route),
+        config ? config : serviceConfig?.requestConfig
+      )
+        .then(serviceConfig?.onSuccess ?? defaultOnSuccessFunction)
+        .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
   };

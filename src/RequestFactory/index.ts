@@ -1,13 +1,9 @@
 import { AxiosInstance } from "axios";
-import { OnSuccessFunction } from "./../types/onSuccess";
 
 import { OnErrorFunction } from "../types/onError";
 
 import { Prefix } from "../types/route";
 
-import { noPayloadRequest, noPayloadRequestByParam } from "./noPayload";
-
-import { withPayloadRequest, withPayloadRequestByParam } from "./withPayload";
 import {
   NoPayloadHTTPMethods,
   noPayloadRequestMethods,
@@ -16,17 +12,20 @@ import {
 } from "../constants/methods.const";
 import ForestInstance from "../forest/instance";
 
+import { noPayloadRequest, noPayloadRequestByParam } from "./noPayload";
+import { OnSuccessFunction } from "./../types/onSuccess";
+import { withPayloadRequest, withPayloadRequestByParam } from "./withPayload";
+import { ServiceConfig } from "../types/forest";
+
 export class RequestFactory {
   private axios: AxiosInstance;
   private prefix: Prefix;
-  private onError: OnErrorFunction | undefined;
-  private onSuccess: OnSuccessFunction | undefined;
+  private config: ServiceConfig | undefined;
 
-  constructor(axios: AxiosInstance, prefix: Prefix, onSuccess?: OnSuccessFunction, onError?: OnErrorFunction) {
+  constructor(axios: AxiosInstance, prefix: Prefix, config?: ServiceConfig) {
     this.axios = axios;
     this.prefix = prefix;
-    this.onSuccess = onSuccess;
-    this.onError = onError;
+    this.config = config;
   }
 
   public noPayloadRequest = (method: NoPayloadHTTPMethods) =>
@@ -34,8 +33,7 @@ export class RequestFactory {
       axios: this.axios,
       prefix: this.prefix,
       method,
-      onSuccess: this.onSuccess,
-      onError: this.onError,
+      serviceConfig: this.config,
     });
 
   public noPayloadRequestByParam = (method: NoPayloadHTTPMethods) =>
@@ -43,8 +41,7 @@ export class RequestFactory {
       axios: this.axios,
       prefix: this.prefix,
       method,
-      onSuccess: this.onSuccess,
-      onError: this.onError,
+      serviceConfig: this.config,
     });
 
   public withPayloadRequest = (method: WithPayloadHTTPMethods) =>
@@ -52,8 +49,7 @@ export class RequestFactory {
       axios: this.axios,
       prefix: this.prefix,
       method,
-      onSuccess: this.onSuccess,
-      onError: this.onError,
+      serviceConfig: this.config,
     });
 
   public withPayloadRequestByParam = (method: WithPayloadHTTPMethods) =>
@@ -61,18 +57,12 @@ export class RequestFactory {
       axios: this.axios,
       prefix: this.prefix,
       method,
-      onSuccess: this.onSuccess,
-      onError: this.onError,
+      serviceConfig: this.config,
     });
 }
 
-export const createRequestMethods = (
-  prefix: string,
-  forestInstance: ForestInstance,
-  onSuccess?: OnSuccessFunction,
-  onError?: OnErrorFunction
-) => {
-  const requestFactory = new RequestFactory(forestInstance.axiosInstance, prefix, onSuccess, onError);
+export const createRequestMethods = (prefix: string, forestInstance: ForestInstance, config: ServiceConfig) => {
+  const requestFactory = new RequestFactory(forestInstance.axiosInstance, prefix, config);
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
     getByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.GET),
