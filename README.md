@@ -40,7 +40,7 @@ Using yarn
 <ul><li><a href="#usage/custom">Custom Service</a></li></ul>
 <li><a href="#types">Service Types</a></li>
 <li><a href="#config">Configuration</a>
-<ul><li><a href="#config/instance">Instance</a><ul><li><a href="#config/instance/axios-instance-access">Instance Creation</a></li><li><a href="#config/instance/axios-instance-access">Axios Instance Access</a></li></ul></li></ul>
+<ul><li><a href="#config/instance">Instance</a><ul><li><a href="#config/instance/instance-creation">Instance Creation</a></li><li><a href="#config/instance/axios-instance-access">Axios Instance Access</a></li></ul></li></ul>
 <ul><li><a href="#config/service">Service</a></li><ul><li><a href="#config/service/routes">Methods Routes</a></li></ul>
 <ul><li><a href="#config/service/request-config">Request Config</a></li>
 <li><a href="#config/service/payload-key">Payload Data Key</a></li></ul></ul>
