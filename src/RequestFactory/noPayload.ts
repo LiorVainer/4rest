@@ -6,6 +6,7 @@ import { BaseParamType, Route } from "../types/route";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 import { NoPayloadHTTPMethods } from "../constants/methods.const";
 import { ServiceConfig } from "../types/forest";
+import { mergeRequestConfig } from "../utils/config";
 
 export interface NoPayloadRequestFactoryProps {
   serviceConfig?: ServiceConfig;
@@ -26,7 +27,10 @@ export const noPayloadRequest =
   ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any>(route?: Route, config?: AxiosRequestConfig) => {
     return async () =>
-      axios[method]<ResponseDataType>(routeBuilder(prefix, route), config ? config : serviceConfig?.requestConfig)
+      axios[method]<ResponseDataType>(
+        routeBuilder(prefix, route),
+        mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
+      )
         .then(serviceConfig?.onSuccess ?? defaultOnSuccessFunction)
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
   };
@@ -47,7 +51,7 @@ export const noPayloadRequestByParam =
     return async (param: ParamType) =>
       axios[method]<ResponseDataType>(
         routeBuilderWithParam(prefix, param, route),
-        config ? config : serviceConfig?.requestConfig
+        mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
         .then(serviceConfig?.onSuccess ?? defaultOnSuccessFunction)
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);

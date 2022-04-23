@@ -8,6 +8,7 @@ import { defaultOnSuccessFunction, OnSuccessFunction } from "../types/onSuccess"
 import { Key } from "../types/payload";
 import { WithPayloadHTTPMethods } from "../constants/methods.const";
 import { ServiceConfig } from "../types/forest";
+import { mergeRequestConfig } from "../utils/config";
 
 export interface WithPayloadRequestFactoryProps {
   axios: AxiosInstance;
@@ -37,7 +38,7 @@ export const withPayloadRequest =
       axios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
         routeBuilder(prefix, route),
         payloadBuilder(data, key ? key : serviceConfig?.payloadKey),
-        config ? config : serviceConfig?.requestConfig
+        mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
         .then(serviceConfig?.onSuccess ?? defaultOnSuccessFunction)
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
@@ -62,7 +63,7 @@ export const withPayloadRequestByParam =
       axios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
         routeBuilderWithParam(prefix, param, route),
         payloadBuilder(data, key ? key : serviceConfig?.payloadKey),
-        config ? config : serviceConfig?.requestConfig
+        mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
         .then(serviceConfig?.onSuccess ?? defaultOnSuccessFunction)
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);

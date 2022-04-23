@@ -1,6 +1,7 @@
+import { AxiosDefaults, AxiosRequestConfig } from "axios";
 import { ServiceConfig } from "../types/forest";
 
-export const mergeConfigs = (
+export const mergeGlobalAndServiceConfig = (
   serviceConfig?: ServiceConfig,
   globalServiceConfig?: ServiceConfig
 ): ServiceConfig | undefined => {
@@ -19,4 +20,34 @@ export const mergeConfigs = (
   }
 
   return undefined;
+};
+
+export const mergeRequestConfig = (
+  axiosDefaults: AxiosDefaults,
+  serviceRequestConfig?: AxiosRequestConfig,
+  singleRequestConfig?: AxiosRequestConfig
+): AxiosRequestConfig | undefined => {
+  let mergedConfig = undefined;
+  if (serviceRequestConfig && !singleRequestConfig) {
+    mergedConfig = {
+      ...axiosDefaults,
+      ...serviceRequestConfig,
+      headers: { ...axiosDefaults.headers.common, ...serviceRequestConfig.headers },
+    };
+  } else if (!serviceRequestConfig && singleRequestConfig) {
+    mergedConfig = {
+      ...axiosDefaults,
+      ...singleRequestConfig,
+      headers: { ...axiosDefaults.headers.common, ...singleRequestConfig.headers },
+    };
+  } else if (serviceRequestConfig && singleRequestConfig) {
+    mergedConfig = {
+      ...axiosDefaults,
+      ...serviceRequestConfig,
+      ...singleRequestConfig,
+      headers: { ...axiosDefaults.headers.common, ...serviceRequestConfig.headers, ...singleRequestConfig.headers },
+    };
+  }
+
+  return mergedConfig;
 };
