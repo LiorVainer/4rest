@@ -1,15 +1,11 @@
 import { AxiosInstance } from "axios";
-import {
-  NoPayloadHTTPMethods,
-  noPayloadRequestMethods,
-  WithPayloadHTTPMethods,
-  withPayloadRequestMethods,
-} from "../constants/methods.const";
+import { noPayloadRequestMethods, withPayloadRequestMethods } from "../constants/methods.const";
 import ForestInstance from "../forest/instance";
 import { ServiceConfig } from "../types/service.types";
 import { Prefix } from "../types/route";
 import { noPayloadRequest, noPayloadRequestByParam } from "./noPayload";
 import { withPayloadRequest, withPayloadRequestByParam } from "./withPayload";
+import { NoPayloadHTTPMethods, WithPayloadHTTPMethods } from "../types/methods.types";
 
 export class RequestFactory {
   private axios: AxiosInstance;
@@ -60,28 +56,16 @@ export const createRequestMethods = (
   forestInstance: ForestInstance,
   config: ServiceConfig | undefined
 ) => {
-  const requestFactory = new RequestFactory(
-    forestInstance.axiosInstance,
-    prefix,
-    config
-  );
+  const requestFactory = new RequestFactory(forestInstance.axiosInstance, prefix, config);
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
-    getByParam: requestFactory.noPayloadRequestByParam(
-      noPayloadRequestMethods.GET
-    ),
+    getByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.GET),
     delete: requestFactory.noPayloadRequest(noPayloadRequestMethods.DELETE),
-    deleteByParam: requestFactory.noPayloadRequestByParam(
-      noPayloadRequestMethods.DELETE
-    ),
+    deleteByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.DELETE),
     post: requestFactory.withPayloadRequest(withPayloadRequestMethods.POST),
-    putByParam: requestFactory.withPayloadRequestByParam(
-      withPayloadRequestMethods.PUT
-    ),
+    putByParam: requestFactory.withPayloadRequestByParam(withPayloadRequestMethods.PUT),
     put: requestFactory.withPayloadRequest(withPayloadRequestMethods.PUT),
-    patchByParam: requestFactory.withPayloadRequestByParam(
-      withPayloadRequestMethods.PATCH
-    ),
+    patchByParam: requestFactory.withPayloadRequestByParam(withPayloadRequestMethods.PATCH),
     patch: requestFactory.withPayloadRequest(withPayloadRequestMethods.PATCH),
   };
 };
