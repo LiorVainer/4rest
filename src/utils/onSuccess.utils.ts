@@ -1,27 +1,14 @@
 import { AxiosResponse } from "axios";
-import {
-  defaultOnSuccessFunction,
-  defaultValidationOnSuccessFunction,
-} from "../constants/onSuccess.const";
+import { defaultOnSuccessFunction, defaultValidationOnSuccessFunction } from "../constants/onSuccess.const";
 import { ServiceConfig } from "./../types/forest";
 
-export const onSuccessHandle = <T>(
-  res: AxiosResponse<T>,
-  serviceConfig?: ServiceConfig
-) => {
-  console.log(res, serviceConfig);
+export const onSuccessHandle = <T>(res: AxiosResponse<T>, serviceConfig?: ServiceConfig) => {
   if (serviceConfig) {
     if (serviceConfig?.onSuccess) {
-      console.log("got here 1");
-      serviceConfig?.onSuccess(res, serviceConfig);
-      return;
+      return serviceConfig?.onSuccess(res, serviceConfig);
     } else if (serviceConfig.validation?.types.resoponseData) {
-      console.log("got here 2");
-      defaultValidationOnSuccessFunction(res, serviceConfig);
-      return;
+      return defaultValidationOnSuccessFunction(res, serviceConfig);
     }
   }
-  console.log("got here 4");
-
-  defaultOnSuccessFunction(res, serviceConfig);
+  return defaultOnSuccessFunction(res, serviceConfig);
 };
