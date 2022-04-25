@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { OnSuccessFunction } from "../types/onSuccess";
-import { ServiceConfig } from "./../types/forest";
+import { ServiceConfig } from "../types/service.types";
 
 export const defaultOnSuccessFunction: OnSuccessFunction = (
   response: AxiosResponse<any>

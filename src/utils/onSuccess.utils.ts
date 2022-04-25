@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { defaultOnSuccessFunction, defaultValidationOnSuccessFunction } from "../constants/onSuccess.const";
-import { ServiceConfig } from "./../types/forest";
+import { ServiceConfig } from "../types/service.types";
 
 export const onSuccessHandle = <T>(res: AxiosResponse<T>, serviceConfig?: ServiceConfig) => {
   if (serviceConfig) {

@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import { AxiosSettings } from "../types/axios";
 
-import { ServiceConfig } from "../types/forest";
+import { ServiceConfig } from "../types/service.types";
 import { createAxiosInstance } from "../utils/axios";
 import { mergeGlobalAndServiceConfig } from "../utils/config";
 

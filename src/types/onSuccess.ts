@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { ServiceConfig } from "./forest";
+import { ServiceConfig } from "./service.types";
 
 export type OnSuccessFunction = (
   value: AxiosResponse<any>,

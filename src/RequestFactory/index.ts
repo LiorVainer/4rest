@@ -6,7 +6,7 @@ import {
   withPayloadRequestMethods,
 } from "../constants/methods.const";
 import ForestInstance from "../forest/instance";
-import { ServiceConfig } from "../types/forest";
+import { ServiceConfig } from "../types/service.types";
 import { Prefix } from "../types/route";
 import { noPayloadRequest, noPayloadRequestByParam } from "./noPayload";
 import { withPayloadRequest, withPayloadRequestByParam } from "./withPayload";

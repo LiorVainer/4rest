@@ -1,4 +1,5 @@
 import { AxiosRequestConfig } from "axios";
+import { ForestService } from "../forest/service";
 import { createRequestMethods } from "../RequestFactory";
 import { OnErrorFunction } from "./onError";
 import { OnSuccessFunction } from "./onSuccess";
@@ -7,6 +8,10 @@ import { Route } from "./route";
 import { ValidationConfig } from "./validation";
 
 export type ServiceMethods = ReturnType<typeof createRequestMethods>;
+export type ServiceMethod = keyof ServiceMethods;
+
+export type ServiceFunction = keyof ForestService;
+
 export interface ServiceConfig {
   routes?: {
     getAll?: Route;

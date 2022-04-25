@@ -1,6 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { WithPayloadHTTPMethods } from "../constants/methods.const";
-import { ServiceConfig } from "../types/forest";
+import { ServiceConfig } from "../types/service.types";
 import { defaultOnErrorFunction } from "../types/onError";
 import { Key } from "../types/payload";
 import { BaseParamType, Route } from "../types/route";
@@ -8,6 +7,7 @@ import { mergeRequestConfig } from "../utils/config";
 import { onSuccessHandle } from "../utils/onSuccess.utils";
 import { payloadBuilder } from "../utils/payload";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
+import { WithPayloadHTTPMethods } from "../types/methods.types";
 
 export interface WithPayloadRequestFactoryProps {
   axios: AxiosInstance;
@@ -53,18 +53,11 @@ export const withPayloadRequest =
  */
 export const withPayloadRequestByParam =
   ({ axios, prefix, method, serviceConfig }: WithPayloadRequestFactoryProps) =>
-  <
-    ResponseDataType = any,
-    PayloadType = ResponseDataType,
-    ParamType extends BaseParamType = string
-  >(
+  <ResponseDataType = any, PayloadType = ResponseDataType, ParamType extends BaseParamType = string>(
     route?: Route,
     key?: Key,
     config?: AxiosRequestConfig
-  ): ((
-    param: ParamType,
-    data: PayloadType
-  ) => Promise<AxiosResponse<ResponseDataType>>) => {
+  ): ((param: ParamType, data: PayloadType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType, data: PayloadType) =>
       axios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
         routeBuilderWithParam(prefix, param, route),

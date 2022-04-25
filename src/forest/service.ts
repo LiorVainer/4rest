@@ -1,5 +1,5 @@
 import { createRequestMethods } from "../RequestFactory";
-import { ServiceConfig, ServiceMethods } from "../types/forest";
+import { ServiceConfig, ServiceMethods } from "../types/service.types";
 import { ServiceMethodResponse } from "../types/promise";
 import { fallback } from "../utils/general";
 import ForestInstance from "./instance";
