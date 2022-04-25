@@ -1,19 +1,23 @@
-import { ServiceMethodResponse } from "../types/promise";
-
-import { ServiceConfig, ServiceMethods } from "../types/forest";
-
 import { createRequestMethods } from "../RequestFactory";
-
+import { ServiceConfig, ServiceMethods } from "../types/forest";
+import { ServiceMethodResponse } from "../types/promise";
 import { fallback } from "../utils/general";
-
 import ForestInstance from "./instance";
 
-export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResponseData, ClassIdType = string> {
-  protected config: ServiceConfig = {};
+export class ForestService<
+  ClassResponseData = any,
+  ClassPayloadData = ClassResponseData,
+  ClassIdType = string
+> {
+  protected config: ServiceConfig | undefined;
   private instance: ForestInstance;
   protected methods: ServiceMethods;
 
-  constructor(prefix: string, forestInstance: ForestInstance, config?: ServiceConfig) {
+  constructor(
+    prefix: string,
+    forestInstance: ForestInstance,
+    config?: ServiceConfig
+  ) {
     this.instance = forestInstance;
     if (config) {
       this.config = config;
@@ -22,24 +26,39 @@ export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResp
     this.methods = createRequestMethods(prefix, this.instance, this.config);
   }
 
-  getAll<ResponseData = ClassResponseData[]>(): ServiceMethodResponse<ResponseData> {
+  getAll<
+    ResponseData = ClassResponseData[]
+  >(): ServiceMethodResponse<ResponseData> {
     return this.methods.get<ResponseData>(
-      this.config.routes?.getAll,
-      fallback(this.config.requestConfigByMethod?.getAll, this.config.requestConfig)
+      this.config?.routes?.getAll,
+      fallback(
+        this.config?.requestConfigByMethod?.getAll,
+        this.config?.requestConfig
+      )
     )();
   }
 
-  getById<ResponseData = ClassResponseData, IdType = ClassIdType>(param: IdType): ServiceMethodResponse<ResponseData> {
+  getById<ResponseData = ClassResponseData, IdType = ClassIdType>(
+    param: IdType
+  ): ServiceMethodResponse<ResponseData> {
     return this.methods.getByParam<ResponseData, IdType>(
-      this.config.routes?.getById,
-      fallback(this.config.requestConfigByMethod?.getById, this.config.requestConfig)
+      this.config?.routes?.getById,
+      fallback(
+        this.config?.requestConfigByMethod?.getById,
+        this.config?.requestConfig
+      )
     )(param);
   }
 
-  deleteAll<ResponseData = ClassResponseData[]>(): ServiceMethodResponse<ResponseData> {
+  deleteAll<
+    ResponseData = ClassResponseData[]
+  >(): ServiceMethodResponse<ResponseData> {
     return this.methods.delete<ResponseData>(
-      this.config.routes?.deleteAll,
-      fallback(this.config.requestConfigByMethod?.deleteAll, this.config.requestConfig)
+      this.config?.routes?.deleteAll,
+      fallback(
+        this.config?.requestConfigByMethod?.deleteAll,
+        this.config?.requestConfig
+      )
     )();
   }
 
@@ -47,8 +66,11 @@ export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResp
     param: IdType
   ): ServiceMethodResponse<ResponseData> {
     return this.methods.deleteByParam<ResponseData, IdType>(
-      this.config.routes?.deleteById,
-      fallback(this.config.requestConfigByMethod?.deleteById, this.config.requestConfig)
+      this.config?.routes?.deleteById,
+      fallback(
+        this.config?.requestConfigByMethod?.deleteById,
+        this.config?.requestConfig
+      )
     )(param);
   }
 
@@ -56,9 +78,12 @@ export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResp
     data: PayloadData
   ): ServiceMethodResponse<ResponseData> {
     return this.methods.post<ResponseData, PayloadData>(
-      this.config.routes?.post,
-      fallback(this.config.payloadKeyByMethod?.post, this.config.payloadKey),
-      fallback(this.config.requestConfigByMethod?.post, this.config.requestConfig)
+      this.config?.routes?.post,
+      fallback(this.config?.payloadKeyByMethod?.post, this.config?.payloadKey),
+      fallback(
+        this.config?.requestConfigByMethod?.post,
+        this.config?.requestConfig
+      )
     )(data);
   }
 
@@ -66,20 +91,33 @@ export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResp
     data: PayloadData
   ): ServiceMethodResponse<Partial<ResponseData>> {
     return this.methods.patch<ResponseData, PayloadData>(
-      this.config.routes?.patch,
-      fallback(this.config.payloadKeyByMethod?.patch, this.config.payloadKey),
-      fallback(this.config.requestConfigByMethod?.patch, this.config.requestConfig)
+      this.config?.routes?.patch,
+      fallback(this.config?.payloadKeyByMethod?.patch, this.config?.payloadKey),
+      fallback(
+        this.config?.requestConfigByMethod?.patch,
+        this.config?.requestConfig
+      )
     )(data);
   }
 
-  patchById<ResponseData = ClassResponseData, PayloadData = ClassPayloadData, IdType = ClassIdType>(
+  patchById<
+    ResponseData = ClassResponseData,
+    PayloadData = ClassPayloadData,
+    IdType = ClassIdType
+  >(
     param: IdType,
     data: PayloadData
   ): ServiceMethodResponse<Partial<ResponseData>> {
     return this.methods.patchByParam<ResponseData, PayloadData, IdType>(
-      this.config.routes?.patchById,
-      fallback(this.config.payloadKeyByMethod?.patchById, this.config.payloadKey),
-      fallback(this.config.requestConfigByMethod?.patchById, this.config.requestConfig)
+      this.config?.routes?.patchById,
+      fallback(
+        this.config?.payloadKeyByMethod?.patchById,
+        this.config?.payloadKey
+      ),
+      fallback(
+        this.config?.requestConfigByMethod?.patchById,
+        this.config?.requestConfig
+      )
     )(param, data);
   }
 
@@ -87,20 +125,33 @@ export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResp
     data: PayloadData
   ): ServiceMethodResponse<Partial<ResponseData>> {
     return this.methods.put<ResponseData, PayloadData>(
-      this.config.routes?.put,
-      fallback(this.config.payloadKeyByMethod?.put, this.config.payloadKey),
-      fallback(this.config.requestConfigByMethod?.put, this.config.requestConfig)
+      this.config?.routes?.put,
+      fallback(this.config?.payloadKeyByMethod?.put, this.config?.payloadKey),
+      fallback(
+        this.config?.requestConfigByMethod?.put,
+        this.config?.requestConfig
+      )
     )(data);
   }
 
-  putById<ResponseData = ClassResponseData, PayloadData = ClassPayloadData, IdType = ClassIdType>(
+  putById<
+    ResponseData = ClassResponseData,
+    PayloadData = ClassPayloadData,
+    IdType = ClassIdType
+  >(
     param: IdType,
     data: PayloadData
   ): ServiceMethodResponse<Partial<ResponseData>> {
     return this.methods.putByParam<ResponseData, PayloadData, IdType>(
-      this.config.routes?.putById,
-      fallback(this.config.payloadKeyByMethod?.putById, this.config.payloadKey),
-      fallback(this.config.requestConfigByMethod?.putById, this.config.requestConfig)
+      this.config?.routes?.putById,
+      fallback(
+        this.config?.payloadKeyByMethod?.putById,
+        this.config?.payloadKey
+      ),
+      fallback(
+        this.config?.requestConfigByMethod?.putById,
+        this.config?.requestConfig
+      )
     )(param, data);
   }
 }

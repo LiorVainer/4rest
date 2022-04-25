@@ -1,9 +1,4 @@
 import { AxiosInstance } from "axios";
-
-import { OnErrorFunction } from "../types/onError";
-
-import { Prefix } from "../types/route";
-
 import {
   NoPayloadHTTPMethods,
   noPayloadRequestMethods,
@@ -11,11 +6,10 @@ import {
   withPayloadRequestMethods,
 } from "../constants/methods.const";
 import ForestInstance from "../forest/instance";
-
-import { noPayloadRequest, noPayloadRequestByParam } from "./noPayload";
-import { OnSuccessFunction } from "./../types/onSuccess";
-import { withPayloadRequest, withPayloadRequestByParam } from "./withPayload";
 import { ServiceConfig } from "../types/forest";
+import { Prefix } from "../types/route";
+import { noPayloadRequest, noPayloadRequestByParam } from "./noPayload";
+import { withPayloadRequest, withPayloadRequestByParam } from "./withPayload";
 
 export class RequestFactory {
   private axios: AxiosInstance;
@@ -61,17 +55,33 @@ export class RequestFactory {
     });
 }
 
-export const createRequestMethods = (prefix: string, forestInstance: ForestInstance, config: ServiceConfig) => {
-  const requestFactory = new RequestFactory(forestInstance.axiosInstance, prefix, config);
+export const createRequestMethods = (
+  prefix: string,
+  forestInstance: ForestInstance,
+  config: ServiceConfig | undefined
+) => {
+  const requestFactory = new RequestFactory(
+    forestInstance.axiosInstance,
+    prefix,
+    config
+  );
   return {
     get: requestFactory.noPayloadRequest(noPayloadRequestMethods.GET),
-    getByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.GET),
+    getByParam: requestFactory.noPayloadRequestByParam(
+      noPayloadRequestMethods.GET
+    ),
     delete: requestFactory.noPayloadRequest(noPayloadRequestMethods.DELETE),
-    deleteByParam: requestFactory.noPayloadRequestByParam(noPayloadRequestMethods.DELETE),
+    deleteByParam: requestFactory.noPayloadRequestByParam(
+      noPayloadRequestMethods.DELETE
+    ),
     post: requestFactory.withPayloadRequest(withPayloadRequestMethods.POST),
-    putByParam: requestFactory.withPayloadRequestByParam(withPayloadRequestMethods.PUT),
+    putByParam: requestFactory.withPayloadRequestByParam(
+      withPayloadRequestMethods.PUT
+    ),
     put: requestFactory.withPayloadRequest(withPayloadRequestMethods.PUT),
-    patchByParam: requestFactory.withPayloadRequestByParam(withPayloadRequestMethods.PATCH),
+    patchByParam: requestFactory.withPayloadRequestByParam(
+      withPayloadRequestMethods.PATCH
+    ),
     patch: requestFactory.withPayloadRequest(withPayloadRequestMethods.PATCH),
   };
 };

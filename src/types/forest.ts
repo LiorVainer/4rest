@@ -1,9 +1,10 @@
-import { OnSuccessFunction } from "./onSuccess";
+import { AxiosRequestConfig } from "axios";
 import { createRequestMethods } from "../RequestFactory";
+import { OnErrorFunction } from "./onError";
+import { OnSuccessFunction } from "./onSuccess";
 import { Key } from "./payload";
 import { Route } from "./route";
-import { AxiosRequestConfig } from "axios";
-import { OnErrorFunction } from "./onError";
+import { ValidationConfig } from "./validation";
 
 export type ServiceMethods = ReturnType<typeof createRequestMethods>;
 export interface ServiceConfig {
@@ -30,6 +31,7 @@ export interface ServiceConfig {
     put?: AxiosRequestConfig;
     putById?: AxiosRequestConfig;
   };
+  validation: ValidationConfig;
   payloadKey?: Key;
   payloadKeyByMethod?: {
     post?: Key;

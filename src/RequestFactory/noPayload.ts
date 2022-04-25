@@ -1,12 +1,11 @@
-import { defaultOnSuccessFunction, OnSuccessFunction } from "./../types/onSuccess";
-import { defaultOnErrorFunction, OnErrorFunction } from "../types/onError";
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-
-import { BaseParamType, Route } from "../types/route";
-import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 import { NoPayloadHTTPMethods } from "../constants/methods.const";
 import { ServiceConfig } from "../types/forest";
+import { defaultOnErrorFunction } from "../types/onError";
+import { BaseParamType, Route } from "../types/route";
 import { mergeRequestConfig } from "../utils/config";
+import { onSuccessHandle } from "../utils/onSuccess.utils";
+import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 
 export interface NoPayloadRequestFactoryProps {
   serviceConfig?: ServiceConfig;
@@ -31,7 +30,7 @@ export const noPayloadRequest =
         routeBuilder(prefix, route),
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
-        .then(serviceConfig?.onSuccess ?? defaultOnSuccessFunction)
+        .then((res) => onSuccessHandle(res, serviceConfig))
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
   };
 
@@ -53,6 +52,6 @@ export const noPayloadRequestByParam =
         routeBuilderWithParam(prefix, param, route),
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
-        .then(serviceConfig?.onSuccess ?? defaultOnSuccessFunction)
+        .then((res) => onSuccessHandle(res, serviceConfig))
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
   };
