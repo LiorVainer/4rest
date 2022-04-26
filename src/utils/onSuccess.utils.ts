@@ -3,12 +3,7 @@ import {
   defaultOnSuccessFunction,
   defaultValidationOnSuccessFunction,
 } from "../constants/onSuccess.const";
-import { ServiceConfig, ServiceFunction } from "./../types/service.types";
-
-export interface Metadata {
-  serviceConfig?: ServiceConfig;
-  serviceFunction?: ServiceFunction;
-}
+import { Metadata } from "../types/onSuccess";
 
 export const onSuccessHandle = <T>(
   res: AxiosResponse<T>,
