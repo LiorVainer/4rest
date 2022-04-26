@@ -1,11 +1,12 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { ServiceConfig } from "../types/service.types";
+import { NoPayloadHTTPMethods } from "../types/methods.types";
 import { defaultOnErrorFunction } from "../types/onError";
 import { BaseParamType, Route } from "../types/route";
+import { ServiceConfig } from "../types/service.types";
 import { mergeRequestConfig } from "../utils/config";
 import { onSuccessHandle } from "../utils/onSuccess.utils";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
-import { NoPayloadHTTPMethods } from "../types/methods.types";
+import { ServiceFunction } from "./../types/service.types";
 
 export interface NoPayloadRequestFactoryProps {
   serviceConfig?: ServiceConfig;
@@ -24,13 +25,17 @@ export interface NoPayloadRequestFactoryProps {
  */
 export const noPayloadRequest =
   ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
-  <ResponseDataType = any>(route?: Route, config?: AxiosRequestConfig) => {
+  <ResponseDataType = any>(
+    route?: Route,
+    config?: AxiosRequestConfig,
+    serviceFunction?: ServiceFunction
+  ) => {
     return async () =>
       axios[method]<ResponseDataType>(
         routeBuilder(prefix, route),
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
-        .then((res) => onSuccessHandle(res, serviceConfig))
+        .then((res) => onSuccessHandle(res, { serviceConfig, serviceFunction }))
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
   };
 
@@ -45,13 +50,14 @@ export const noPayloadRequestByParam =
   ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any, ParamType extends BaseParamType = string>(
     route?: Route,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
+    serviceFunction?: ServiceFunction
   ): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType) =>
       axios[method]<ResponseDataType>(
         routeBuilderWithParam(prefix, param, route),
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
-        .then((res) => onSuccessHandle(res, serviceConfig))
+        .then((res) => onSuccessHandle(res, { serviceConfig, serviceFunction }))
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
   };

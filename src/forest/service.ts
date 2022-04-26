@@ -1,6 +1,10 @@
 import { createRequestMethods } from "../RequestFactory";
-import { ServiceConfig, ServiceMethods } from "../types/service.types";
 import { ServiceMethodResponse } from "../types/promise";
+import {
+  ServiceConfig,
+  ServiceMethods,
+  SERVICE_FUNCTIONS,
+} from "../types/service.types";
 import { fallback } from "../utils/general";
 import ForestInstance from "./instance";
 
@@ -34,7 +38,8 @@ export class ForestService<
       fallback(
         this.config?.requestConfigByMethod?.getAll,
         this.config?.requestConfig
-      )
+      ),
+      SERVICE_FUNCTIONS.getAll
     )();
   }
 
@@ -46,7 +51,8 @@ export class ForestService<
       fallback(
         this.config?.requestConfigByMethod?.getById,
         this.config?.requestConfig
-      )
+      ),
+      SERVICE_FUNCTIONS.getById
     )(param);
   }
 
@@ -58,7 +64,8 @@ export class ForestService<
       fallback(
         this.config?.requestConfigByMethod?.deleteAll,
         this.config?.requestConfig
-      )
+      ),
+      SERVICE_FUNCTIONS.deleteAll
     )();
   }
 
@@ -70,7 +77,8 @@ export class ForestService<
       fallback(
         this.config?.requestConfigByMethod?.deleteById,
         this.config?.requestConfig
-      )
+      ),
+      SERVICE_FUNCTIONS.deleteById
     )(param);
   }
 
@@ -83,7 +91,8 @@ export class ForestService<
       fallback(
         this.config?.requestConfigByMethod?.post,
         this.config?.requestConfig
-      )
+      ),
+      SERVICE_FUNCTIONS.post
     )(data);
   }
 
@@ -96,7 +105,8 @@ export class ForestService<
       fallback(
         this.config?.requestConfigByMethod?.patch,
         this.config?.requestConfig
-      )
+      ),
+      SERVICE_FUNCTIONS.patch
     )(data);
   }
 
@@ -117,7 +127,8 @@ export class ForestService<
       fallback(
         this.config?.requestConfigByMethod?.patchById,
         this.config?.requestConfig
-      )
+      ),
+      SERVICE_FUNCTIONS.patchById
     )(param, data);
   }
 
@@ -130,7 +141,8 @@ export class ForestService<
       fallback(
         this.config?.requestConfigByMethod?.put,
         this.config?.requestConfig
-      )
+      ),
+      SERVICE_FUNCTIONS.put
     )(data);
   }
 
@@ -151,7 +163,8 @@ export class ForestService<
       fallback(
         this.config?.requestConfigByMethod?.putById,
         this.config?.requestConfig
-      )
+      ),
+      SERVICE_FUNCTIONS.putById
     )(param, data);
   }
 }

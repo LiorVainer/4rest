@@ -11,6 +11,17 @@ export type ServiceMethods = ReturnType<typeof createRequestMethods>;
 export type ServiceMethod = keyof ServiceMethods;
 
 export type ServiceFunction = keyof ForestService;
+export const SERVICE_FUNCTIONS: Record<ServiceFunction, ServiceFunction> = {
+  getAll: "getAll",
+  getById: "getById",
+  deleteAll: "deleteAll",
+  deleteById: "deleteById",
+  post: "post",
+  patch: "patch",
+  patchById: "patchById",
+  put: "put",
+  putById: "putById",
+};
 
 export interface ServiceConfig {
   routes?: {
@@ -36,7 +47,7 @@ export interface ServiceConfig {
     put?: AxiosRequestConfig;
     putById?: AxiosRequestConfig;
   };
-  validation: ValidationConfig;
+  validation?: ValidationConfig;
   payloadKey?: Key;
   payloadKeyByMethod?: {
     post?: Key;

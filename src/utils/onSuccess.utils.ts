@@ -1,14 +1,25 @@
 import { AxiosResponse } from "axios";
-import { defaultOnSuccessFunction, defaultValidationOnSuccessFunction } from "../constants/onSuccess.const";
-import { ServiceConfig } from "../types/service.types";
+import {
+  defaultOnSuccessFunction,
+  defaultValidationOnSuccessFunction,
+} from "../constants/onSuccess.const";
+import { ServiceConfig, ServiceFunction } from "./../types/service.types";
 
-export const onSuccessHandle = <T>(res: AxiosResponse<T>, serviceConfig?: ServiceConfig) => {
-  if (serviceConfig) {
-    if (serviceConfig?.onSuccess) {
-      return serviceConfig?.onSuccess(res, serviceConfig);
-    } else if (serviceConfig.validation?.types.resoponseData) {
-      return defaultValidationOnSuccessFunction(res, serviceConfig);
+export interface Metadata {
+  serviceConfig?: ServiceConfig;
+  serviceFunction?: ServiceFunction;
+}
+
+export const onSuccessHandle = <T>(
+  res: AxiosResponse<T>,
+  metadata?: Metadata
+) => {
+  if (metadata?.serviceConfig) {
+    if (metadata.serviceConfig.onSuccess) {
+      return metadata?.serviceConfig?.onSuccess(res, metadata.serviceConfig);
+    } else if (metadata.serviceConfig.validation?.types.resoponseData) {
+      return defaultValidationOnSuccessFunction(res, metadata.serviceConfig);
     }
   }
-  return defaultOnSuccessFunction(res, serviceConfig);
+  return defaultOnSuccessFunction(res, metadata?.serviceConfig);
 };
