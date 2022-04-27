@@ -6,8 +6,4 @@ export interface Metadata {
   serviceFunction?: ServiceFunction;
 }
 
-export type OnSuccessFunction = (
-  value: AxiosResponse<any>,
-  serviceConfig?: ServiceConfig,
-  metadata?: Metadata
-) => any;
+export type OnSuccessFunction = (value: AxiosResponse<any>, metadata?: Metadata) => any;

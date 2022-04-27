@@ -1,5 +1,5 @@
 import { ZodSchema } from "zod";
-import { ServiceFunction, ServiceMethod } from "./service.types";
+import { ServiceFunction } from "./service.types";
 
 export interface ValidationConfig {
   types: {
