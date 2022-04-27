@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
-import { OnSuccessFunction } from "../types/onSuccess";
 import { ServiceConfig } from "../types/service.types";
+import { OnSuccessFunction } from "./../types/onSuccess";
 
 export const defaultOnSuccessFunction: OnSuccessFunction = (
   response: AxiosResponse<any>
@@ -14,4 +14,13 @@ export const defaultValidationOnSuccessFunction: OnSuccessFunction = (
 ) => {
   serviceConfig?.validation?.types.resoponseData?.parse(response.data);
   return response;
+};
+
+export const customValidationOnSuccessFunction = (
+  onSuccess: OnSuccessFunction,
+  response: AxiosResponse<any>,
+  serviceConfig?: ServiceConfig
+) => {
+  serviceConfig?.validation?.types.resoponseData?.parse(response.data);
+  return onSuccess(response, serviceConfig);
 };

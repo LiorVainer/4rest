@@ -10,7 +10,9 @@ import { ValidationConfig } from "./validation";
 export type ServiceMethods = ReturnType<typeof createRequestMethods>;
 export type ServiceMethod = keyof ServiceMethods;
 
-export type ServiceFunction = keyof ForestService;
+export type ServiceFunction<Service extends ForestService = ForestService> =
+  keyof Service;
+
 export const SERVICE_FUNCTIONS: Record<ServiceFunction, ServiceFunction> = {
   getAll: "getAll",
   getById: "getById",
