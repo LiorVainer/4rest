@@ -6,7 +6,7 @@ import { ServiceConfig } from "../types/service.types";
 import { mergeRequestConfig } from "../utils/config";
 import { onSuccessHandle } from "../utils/onSuccess.utils";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
-import { ServiceFunction } from "./../types/service.types";
+import { ServiceFunction } from "../types/service.types";
 
 export interface NoPayloadRequestFactoryProps {
   serviceConfig?: ServiceConfig;
@@ -23,7 +23,7 @@ export interface NoPayloadRequestFactoryProps {
  * @param serviceConfig - Upper Level Multiple Methods Service Configuration
  * @returns - Request Function of selected method with route: "prefix/route"
  */
-export const noPayloadRequest =
+export const noPayloadRequestFunctionCreator =
   ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any>(
     route?: Route,
@@ -46,7 +46,7 @@ export const noPayloadRequest =
  * @param serviceConfig - Upper Level Multiple Methods Service Configuration
  * @returns - Request Function of selected method with route: "prefix/route/:param"
  */
-export const noPayloadRequestByParam =
+export const noPayloadRequestFunctionCreatorByParam =
   ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
   <ResponseDataType = any, ParamType extends BaseParamType = string>(
     route?: Route,

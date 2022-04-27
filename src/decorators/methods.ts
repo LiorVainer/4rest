@@ -1,4 +1,4 @@
-import { createRequestMethods } from "./../RequestFactory/index";
+import { createMethodsFunctionsCreator } from "../RequestFunctionsFactory/index";
 import { ForestService } from "./../forest/service";
 import { fallback } from "../utils/general";
 import { ServiceMethodResponse } from "../types/promise";

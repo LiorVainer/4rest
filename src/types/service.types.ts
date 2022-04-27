@@ -1,14 +1,14 @@
 import { AxiosRequestConfig } from "axios";
 import { ForestService } from "../forest/service";
-import { createRequestMethods } from "../RequestFactory";
+import { createMethodsFunctionsCreator } from "../RequestFunctionsFactory";
 import { OnErrorFunction } from "./onError";
 import { OnSuccessFunction } from "./onSuccess";
 import { Key } from "./payload";
 import { Route } from "./route";
 import { ValidationConfig } from "./validation";
 
-export type ServiceMethods = ReturnType<typeof createRequestMethods>;
-export type ServiceMethod = keyof ServiceMethods;
+export type ServiceMethodsCreator = ReturnType<typeof createMethodsFunctionsCreator>;
+export type ServiceMethodCreator = keyof ServiceMethodsCreator;
 
 export type ServiceFunction<Service extends ForestService = ForestService> =
   keyof Service;
