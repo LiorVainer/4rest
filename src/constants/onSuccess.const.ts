@@ -1,37 +1,41 @@
 import { AxiosResponse } from "axios";
+import { responseValidationHandle } from "../utils/validation.utils";
 import { Metadata, OnSuccessFunction } from "./../types/onSuccess";
 
+/**
+ *
+ * @param response - Axios Response to be handled
+ * @returns - Axios response
+ */
 export const defaultOnSuccessFunction: OnSuccessFunction = (response: AxiosResponse<any>) => {
   return response;
 };
 
+/**
+ * Function to do default handle of response with validation of response
+ * @param response - Axios Response to be handled
+ * @param metadata - Metadata of the request and service config
+ */
 export const defaultValidationOnSuccessFunction: OnSuccessFunction = (
   response: AxiosResponse<any>,
   metadata?: Metadata
 ) => {
-  if (metadata?.serviceFunction && metadata?.serviceConfig?.validation?.methods) {
-    if (metadata?.serviceConfig?.validation?.methods.includes(metadata?.serviceFunction)) {
-      metadata?.serviceConfig?.validation?.types.resoponseData?.parse(response.data);
-    }
-  } else {
-    metadata?.serviceConfig?.validation?.types.resoponseData?.parse(response.data);
-  }
+  responseValidationHandle(response, metadata);
 
   return response;
 };
 
+/**
+ * Function to do custom handle of response with validation of response
+ * @param response - Axios Response to be handled
+ * @param metadata - Metadata of the request and service config
+ */
 export const customValidationOnSuccessFunction = (
   onSuccess: OnSuccessFunction,
   response: AxiosResponse<any>,
   metadata?: Metadata
 ) => {
-  if (metadata?.serviceFunction && metadata?.serviceConfig?.validation?.methods) {
-    if (metadata?.serviceConfig?.validation?.methods.includes(metadata?.serviceFunction)) {
-      metadata?.serviceConfig?.validation?.types.resoponseData?.parse(response.data);
-    }
-  } else {
-    metadata?.serviceConfig?.validation?.types.resoponseData?.parse(response.data);
-  }
+  responseValidationHandle(response, metadata);
 
   return onSuccess(response, metadata);
 };
