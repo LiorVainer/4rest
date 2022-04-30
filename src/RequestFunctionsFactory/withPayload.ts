@@ -8,6 +8,7 @@ import { mergeRequestConfig } from "../utils/config";
 import { onSuccessHandle } from "../utils/onSuccess.utils";
 import { payloadBuilder } from "../utils/payload";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
+import { payloadValidationHandle } from "../utils/validation.utils";
 
 export interface WithPayloadRequestFactoryProps {
   axios: AxiosInstance;
@@ -34,14 +35,19 @@ export const withPayloadRequest =
     config?: AxiosRequestConfig,
     serviceFunction?: ServiceFunction
   ): ((data: PayloadType) => Promise<AxiosResponse<ResponseDataType>>) => {
-    return async (data: PayloadType) =>
-      axios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
+    return async (data: PayloadType) => {
+      const metadata = { serviceConfig, serviceFunction };
+
+      payloadValidationHandle(data, metadata);
+
+      return axios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
         routeBuilder(prefix, route),
         payloadBuilder(data, key ? key : serviceConfig?.payloadKey),
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
-        .then((res) => onSuccessHandle(res, { serviceConfig, serviceFunction }))
+        .then((res) => onSuccessHandle(res, metadata))
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
+    };
   };
 
 /**
@@ -54,25 +60,23 @@ export const withPayloadRequest =
  */
 export const withPayloadRequestByParam =
   ({ axios, prefix, method, serviceConfig }: WithPayloadRequestFactoryProps) =>
-  <
-    ResponseDataType = any,
-    PayloadType = ResponseDataType,
-    ParamType extends BaseParamType = string
-  >(
+  <ResponseDataType = any, PayloadType = ResponseDataType, ParamType extends BaseParamType = string>(
     route?: Route,
     key?: Key,
     config?: AxiosRequestConfig,
     serviceFunction?: ServiceFunction
-  ): ((
-    param: ParamType,
-    data: PayloadType
-  ) => Promise<AxiosResponse<ResponseDataType>>) => {
-    return async (param: ParamType, data: PayloadType) =>
-      axios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
+  ): ((param: ParamType, data: PayloadType) => Promise<AxiosResponse<ResponseDataType>>) => {
+    return async (param: ParamType, data: PayloadType) => {
+      const metadata = { serviceConfig, serviceFunction };
+
+      payloadValidationHandle(data, metadata);
+
+      return axios[method]<DataPayload<PayloadType>, AxiosResponse<ResponseDataType>>(
         routeBuilderWithParam(prefix, param, route),
         payloadBuilder(data, key ? key : serviceConfig?.payloadKey),
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
-        .then((res) => onSuccessHandle(res, { serviceConfig, serviceFunction }))
+        .then((res) => onSuccessHandle(res, metadata))
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
+    };
   };

@@ -25,18 +25,17 @@ export interface NoPayloadRequestFactoryProps {
  */
 export const noPayloadRequestFunctionCreator =
   ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
-  <ResponseDataType = any>(
-    route?: Route,
-    config?: AxiosRequestConfig,
-    serviceFunction?: ServiceFunction
-  ) => {
-    return async () =>
-      axios[method]<ResponseDataType>(
+  <ResponseDataType = any>(route?: Route, config?: AxiosRequestConfig, serviceFunction?: ServiceFunction) => {
+    return async () => {
+      const metadata = { serviceConfig, serviceFunction };
+
+      return axios[method]<ResponseDataType>(
         routeBuilder(prefix, route),
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
-        .then((res) => onSuccessHandle(res, { serviceConfig, serviceFunction }))
+        .then((res) => onSuccessHandle(res, metadata))
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
+    };
   };
 
 /**
@@ -53,11 +52,14 @@ export const noPayloadRequestFunctionCreatorByParam =
     config?: AxiosRequestConfig,
     serviceFunction?: ServiceFunction
   ): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
-    return async (param: ParamType) =>
-      axios[method]<ResponseDataType>(
+    return async (param: ParamType) => {
+      const metadata = { serviceConfig, serviceFunction };
+
+      return axios[method]<ResponseDataType>(
         routeBuilderWithParam(prefix, param, route),
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
-        .then((res) => onSuccessHandle(res, { serviceConfig, serviceFunction }))
+        .then((res) => onSuccessHandle(res, metadata))
         .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
+    };
   };
