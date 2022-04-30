@@ -5,7 +5,7 @@ import { OnErrorFunction } from "./onError";
 import { OnSuccessFunction } from "./onSuccess";
 import { Key } from "./payload";
 import { Route } from "./route";
-import { ValidationConfig } from "./validation";
+import { ValidationConfig } from "./validation.types";
 
 export type ServiceMethodsCreator = ReturnType<typeof createMethodsFunctionsCreator>;
 export type ServiceMethodCreator = keyof ServiceMethodsCreator;
