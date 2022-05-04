@@ -11,7 +11,7 @@
 
 ## Description
 
-<strong>4rest (Forest)</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) package suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
+<strong>4rest (Forest)</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) and [`zod`](https://www.npmjs.com/package/zod) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
 
 <br />
 
@@ -34,18 +34,29 @@ Using yarn
 <h2>Table of contents</h2>
 
 <ul>
+<li><a href="#motivation">Motivation</a></li>
 <li><a href="#features">Features</a></li>
 <li><a href="#usage">Usage / Examples</a>
 <ul><li><a href="#usage/basic">Basic Service</a></li></ul>
-<ul><li><a href="#usage/custom">Custom Service</a></li></ul>
+<ul><li><a href="#usage/extended">Extended Service</a></li></ul>
 <li><a href="#types">Service Types</a></li>
 <li><a href="#config">Configuration</a>
 <ul><li><a href="#config/instance">Instance</a><ul><li><a href="#config/instance/instance-creation">Instance Creation</a></li><li><a href="#config/instance/axios-instance-access">Axios Instance Access</a></li></ul></li></ul>
 <ul><li><a href="#config/service">Service</a></li><ul><li><a href="#config/service/routes">Methods Routes</a></li></ul>
 <ul><li><a href="#config/service/request-config">Request Config</a></li>
-<li><a href="#config/service/payload-key">Payload Data Key</a></li></ul></ul>
+<li><a href="#config/service/payload-key">Payload Data Key</a></li><li><a href="#config/service/validation">Zod Validation</a></li></ul></ul>
 
 </ul>
+
+<br />
+
+<a id="motivation"> <h2>Motivation</h2></a>
+
+The package was created to help developers to get their requests functions from client to API up and runing quickly and comfortably, as well as making configuration for requests all centeralized in one spot at the code base of the app.
+Using the package, you can divide your requests functions to API to different services based on the models (data structures) of the API.
+When you have initiallized your service, you can make request to API at every place in your app with type safety based on the service configuration.
+
+_Note: The package was meant to be used with rest apis only and is does not support graphql._
 
 <br />
 
@@ -65,13 +76,15 @@ Using yarn
 
 <br />
 
-🎨 <strong>Custom Services</strong> with option to add additional methods extending out CRUD methods that comes built in with the service
+🎨 <strong>Extended Services</strong> with option to add additional methods extending out CRUD methods that comes built in with the base service you create
 
 🧱 <strong>Services Built</strong> on fully configurable [`axios`](https://www.npmjs.com/package/axios) Instance
 
-⚙️ <strong>Convenient Configuration</strong> with custom routes, request configuration, and payload data (body property of request) key custom define
+⚙️ <strong>Convenient Configuration</strong> with custom routes, request configuration, and payload data (body property of request) key custom define.
+all of that configuration is per service or can be set globally on fetching instance as well
 
-🛡️ <strong>Type Safe</strong> API fetching requests, payloads, and responses
+🛡️ <strong>Data Type Validation</strong> - API fetching requests, payloads and responses data validation with [`zod`](https://www.npmjs.com/package/zod) schemas
+
 
 🧪 <strong>Test Proof</strong> - _4rest_ has 100% test coverage
 
@@ -165,9 +178,9 @@ async function updateUserById(id: ObjectId, partialUser: Partial<User>) {
 }
 ```
 
-<a id="usage/custom"> <h3>🎨 <u>_Custom_</u></h3></a>
+<a id="usage/extended"> <h3>🎨 <u>_Extended_</u></h3></a>
 
-#### 1) Create Custom Service
+#### 1) Create Extended Service
 
 ```typescript
 import { ForestService } from "4rest";
@@ -175,25 +188,51 @@ import { ForestService } from "4rest";
 import { instance } from "./forestInstance";
 
 export class UserService extends ForestService<UserWithId, User> {
-  constructor(config?: ServiceConfig) {
-    super("user", instance, config);
-    /* prefix for request url is "user" */
+  constructor() {
+    super("user", instance, {
+      /* service config will go here */
+    });
+    /* prefix for request url will be "user" */
   }
 
-  public getByFullname = this.methods.getByParam<UserWithId, string>("fullName");
-  public isEmailTaken = this.methods.getByParam<boolean, string>(["email", "taken"]);
+  public getByName = (name: string) => this.methodsCreator.getByParam<UserWithId, string>({ suffix: "name" })(name);
+  public getByNameWithQuery = (name: string) =>
+    this.methodsCreator.get<UserWithId>({ route: "name", config: { params: { name } } })();
+  public isEmailTaken = (email: string) =>
+    this.methodsCreator.getByParam<boolean, string>({ route: ["email", "taken"] })(email);
 }
 ```
 
-_<strong>Note:</strong> you must include constructor in the structure that is shown above in your custom service in order for it to work properly_
+_<strong>Notes:</strong>_
 
-#### 2) Use Custom Service
+1. You <strong>_must_</strong> include constructor in the structure that is shown above in your extended service in order for it to work properly
+
+2. Extended Service will include all the base service methods as well as the additional ones you have added
+
+3. To help you construct new service methods, `ForestService` class comes included with property named `methodsCreator` that you can utilize to create new methods easily.
+
+`methodsCreator` property includes the following helper methods:
+
+- get
+- getByParam
+- delete
+- post
+- put
+- putByParam
+- patch
+- patchByParam
+
+#### 2) Use Extended Service
 
 ```typescript
 const userService = new UserService();
 
-async function getUserByFullname(fullname: string) {
-  const user: User = await (await userService.getByFullname(fullname)).data;
+async function getUserName(name: string) {
+  const user: User = await (await userService.getByName(name)).data;
+}
+
+async function getUserNameByQuery(name: string) {
+  const user: User = await (await userService.getByNameWithQuery(name)).data;
 }
 
 async function isEmailTaken(email: string) {
@@ -440,6 +479,94 @@ const userService = instance.createService<UserWithId, User, number>("user", {
   payloadKeyByMethod: { post: "data" },
 });
 ```
+
+<a id="config/service/validation"> <h4>4) Zod Validation</h4></a>
+
+If you want to make sure that the data you send to the API or recieved back from it, matches your data model schemas you can set validation config for service with [`zod`](https://www.npmjs.com/package/zod) schemas.
+
+First of all, decalre your validation schemas using zod:
+
+```typescript
+export const UserSchema = z.object({
+  name: z.string(),
+  email: z.string().optional(),
+});
+
+export const UserWithIdSchema = UserSchema.extend({
+  _id: z.number(),
+});
+```
+
+then apply zod schemas to the fitting property of service configuration object:
+
+- <strong>Global validation for all methods on service:</strong>
+
+```typescript
+import { instance } from "./forestInstance";
+import { UserWithIdSchema, UserSchema } from "../../types/user";
+
+const userService = instance.createService<UserWithId, User, number>("user", {
+  validation: {
+      types: { resoponseData: UserWithIdSchema },
+    }
+  }
+});
+```
+
+_Examples for data recieved back from API:_
+
+```typescript
+// Valid Data, no error will be thrown
+[{ _id: 1, name: "John Smith" }];
+
+// Invalid data, will throw error
+[{ name: "John Smith" }];
+```
+
+- <strong>Validation by service method:</strong>
+
+```typescript
+import { instance } from "./forestInstance";
+import { UserWithIdSchema, UserSchema } from "../../types/user";
+
+const userService = instance.createService<UserWithId, User, number>("user", {
+  validation: {
+    onMethods: {
+      post: { types: { requestPayload: UserSchema, resoponseData: UserWithIdSchema } },
+      getById: { types: { resoponseData: UserSchema.strict() } },
+    },
+  },
+});
+```
+
+_Examples for payload sent to API:_
+
+```typescript
+// Valid Data, no error will be thrown
+{ name: "John Smith", email: "john.smith@gmail.com" };
+
+// Invalid data, will throw error
+{ email: "john.smith@gmail.com" };
+```
+
+- <strong>Combination of both:</strong>
+
+```typescript
+import { instance } from "./forestInstance";
+import { UserWithIdSchema, UserSchema } from "../../types/user";
+
+userService = forestInstance.createService<UserWithId, User, number>("user", {
+  validation: {
+    onMethods: {
+      post: { types: { requestPayload: UserSchema, resoponseData: UserWithIdSchema } },
+      getById: { types: { resoponseData: UserSchema.strict() } },
+    },
+    types: { resoponseData: UserWithIdSchema },
+  },
+});
+```
+
+_<strong>Note:</strong> if a method has its own specific validation, it will be used over the global one_
 
 ## License
 
