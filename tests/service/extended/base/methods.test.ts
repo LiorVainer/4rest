@@ -5,6 +5,11 @@ import { UserWithId } from "../../../types/user";
 
 import { userService } from "./index.test";
 
+export const requestInterceptor = axios.interceptors.request.use((request) => {
+  console.log("Starting Request", JSON.stringify(request, null, 2));
+  return request;
+});
+
 describe("Custom Service Method ", () => {
   let mock: MockAdapter;
 
@@ -33,7 +38,7 @@ describe("Custom Service Method ", () => {
 
     const name = "John Smith";
     const matchUser = { _id: 1, name: "John Smith", email: "john.smith@gmail.com" };
-    mock.onGet(`user/name/${name}`).reply(
+    mock.onGet(`user/${name}/name`).reply(
       200,
       usersData.find((user) => user.name === name)
     );

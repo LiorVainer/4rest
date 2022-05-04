@@ -12,13 +12,15 @@ export const forestInstance: ForestInstance = forest.create();
 export let userService: UserService;
 
 export class UserService extends ForestService<UserWithId, User> {
-  constructor(config?: ForestServiceConfig) {
-    super("user", forestInstance, config);
+  constructor() {
+    super("user", forestInstance);
   }
 
-  public getByName = (name: string) => this.methodsCreator.getByParam<UserWithId, string>("name")(name);
-  public getByNameWithQuery = (name: string) => this.methodsCreator.get<UserWithId>("name", { params: { name } })();
-  public isEmailTaken = (email: string) => this.methodsCreator.getByParam<boolean, string>(["email", "taken"])(email);
+  public getByName = (name: string) => this.methodsCreator.getByParam<UserWithId, string>({ suffix: "name" })(name);
+  public getByNameWithQuery = (name: string) =>
+    this.methodsCreator.get<UserWithId>({ route: "name", config: { params: { name } } })();
+  public isEmailTaken = (email: string) =>
+    this.methodsCreator.getByParam<boolean, string>({ route: ["email", "taken"] })(email);
 }
 
 beforeAll(() => {

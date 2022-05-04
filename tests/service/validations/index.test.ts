@@ -1,8 +1,5 @@
-import axios from "axios";
-
 import { User, UserWithIdSchema, UserWithId, UserSchema } from "../../types/user";
 import forest, { ForestInstance, ForestService } from "../../../src";
-import { z } from "zod";
 
 export let forestInstance: ForestInstance;
 export let userService: ForestService<UserWithId, User, number>;

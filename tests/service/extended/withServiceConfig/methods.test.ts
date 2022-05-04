@@ -37,7 +37,7 @@ describe("Custom Service Method ", () => {
 
     const name = "John Smith";
     const matchUser = { _id: 1, name: "John Smith", email: "john.smith@gmail.com" };
-    mock.onGet(`user/name/${name}`).reply((config) => {
+    mock.onGet(`user/${name}/name`).reply((config) => {
       expect(config.headers?.Authorization).toEqual(Authorization);
       return [200, usersData.find((user) => user.name === name)];
     });
