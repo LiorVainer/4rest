@@ -1,21 +1,20 @@
 import { AxiosInstance } from "axios";
 import { AxiosSettings } from "../types/axios";
 
-import { ServiceConfig } from "../types/service.types";
+import { GlobalServiceConfig, ServiceConfig } from "../types/service.types";
 import { createAxiosInstance } from "../utils/axios";
 import { mergeGlobalAndServiceConfig } from "../utils/config";
-
 
 import { ForestService } from "./service";
 
 export interface InstanceConfig {
   axiosSettings?: AxiosSettings;
-  globalServiceConfig?: ServiceConfig;
+  globalServiceConfig?: GlobalServiceConfig;
 }
 
 export class ForestInstance {
   readonly axiosInstance: AxiosInstance;
-  readonly globalServiceConfig: ServiceConfig | undefined;
+  readonly globalServiceConfig: GlobalServiceConfig | undefined;
 
   constructor(config?: InstanceConfig) {
     this.axiosInstance = createAxiosInstance(config?.axiosSettings);

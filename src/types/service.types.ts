@@ -10,8 +10,7 @@ import { ValidationConfig } from "./validation.types";
 export type ServiceMethodsCreator = ReturnType<typeof createMethodsFunctionsCreator>;
 export type ServiceMethodCreator = keyof ServiceMethodsCreator;
 
-export type ServiceFunction<Service extends ForestService = ForestService> =
-  keyof Service;
+export type ServiceFunction<Service extends ForestService = ForestService> = keyof Service;
 
 export const SERVICE_FUNCTIONS: Record<ServiceFunction, ServiceFunction> = {
   getAll: "getAll",
@@ -25,6 +24,7 @@ export const SERVICE_FUNCTIONS: Record<ServiceFunction, ServiceFunction> = {
   putById: "putById",
 };
 
+export type GlobalServiceConfig = Omit<ServiceConfig, "validation">;
 export interface ServiceConfig {
   routes?: {
     getAll?: Route;
