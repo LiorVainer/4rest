@@ -1,17 +1,16 @@
 import { BaseParamType, Prefix, Route } from "../types/route";
 
-export const routeBuilder = (prefix: Prefix, route?: Route): string =>
-  route
-    ? `${prefix}/${typeof route === "string" ? route : route?.join("/")}`
-    : prefix;
+export const stringStructBuilder = (route: Route, seperator: string = "/"): string => {
+  return typeof route === "string" ? route : route?.join(seperator);
+};
 
-export const routeBuilderWithParam = (
-  prefix: Prefix,
-  param: BaseParamType,
-  route?: Route
-): string =>
-  route
-    ? `${prefix}/${
-        typeof route === "string" ? route : route?.join("/")
-      }/${param.toString()}`
-    : `${prefix}/${param.toString()}`;
+export const routeBuilder = (prefix: Prefix, route?: Route): string =>
+  route ? `${prefix}/${stringStructBuilder(route)}` : prefix;
+
+export const routeBuilderWithParam = (prefix: Prefix, param: BaseParamType, route?: Route, suffix?: Route): string => {
+  if (route) {
+    return `${prefix}/${stringStructBuilder(route)}/${param}${suffix ? `/${stringStructBuilder(suffix)}` : ""}`;
+  } else {
+    return `${prefix}/${param}${suffix ? `/${stringStructBuilder(suffix)}` : ""}`;
+  }
+};

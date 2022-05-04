@@ -7,6 +7,7 @@ import { mergeRequestConfig } from "../utils/config";
 import { onSuccessHandle } from "../utils/onSuccess.utils";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 import { ServiceFunction } from "../types/service.types";
+import { NoPayloadRequestFunctionByParamParams, NoPayloadRequestFunctionParams } from "./factory.types";
 
 export interface NoPayloadRequestFactoryProps {
   serviceConfig?: ServiceConfig;
@@ -25,7 +26,7 @@ export interface NoPayloadRequestFactoryProps {
  */
 export const noPayloadRequestFunctionCreator =
   ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
-  <ResponseDataType = any>(route?: Route, config?: AxiosRequestConfig, serviceFunction?: ServiceFunction) => {
+  <ResponseDataType = any>({ config, route, serviceFunction }: NoPayloadRequestFunctionParams = {}) => {
     return async () => {
       const metadata = { serviceConfig, serviceFunction };
 
@@ -47,16 +48,17 @@ export const noPayloadRequestFunctionCreator =
  */
 export const noPayloadRequestFunctionCreatorByParam =
   ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
-  <ResponseDataType = any, ParamType extends BaseParamType = string>(
-    route?: Route,
-    config?: AxiosRequestConfig,
-    serviceFunction?: ServiceFunction
-  ): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
+  <ResponseDataType = any, ParamType extends BaseParamType = string>({
+    config,
+    route,
+    serviceFunction,
+    suffix,
+  }: NoPayloadRequestFunctionByParamParams = {}): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType) => {
       const metadata = { serviceConfig, serviceFunction };
 
       return axios[method]<ResponseDataType>(
-        routeBuilderWithParam(prefix, param, route),
+        routeBuilderWithParam(prefix, param, route, suffix),
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
         .then((res) => onSuccessHandle(res, metadata))
