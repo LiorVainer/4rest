@@ -1,4 +1,4 @@
-import { array, z, ZodSchema } from "zod";
+import { ZodSchema } from "zod";
 import { ServiceFunction } from "./service.types";
 
 interface ValidationTypes<T = ZodSchema> {

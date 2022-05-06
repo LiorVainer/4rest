@@ -9,6 +9,7 @@ import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 import { ServiceFunction } from "../types/service.types";
 import { NoPayloadRequestFunctionByParamParams, NoPayloadRequestFunctionParams } from "./factory.types";
 import { metadataCreator } from "../utils/metadata.utils";
+import { onErrorHandle } from "../utils/onError.utils";
 
 export interface NoPayloadRequestFactoryProps {
   serviceConfig?: ServiceConfig;
@@ -27,16 +28,23 @@ export interface NoPayloadRequestFactoryProps {
  */
 export const noPayloadRequestFunctionCreator =
   ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
-  <ResponseDataType = any>({ config, route, serviceFunction, validation }: NoPayloadRequestFunctionParams = {}) => {
+  <ResponseDataType = any>({
+    config,
+    route,
+    serviceFunction,
+    validation,
+    onSuccess,
+    onError,
+  }: NoPayloadRequestFunctionParams = {}) => {
     return async () => {
-      const metadata = metadataCreator(serviceConfig, serviceFunction, validation);
+      const metadata = metadataCreator(serviceConfig, serviceFunction, { validation, onSuccess, onError });
 
       return axios[method]<ResponseDataType>(
         routeBuilder(prefix, route),
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
         .then((res) => onSuccessHandle(res, metadata))
-        .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
+        .catch((error) => onErrorHandle(error, metadata));
     };
   };
 
@@ -55,15 +63,17 @@ export const noPayloadRequestFunctionCreatorByParam =
     serviceFunction,
     suffix,
     validation,
+    onError,
+    onSuccess,
   }: NoPayloadRequestFunctionByParamParams = {}): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType) => {
-      const metadata = metadataCreator(serviceConfig, serviceFunction, validation);
+      const metadata = metadataCreator(serviceConfig, serviceFunction, { validation, onSuccess, onError });
 
       return axios[method]<ResponseDataType>(
         routeBuilderWithParam(prefix, param, route, suffix),
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
         .then((res) => onSuccessHandle(res, metadata))
-        .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
+        .catch((error) => onErrorHandle(error, metadata));
     };
   };

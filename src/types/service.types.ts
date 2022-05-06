@@ -39,5 +39,7 @@ export interface ServiceConfig {
     putById?: Key;
   };
   onSuccess?: OnSuccessFunction;
+  onSuccessByMethod?: Partial<Record<ServiceFunction, OnSuccessFunction>>;
   onError?: OnErrorFunction;
+  onErrorByMethod?: Partial<Record<ServiceFunction, OnErrorFunction>>;
 }

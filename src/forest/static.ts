@@ -1,4 +1,3 @@
-import { createAxiosInstance } from "../utils/axios";
 import ForestInstance, { InstanceConfig } from "./instance";
 
 export class ForestStatic {

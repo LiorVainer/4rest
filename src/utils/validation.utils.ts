@@ -1,7 +1,6 @@
 import { AxiosResponse } from "axios";
 import { ARRAY_VALIDATION_SERVICE_FUNCTIONS } from "../constants/validations.const";
-
-import { Metadata } from "../types/onSuccess";
+import { Metadata } from "../types/metadata.types";
 
 /**
  * Function to handle validation of response of HTTP request to API

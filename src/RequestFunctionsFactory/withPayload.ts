@@ -6,6 +6,7 @@ import { BaseParamType, Route } from "../types/route";
 import { ServiceConfig, ServiceFunction } from "../types/service.types";
 import { mergeRequestConfig } from "../utils/config";
 import { metadataCreator } from "../utils/metadata.utils";
+import { onErrorHandle } from "../utils/onError.utils";
 import { onSuccessHandle } from "../utils/onSuccess.utils";
 import { payloadBuilder } from "../utils/payload";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
@@ -37,9 +38,11 @@ export const withPayloadRequest =
     route,
     serviceFunction,
     validation,
+    onError,
+    onSuccess,
   }: PayloadRequestFunctionParams = {}): ((data: PayloadType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (data: PayloadType) => {
-      const metadata = metadataCreator(serviceConfig, serviceFunction, validation);
+      const metadata = metadataCreator(serviceConfig, serviceFunction, { validation, onSuccess, onError });
 
       payloadValidationHandle(data, metadata);
 
@@ -49,7 +52,7 @@ export const withPayloadRequest =
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
         .then((res) => onSuccessHandle(res, metadata))
-        .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
+        .catch((error) => onErrorHandle(error, metadata));
     };
   };
 
@@ -70,12 +73,14 @@ export const withPayloadRequestByParam =
     serviceFunction,
     suffix,
     validation,
+    onError,
+    onSuccess,
   }: PayloadRequestFunctionByParamParams = {}): ((
     param: ParamType,
     data: PayloadType
   ) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType, data: PayloadType) => {
-      const metadata = metadataCreator(serviceConfig, serviceFunction, validation);
+      const metadata = metadataCreator(serviceConfig, serviceFunction, { validation, onSuccess, onError });
 
       payloadValidationHandle(data, metadata);
 
@@ -85,6 +90,6 @@ export const withPayloadRequestByParam =
         mergeRequestConfig(axios.defaults, serviceConfig?.requestConfig, config)
       )
         .then((res) => onSuccessHandle(res, metadata))
-        .catch(serviceConfig?.onError ?? defaultOnErrorFunction);
+        .catch((error) => onErrorHandle(error, metadata));
     };
   };

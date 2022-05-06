@@ -1,5 +1,7 @@
-export type OnErrorFunction = (error: any) => any;
+import { Metadata } from "./metadata.types";
 
-export const defaultOnErrorFunction: OnErrorFunction = (error: any) => {
+export type OnErrorFunction = (error: any, metadata?: Metadata) => any;
+
+export const defaultOnErrorFunction: OnErrorFunction = (error: any, _metadata) => {
   throw error;
 };
