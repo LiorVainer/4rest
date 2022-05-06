@@ -3,13 +3,13 @@
 </br>
 </br>
 
+## 4REST
+
 [![test coverage](https://badgen.net/badge/coverage/100%25/green?icon=github)](https://github.com/LiorVainer/4rest)
 [![npm version](https://img.shields.io/npm/v/4rest?color=f00e0e&logo=npm&style=flat)](https://www.npmjs.com/package/4rest)
 [![install size](https://packagephobia.com/badge?p=4rest)](https://packagephobia.com/result?p=4rest)
 [![minizipped size](https://img.shields.io/bundlephobia/minzip/4rest)](https://packagephobia.com/result?p=4rest)
 [![License](https://img.shields.io/github/license/liorvainer/4rest?color=orange)](https://www.npmjs.com/package/4rest)
-
-## Description
 
 <strong>4rest (Forest)</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) and [`zod`](https://www.npmjs.com/package/zod) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
 
@@ -31,7 +31,7 @@ Using yarn
 
 <br />
 
-<h2>Table of contents</h2>
+<h2>Table of Contents</h2>
 
 <ul>
 <li><a href="#motivation">Motivation</a></li>
@@ -39,14 +39,15 @@ Using yarn
 <li><a href="#usage">Usage / Examples</a>
 <ul><li><a href="#usage/basic">Basic Service</a></li></ul>
 <ul><li><a href="#usage/extended">Extended Service</a></li></ul>
-<li><a href="#types">Service Types</a></li>
 <li><a href="#config">Configuration</a>
 <ul><li><a href="#config/instance">Instance</a><ul><li><a href="#config/instance/instance-creation">Instance Creation</a></li><li><a href="#config/instance/axios-instance-access">Axios Instance Access</a></li></ul></li></ul>
 <ul><li><a href="#config/service">Service</a></li><ul><li><a href="#config/service/routes">Methods Routes</a></li></ul>
 <ul><li><a href="#config/service/request-config">Request Config</a></li>
-<li><a href="#config/service/payload-key">Payload Data Key</a></li><li><a href="#config/service/validation">Zod Validation</a></li></ul></ul>
-
-</ul>
+<li><a href="#config/service/payload-key">Payload Data Key</a></li><li><a href="#config/service/handlingFunctions">On Success / On Error Handling</a></li><li><a href="#config/service/validation">Zod Validation</a></li></ul></li></ul>
+<ul><li><a href="#config/methods-creator">Methods Creator Helper</a></li></ul>
+<li><a href="#types">Types</a>
+<ul><li><a href="#types/service-generics">Service Generics</a></li><li><a href="#types/service-method-metadata">Service Method Metadata</a></li><li><a href="#types/on-success">OnSuccess Function</a></li><li><a href="#types/on-error">OnError Function</a></li></ul></li>
+<ul></ul></ul>
 
 <br />
 
@@ -84,7 +85,6 @@ _Note: The package was meant to be used with rest apis only and is does not supp
 all of that configuration is per service or can be set globally on fetching instance as well
 
 🛡️ <strong>Data Type Validation</strong> - API fetching requests, payloads and responses data validation with [`zod`](https://www.npmjs.com/package/zod) schemas
-
 
 🧪 <strong>Test Proof</strong> - _4rest_ has 100% test coverage
 
@@ -209,18 +209,7 @@ _<strong>Notes:</strong>_
 
 2. Extended Service will include all the base service methods as well as the additional ones you have added
 
-3. To help you construct new service methods, `ForestService` class comes included with property named `methodsCreator` that you can utilize to create new methods easily.
-
-`methodsCreator` property includes the following helper methods:
-
-- get
-- getByParam
-- delete
-- post
-- put
-- putByParam
-- patch
-- patchByParam
+3. Read about <a href='#config/methods-creator'>Methods Creator</a> to add new methods to extended service easily
 
 #### 2) Use Extended Service
 
@@ -239,100 +228,7 @@ async function isEmailTaken(email: string) {
   const isEmailTaken: boolean = await (await userService.isEmailTaken(email)).data;
 }
 ```
-
-<br>
-
-<a id="types"> <h2>Types</h2></a>
-
-<strong>Service</strong> has _generic types_ to control the following types of the service methods
-
-- Response Data
-- Payload Data
-- Id Type
-
-```typescript
-class ForestService<ResponseData = any, PayloadData = Response, IdType = string>
-```
-
-By doing so, Typescript will force you to give it the parameters with matching types when calling the service methods or will recognize alone the response data type for more comfortable auto-completion in the future.
-
-You pass this generic types when creating new service with `createService()` function of a `forestInstance`
-
-<strong>Example:</strong>
-
-```typescript
-import { instance } from "./forestInstance";
-import { UserWithId, User } from "./types";
-
-const userService = instance.createService<UserWithId, User, string>("user");
-
-// ResponseData - UserWithId
-// PayloadData - User
-// IdType - string
-```
-
-<strong>By default</strong> the service takes the types you passed to it and transform them to each service method in the following way:
-
-#### getAll
-
-- Response Data Type: `ResponseData[]`
-
-#### getById
-
-- Response Data Type: `ResponseData`
-- Id Type: `IdType`
-
-#### DeleteAll
-
-- Response Data Type: `ResponseData[]`
-
-#### deleteById
-
-- Response Data Type: `ResponseData`
-- Id Type: `IdType`
-
-#### post
-
-- Response Data Type: `ResponseData`
-- Payload Data Type: `PayloadData`
-
-#### patch
-
-- Response Data Type: `ResponseData`
-- Payload Data Type: `Partial<PayloadData>`
-
-#### patchById
-
-- Response Data Type: `ResponseData`
-- Payload Data Type: `Partial<PayloadData>`
-- Id Type: `IdType`
-
-#### put
-
-- Response Data Type: `ResponseData`
-- Payload Data Type: `Partial<PayloadData>`
-
-#### putById
-
-- Response Data Type: `ResponseData`
-- Payload Data Type: `Partial<PayloadData>`
-- Id Type: `IdType`
-
-if you would like to change one or more of this method types, you can do it when calling the method by passing to it generic types that will be relevant to the this method only, at the place you are calling it.
-
-<br>
-
-<strong>Example:</strong>
-
-Lets say you would like to change the type of the response data that comes back from calling to the post method from `ResponseData` to `boolean` because the API you working with is returns only with data that indicates whether or not an _User_ has been created successfully
-
-You can do that in the following way:
-
-```typescript
-const data: boolean = await(await userService.post<boolean>(/* newUserData */)).data;
-```
-
-<br>
+</br>
 
 <a id="config"> <h2>Configuration</h2></a>
 
@@ -354,6 +250,8 @@ const forestInstance = forest.create({
   });
 ```
 
+See What <a href="#config/service">Service Config</a> includes down below.
+
 _<strong>Note:</strong> if a created service will have a config of it's own, it's config properties will be overriding the global service config properties, which means the more specific property is the one that will be in use eventually_
 
 <br/>
@@ -373,10 +271,10 @@ _<strong>Note:</strong> Configuration is completly optional, and if `axiosSettin
 
 <a id="config/instance/axios-instance-access"><h4><strong><u>Axios Instance Access</u></strong></h4></a>
 
-<strong>you can access the totally regular `AxiosInstance` that the `ForestInstance` is based on which contains all of [`axios`](https://www.npmjs.com/package/axios) methods on it:</strong>
+You can access the totally regular `AxiosInstance` that the `ForestInstance` is based on which contains all of [`axios`](https://www.npmjs.com/package/axios) methods on it:
 </br>
 </br>
-access it using the `axiosInstance` property on created `ForestInstance`
+Access it using the `axiosInstance` property on created `ForestInstance`
 
 ```typescript
 import { forestInstance } from "./instance";
@@ -480,7 +378,69 @@ const userService = instance.createService<UserWithId, User, number>("user", {
 });
 ```
 
-<a id="config/service/validation"> <h4>4) Zod Validation</h4></a>
+<a id="config/service/handlingFunctions"> <h4>4) OnSuccess / OnError Handling</h4></a>
+
+You can configure in advance how to handle each request when it is completes successfully or failing and throws error.
+
+Set up onSuccess function which parameters will be the <strong>_response_</strong> from successful request and optionally the <strong>_metadata_</strong> of the request.
+
+Set up onError function which parameters will be the <strong>_error_</strong> that was thrown from a failed request and optionally the <strong>_metadata_</strong> of the request.
+
+<strong>_Without metadata parameter used:_</strong>
+
+```Typescript
+const userService = forestInstance.createService<UserWithId, User, number>("user", {
+    onSuccess: (response) => response.data,
+    onError: (error) => {
+      return { error, msg: "error" };
+    },
+  });
+```
+
+<strong>_With metadata parameter used:_</strong>
+
+```Typescript
+const userService = forestInstance.createService<UserWithId, User, number>("user", {
+    onSuccess: (response, metadata) => {
+      console.log(metadata.serviceConfig.validation);
+      return response.data
+    },
+    onError: (error, metadata) => {
+      console.log(metadata.serviceConfig.routes);
+      return { error, msg: "error" };
+    },
+  });
+```
+
+You can also set different onSuccess and onError functions for each service method in the following way:
+
+```Typescript
+const userService = forestInstance.createService<UserWithId, User, number>("user", {
+    onSuccessByMethod: {
+      getAll: (response) => response.data,
+      getById: (response) => response.status,
+      ...,
+      post: (response, metadata) => {
+        console.log(metadata.serviceFunction);
+
+        return response.data;
+      },
+    },
+    onErrorByMethod: {
+      getById: (error) => {
+        return { error, msg: "errorByMethod" };
+      },
+      ...,
+      post: (error, metadata) => {
+        console.log('error at method:', metadata.serviceFunction);
+
+        throw error;
+      },
+    },
+  });
+```
+
+<a id="config/service/validation"> <h4>5) Zod Validation</h4></a>
 
 If you want to make sure that the data you send to the API or recieved back from it, matches your data model schemas you can set validation config for service with [`zod`](https://www.npmjs.com/package/zod) schemas.
 
@@ -502,10 +462,9 @@ then apply zod schemas to the fitting property of service configuration object:
 - <strong>Global validation for all methods on service:</strong>
 
 ```typescript
-import { instance } from "./forestInstance";
 import { UserWithIdSchema, UserSchema } from "../../types/user";
 
-const userService = instance.createService<UserWithId, User, number>("user", {
+const userService = forestInstance.createService<UserWithId, User, number>("user", {
   validation: {
       types: { resoponseData: UserWithIdSchema },
     }
@@ -526,10 +485,9 @@ _Examples for data recieved back from API:_
 - <strong>Validation by service method:</strong>
 
 ```typescript
-import { instance } from "./forestInstance";
 import { UserWithIdSchema, UserSchema } from "../../types/user";
 
-const userService = instance.createService<UserWithId, User, number>("user", {
+const userService = forestInstance.createService<UserWithId, User, number>("user", {
   validation: {
     onMethods: {
       post: { types: { requestPayload: UserSchema, resoponseData: UserWithIdSchema } },
@@ -552,10 +510,9 @@ _Examples for payload sent to API:_
 - <strong>Combination of both:</strong>
 
 ```typescript
-import { instance } from "./forestInstance";
 import { UserWithIdSchema, UserSchema } from "../../types/user";
 
-userService = forestInstance.createService<UserWithId, User, number>("user", {
+const userService = forestInstance.createService<UserWithId, User, number>("user", {
   validation: {
     onMethods: {
       post: { types: { requestPayload: UserSchema, resoponseData: UserWithIdSchema } },
@@ -567,6 +524,208 @@ userService = forestInstance.createService<UserWithId, User, number>("user", {
 ```
 
 _<strong>Note:</strong> if a method has its own specific validation, it will be used over the global one_
+
+<a id="config/methods-creator"> <h3>📀 <strong>Methods Creator Helper</strong></h3></a>
+
+To help you construct new service methods, `ForestService` class comes included with property named `methodsCreator` that you can utilize to create new methods easily.
+
+`methodsCreator` property includes the following helper methods:
+
+- get
+- getByParam
+- delete
+- post
+- put
+- putByParam
+- patch
+- patchByParam
+
+_Examples_:
+
+```typescript
+public getByName = (name: string) => this.methodsCreator.getByParam<UserWithId, string>({ suffix: "name" })(name);
+public getByNameWithQuery = (name: string) => this.methodsCreator.get<UserWithId>({ route: "name", config: { params: { name } } })();
+public isEmailTaken = (email: string) => this.methodsCreator.getByParam<boolean, string>({ route: ["email", "taken"] })(email);
+```
+
+### _Configuration Options_:
+
+#### _Base Helper Method_:
+
+```typescript
+interface BaseConfig {
+  route?: Route; // string or string[]
+  config?: AxiosRequestConfig;
+  serviceFunction?: ServiceFunction;
+  validation?: MethodValidationConfig; // configuartion object based on Zod Schemas;
+  onSuccess?: OnSuccessFunction;
+  onError?: OnErrorFunction;
+}
+```
+
+#### _Payload Helper Method_:
+
+```typescript
+interface PayloadConfig {
+  route?: Route;
+  config?: AxiosRequestConfig;
+  validation?: MethodValidationConfig;
+  onSuccess?: OnSuccessFunction;
+  onError?: OnErrorFunction;
+  key?: Key; // string
+}
+```
+
+#### _By Param Helper Method_:
+
+```typescript
+interface ByParamConfig {
+  route?: Route;
+  suffix?: Route; // string or string[] added after the param in request url
+  config?: AxiosRequestConfig;
+  validation?: MethodValidationConfig;
+  onSuccess?: OnSuccessFunction;
+  onError?: OnErrorFunction;
+}
+```
+
+#### _Payload By Param Helper Method_:
+
+```typescript
+interface PayloadByParamConfig {
+  route?: Route;
+  suffix?: Route;
+  config?: AxiosRequestConfig;
+  validation?: MethodValidationConfig;
+  onSuccess?: OnSuccessFunction;
+  onError?: OnErrorFunction;
+  key?: Key;
+}
+```
+<br>
+
+<a id="types"> <h2>Types</h2></a>
+
+<a id="types/service-generics"> <h3>Service Generics</h3></a>
+
+<strong>Service</strong> has _generic types_ to control the following types of the service methods
+
+- Response Data
+- Payload Data
+- Id Type
+
+```typescript
+class ForestService<ResponseData = any, PayloadData = Response, IdType = string>
+```
+
+By doing so, Typescript will force you to give it the parameters with matching types when calling the service methods or will recognize alone the response data type for more comfortable auto-completion in the future.
+
+You pass this generic types when creating new service with `createService()` function of a `forestInstance`
+
+<strong>Example:</strong>
+
+```typescript
+import { instance } from "./forestInstance";
+import { UserWithId, User } from "./types";
+
+const userService = instance.createService<UserWithId, User, string>("user");
+
+// ResponseData - UserWithId
+// PayloadData - User
+// IdType - string
+```
+
+<strong>By default</strong> the service takes the types you passed to it and transform them to each service method in the following way:
+
+#### getAll
+
+- Response Data Type: `ResponseData[]`
+
+#### getById
+
+- Response Data Type: `ResponseData`
+- Id Type: `IdType`
+
+#### deleteAll
+
+- Response Data Type: `ResponseData[]`
+
+#### deleteById
+
+- Response Data Type: `ResponseData`
+- Id Type: `IdType`
+
+#### post
+
+- Response Data Type: `ResponseData`
+- Payload Data Type: `PayloadData`
+
+#### patch
+
+- Response Data Type: `ResponseData`
+- Payload Data Type: `Partial<PayloadData>`
+
+#### patchById
+
+- Response Data Type: `ResponseData`
+- Payload Data Type: `Partial<PayloadData>`
+- Id Type: `IdType`
+
+#### put
+
+- Response Data Type: `ResponseData`
+- Payload Data Type: `Partial<PayloadData>`
+
+#### putById
+
+- Response Data Type: `ResponseData`
+- Payload Data Type: `Partial<PayloadData>`
+- Id Type: `IdType`
+
+if you would like to change one or more of this method types, you can do it when calling the method by passing to it generic types that will be relevant to the this method only, at the place you are calling it.
+
+<br>
+
+<strong>Example:</strong>
+
+Lets say you would like to change the type of the response data that comes back from calling to the post method from `ResponseData` to `boolean` because the API you working with is returns only with data that indicates whether or not an _User_ has been created successfully
+
+You can do that in the following way:
+
+```typescript
+const data: boolean = await(await userService.post<boolean>(/* newUserData */)).data;
+```
+
+<a id="types/service-method-metadata"><h3>Service Method Metadata</h3></a>
+
+Each request function (method) in 4rest includes metadata about the current request.
+
+Method metadata includes the following properties:
+
+```typescript
+export interface Metadata {
+  serviceConfig?: ServiceConfig; // current service config
+  serviceFunction?: ServiceFunction; // name of one of the built in base service functions
+}
+```
+
+<a id="types/on-success"><h3>OnSuccess Function</h3></a>
+
+Function For Handling Successful Requests:
+
+```typescript
+export type OnSuccessFunction = <T>(value: AxiosResponse<T>, metadata?: Metadata) => any;
+```
+
+<a id="types/on-error"><h3>OnError Function</h3></a>
+
+Function For Handling Failed Requests:
+
+```typescript
+export type OnSuccessFunction = <T>(value: AxiosResponse<T>, metadata?: Metadata) => any;
+```
+
+<br>
 
 ## License
 
