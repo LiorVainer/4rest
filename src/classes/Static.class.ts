@@ -1,4 +1,4 @@
-import ForestInstance, { InstanceConfig } from "./instance";
+import ForestInstance, { InstanceConfig } from "./Instance.class";
 
 export class ForestStatic {
   create(config?: InstanceConfig): ForestInstance {

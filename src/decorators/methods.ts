@@ -1,5 +1,5 @@
-import { createMethodsFunctionsCreator } from "../RequestFunctionsFactory/index";
-import { ForestService } from "./../forest/service";
+import { createMethodsFunctionsCreator } from "../classes/RequestFunctionsFactory/index";
+import { ForestService } from "../classes/Service.class";
 import { fallback } from "../utils/general";
 import { ServiceMethodResponse } from "../types/promise";
 

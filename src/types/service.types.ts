@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from "axios";
-import { ForestService } from "../forest/service";
-import { createMethodsFunctionsCreator } from "../RequestFunctionsFactory";
+import { ForestService } from "../classes/Service.class";
+import { createMethodsFunctionsCreator } from "../classes/RequestFunctionsFactory";
 import { OnErrorFunction } from "./onError";
 import { OnSuccessFunction } from "./onSuccess";
 import { Key } from "./payload";

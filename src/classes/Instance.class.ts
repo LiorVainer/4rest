@@ -5,7 +5,7 @@ import { GlobalServiceConfig, ServiceConfig } from "../types/service.types";
 import { createAxiosInstance } from "../utils/axios";
 import { mergeGlobalAndServiceConfig } from "../utils/config";
 
-import { ForestService } from "./service";
+import { ForestService } from "./Service.class";
 
 export interface InstanceConfig {
   axiosSettings?: AxiosSettings;

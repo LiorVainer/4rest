@@ -1,15 +1,15 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { NoPayloadHTTPMethods } from "../types/methods.types";
-import { defaultOnErrorFunction } from "../types/onError";
-import { BaseParamType, Route } from "../types/route";
-import { ServiceConfig } from "../types/service.types";
-import { mergeRequestConfig } from "../utils/config";
-import { onSuccessHandle } from "../utils/onSuccess.utils";
-import { routeBuilder, routeBuilderWithParam } from "../utils/route";
-import { ServiceFunction } from "../types/service.types";
+import { NoPayloadHTTPMethods } from "../../types/methods.types";
+import { defaultOnErrorFunction } from "../../types/onError";
+import { BaseParamType, Route } from "../../types/route";
+import { ServiceConfig } from "../../types/service.types";
+import { mergeRequestConfig } from "../../utils/config";
+import { onSuccessHandle } from "../../utils/onSuccess.utils";
+import { routeBuilder, routeBuilderWithParam } from "../../utils/route";
+import { ServiceFunction } from "../../types/service.types";
 import { NoPayloadRequestFunctionByParamConfig, NoPayloadRequestFunctionConfig } from "./factory.types";
-import { metadataCreator } from "../utils/metadata.utils";
-import { onErrorHandle } from "../utils/onError.utils";
+import { metadataCreator } from "../../utils/metadata.utils";
+import { onErrorHandle } from "../../utils/onError.utils";
 
 export interface NoPayloadRequestFactoryProps {
   serviceConfig?: ServiceConfig;
