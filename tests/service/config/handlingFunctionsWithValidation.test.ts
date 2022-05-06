@@ -2,8 +2,9 @@ import axios from "axios";
 
 import MockAdapter from "axios-mock-adapter";
 
-import { User, UserWithId } from "../../types/user";
+import { User, UserWithId, UserWithIdSchema } from "../../types/user";
 import forest, { ForestInstance, ForestService } from "../../../src";
+import { ZodError } from "zod";
 
 export let forestInstance: ForestInstance;
 export let userService: ForestService<UserWithId, User, number>;
@@ -23,6 +24,9 @@ beforeAll(() => {
     onSuccessByMethod: {
       getById: (response) => response.status,
     },
+    validation: {
+      types: { resoponseData: UserWithIdSchema },
+    },
   });
 });
 
@@ -36,7 +40,7 @@ describe("Forest Classes", () => {
   });
 });
 
-describe("Custom Response and Error Handling", () => {
+describe("Custom Response and Error Handling With Validation", () => {
   let mock: MockAdapter;
 
   beforeEach(() => {
@@ -48,15 +52,34 @@ describe("Custom Response and Error Handling", () => {
   });
 
   test("onSuccess Handle", async () => {
-    const usersData = [{ id: 1, name: "John Smith" }];
+    const usersData = [{ _id: 1, name: "John Smith" }];
     mock.onGet("user").reply(200, usersData);
     const response = await userService.getAll();
 
     expect(response).toEqual(usersData);
   });
 
+  test("getAll valid", async () => {
+    const usersData = [{ _id: 1, name: "John Smith" }];
+    mock.onGet("user").reply(200, usersData);
+    const response = await userService.getAll();
+
+    expect(response).toEqual(usersData);
+  });
+
+  test("getAll notValid", async () => {
+    const usersData = [{ id: 1, name: "John Smith" }];
+    mock.onGet("user").reply(200, usersData);
+
+    try {
+      await userService.getAll();
+    } catch (err) {
+      expect(err instanceof Error).toBeTruthy();
+    }
+  });
+
   test("onSuccessByMethod Handle", async () => {
-    const userData = { id: 1, name: "John Smith" };
+    const userData = { _id: 1, name: "John Smith" };
     mock.onGet("user/1").reply(200, userData);
     const response = await userService.getById(1);
 

@@ -1,5 +1,5 @@
 import { AxiosDefaults, AxiosRequestConfig } from "axios";
-import { ServiceConfig } from "../types/forest";
+import { ServiceConfig } from "../types/service.types";
 
 export const mergeGlobalAndServiceConfig = (
   serviceConfig?: ServiceConfig,
