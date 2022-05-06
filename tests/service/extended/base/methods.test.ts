@@ -5,11 +5,6 @@ import { UserWithId } from "../../../types/user";
 
 import { userService } from "./index.test";
 
-export const requestInterceptor = axios.interceptors.request.use((request) => {
-  console.log("Starting Request", JSON.stringify(request, null, 2));
-  return request;
-});
-
 describe("Custom Service Method ", () => {
   let mock: MockAdapter;
 
