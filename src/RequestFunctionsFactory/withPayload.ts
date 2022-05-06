@@ -5,6 +5,7 @@ import { Key } from "../types/payload";
 import { BaseParamType, Route } from "../types/route";
 import { ServiceConfig, ServiceFunction } from "../types/service.types";
 import { mergeRequestConfig } from "../utils/config";
+import { metadataCreator } from "../utils/metadata.utils";
 import { onSuccessHandle } from "../utils/onSuccess.utils";
 import { payloadBuilder } from "../utils/payload";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
@@ -35,9 +36,10 @@ export const withPayloadRequest =
     key,
     route,
     serviceFunction,
+    validation,
   }: PayloadRequestFunctionParams = {}): ((data: PayloadType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (data: PayloadType) => {
-      const metadata = { serviceConfig, serviceFunction };
+      const metadata = metadataCreator(serviceConfig, serviceFunction, validation);
 
       payloadValidationHandle(data, metadata);
 
@@ -67,12 +69,13 @@ export const withPayloadRequestByParam =
     route,
     serviceFunction,
     suffix,
+    validation,
   }: PayloadRequestFunctionByParamParams = {}): ((
     param: ParamType,
     data: PayloadType
   ) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType, data: PayloadType) => {
-      const metadata = { serviceConfig, serviceFunction };
+      const metadata = metadataCreator(serviceConfig, serviceFunction, validation);
 
       payloadValidationHandle(data, metadata);
 

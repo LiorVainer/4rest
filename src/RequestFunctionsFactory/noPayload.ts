@@ -8,6 +8,7 @@ import { onSuccessHandle } from "../utils/onSuccess.utils";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 import { ServiceFunction } from "../types/service.types";
 import { NoPayloadRequestFunctionByParamParams, NoPayloadRequestFunctionParams } from "./factory.types";
+import { metadataCreator } from "../utils/metadata.utils";
 
 export interface NoPayloadRequestFactoryProps {
   serviceConfig?: ServiceConfig;
@@ -26,9 +27,9 @@ export interface NoPayloadRequestFactoryProps {
  */
 export const noPayloadRequestFunctionCreator =
   ({ axios, prefix, method, serviceConfig }: NoPayloadRequestFactoryProps) =>
-  <ResponseDataType = any>({ config, route, serviceFunction }: NoPayloadRequestFunctionParams = {}) => {
+  <ResponseDataType = any>({ config, route, serviceFunction, validation }: NoPayloadRequestFunctionParams = {}) => {
     return async () => {
-      const metadata = { serviceConfig, serviceFunction };
+      const metadata = metadataCreator(serviceConfig, serviceFunction, validation);
 
       return axios[method]<ResponseDataType>(
         routeBuilder(prefix, route),
@@ -53,9 +54,10 @@ export const noPayloadRequestFunctionCreatorByParam =
     route,
     serviceFunction,
     suffix,
+    validation,
   }: NoPayloadRequestFunctionByParamParams = {}): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType) => {
-      const metadata = { serviceConfig, serviceFunction };
+      const metadata = metadataCreator(serviceConfig, serviceFunction, validation);
 
       return axios[method]<ResponseDataType>(
         routeBuilderWithParam(prefix, param, route, suffix),
