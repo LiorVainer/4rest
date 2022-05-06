@@ -14,7 +14,15 @@ beforeAll(() => {
     onError: (error) => {
       return { error, msg: "error" };
     },
+    onErrorByMethod: {
+      getById: (error) => {
+        return { error, msg: "errorByMethod" };
+      },
+    },
     onSuccess: (response) => response.data,
+    onSuccessByMethod: {
+      getById: (response) => response.status,
+    },
   });
 });
 
@@ -47,11 +55,27 @@ describe("Custom Response and Error Handling", () => {
     expect(response).toEqual(usersData);
   });
 
+  test("onSuccessByMethod Handle", async () => {
+    const userData = { id: 1, name: "John Smith" };
+    mock.onGet("user/1").reply(200, userData);
+    const response = await userService.getById(1);
+
+    expect(response).toEqual(200);
+  });
+
   test("onError Handle", async () => {
     mock.onGet("user").reply(500);
     const response: any = await userService.getAll();
 
     expect(response.error instanceof Error).toEqual(true);
     expect(response.msg).toEqual("error");
+  });
+
+  test("onErrorByMethod Handle", async () => {
+    mock.onGet("user/1").reply(500);
+    const response: any = await userService.getById(1);
+
+    expect(response.error instanceof Error).toEqual(true);
+    expect(response.msg).toEqual("errorByMethod");
   });
 });
