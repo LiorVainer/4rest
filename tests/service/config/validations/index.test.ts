@@ -1,5 +1,5 @@
-import { User, UserWithIdSchema, UserWithId, UserSchema } from "../../types/user";
-import forest, { ForestInstance, ForestService } from "../../../src";
+import { User, UserWithIdSchema, UserWithId, UserSchema } from "../../../types/user";
+import forest, { ForestInstance, ForestService } from "../../../../src";
 
 export let forestInstance: ForestInstance;
 export let userService: ForestService<UserWithId, User, number>;

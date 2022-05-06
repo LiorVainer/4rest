@@ -58,7 +58,6 @@ describe("Custom Service Method ", () => {
 
     mock.onGet(`user/name`).reply((config) => {
       expect(config.headers?.Authorization).toEqual(Authorization);
-      console.log("config.params", config.params.name);
 
       return [200, usersData.find((user) => user.name === config.params.name)];
     });

@@ -19,6 +19,7 @@ describe("HTTP GET Method ", () => {
     mock.onGet("user").reply(200, usersData);
 
     const response = await userService.getAll();
+
     expect(response.data).toEqual(usersData);
   });
 

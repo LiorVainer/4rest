@@ -1,7 +1,7 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import { User, UserWithId } from "../../types/user";
+import { User, UserWithId } from "../../../types/user";
 import { userService } from "./index.test";
 import { ZodError } from "zod";
 
