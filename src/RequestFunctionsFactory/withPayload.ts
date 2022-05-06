@@ -11,7 +11,7 @@ import { onSuccessHandle } from "../utils/onSuccess.utils";
 import { payloadBuilder } from "../utils/payload";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 import { payloadValidationHandle } from "../utils/validation.utils";
-import { PayloadRequestFunctionByParamParams, PayloadRequestFunctionParams } from "./factory.types";
+import { PayloadRequestFunctionByParamConfig, PayloadRequestFunctionConfig } from "./factory.types";
 
 export interface WithPayloadRequestFactoryProps {
   axios: AxiosInstance;
@@ -40,7 +40,7 @@ export const withPayloadRequest =
     validation,
     onError,
     onSuccess,
-  }: PayloadRequestFunctionParams = {}): ((data: PayloadType) => Promise<AxiosResponse<ResponseDataType>>) => {
+  }: PayloadRequestFunctionConfig = {}): ((data: PayloadType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (data: PayloadType) => {
       const metadata = metadataCreator(serviceConfig, serviceFunction, { validation, onSuccess, onError });
 
@@ -75,7 +75,7 @@ export const withPayloadRequestByParam =
     validation,
     onError,
     onSuccess,
-  }: PayloadRequestFunctionByParamParams = {}): ((
+  }: PayloadRequestFunctionByParamConfig = {}): ((
     param: ParamType,
     data: PayloadType
   ) => Promise<AxiosResponse<ResponseDataType>>) => {

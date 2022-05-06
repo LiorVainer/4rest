@@ -7,7 +7,7 @@ import { mergeRequestConfig } from "../utils/config";
 import { onSuccessHandle } from "../utils/onSuccess.utils";
 import { routeBuilder, routeBuilderWithParam } from "../utils/route";
 import { ServiceFunction } from "../types/service.types";
-import { NoPayloadRequestFunctionByParamParams, NoPayloadRequestFunctionParams } from "./factory.types";
+import { NoPayloadRequestFunctionByParamConfig, NoPayloadRequestFunctionConfig } from "./factory.types";
 import { metadataCreator } from "../utils/metadata.utils";
 import { onErrorHandle } from "../utils/onError.utils";
 
@@ -35,7 +35,7 @@ export const noPayloadRequestFunctionCreator =
     validation,
     onSuccess,
     onError,
-  }: NoPayloadRequestFunctionParams = {}) => {
+  }: NoPayloadRequestFunctionConfig = {}) => {
     return async () => {
       const metadata = metadataCreator(serviceConfig, serviceFunction, { validation, onSuccess, onError });
 
@@ -65,7 +65,7 @@ export const noPayloadRequestFunctionCreatorByParam =
     validation,
     onError,
     onSuccess,
-  }: NoPayloadRequestFunctionByParamParams = {}): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
+  }: NoPayloadRequestFunctionByParamConfig = {}): ((param: ParamType) => Promise<AxiosResponse<ResponseDataType>>) => {
     return async (param: ParamType) => {
       const metadata = metadataCreator(serviceConfig, serviceFunction, { validation, onSuccess, onError });
 

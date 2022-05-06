@@ -7,7 +7,7 @@ import { Route } from "../types/route";
 import { ServiceFunction } from "../types/service.types";
 import { MethodValidationConfig } from "../types/validation.types";
 
-export interface BaseRequestFunctionParams {
+export interface BaseRequestFunctionConfig {
   route?: Route;
   config?: AxiosRequestConfig;
   serviceFunction?: ServiceFunction;
@@ -15,16 +15,16 @@ export interface BaseRequestFunctionParams {
   onSuccess?: OnSuccessFunction;
   onError?: OnErrorFunction;
 }
-export interface NoPayloadRequestFunctionByParamParams extends BaseRequestFunctionParams {
+export interface NoPayloadRequestFunctionByParamConfig extends BaseRequestFunctionConfig {
   suffix?: Route;
 }
 
-export interface PayloadRequestFunctionByParamParams extends NoPayloadRequestFunctionByParamParams {
+export interface PayloadRequestFunctionByParamConfig extends NoPayloadRequestFunctionByParamConfig {
   key?: Key;
 }
 
-export interface NoPayloadRequestFunctionParams extends BaseRequestFunctionParams {}
+export interface NoPayloadRequestFunctionConfig extends BaseRequestFunctionConfig {}
 
-export interface PayloadRequestFunctionParams extends NoPayloadRequestFunctionParams {
+export interface PayloadRequestFunctionConfig extends NoPayloadRequestFunctionConfig {
   key?: Key;
 }
