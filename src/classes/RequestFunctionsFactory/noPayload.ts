@@ -1,11 +1,11 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { NoPayloadHTTPMethods } from "../../types/methods.types";
-import { defaultOnErrorFunction } from "../../types/onError";
-import { BaseParamType, Route } from "../../types/route";
+import { defaultOnErrorFunction } from "../../types/onError.types";
+import { BaseParamType, Route } from "../../types/route.types";
 import { ServiceConfig } from "../../types/service.types";
-import { mergeRequestConfig } from "../../utils/config";
+import { mergeRequestConfig } from "../../utils/config.utils";
 import { onSuccessHandle } from "../../utils/onSuccess.utils";
-import { routeBuilder, routeBuilderWithParam } from "../../utils/route";
+import { routeBuilder, routeBuilderWithParam } from "../../utils/route.utils";
 import { ServiceFunction } from "../../types/service.types";
 import { NoPayloadRequestFunctionByParamConfig, NoPayloadRequestFunctionConfig } from "./factory.types";
 import { metadataCreator } from "../../utils/metadata.utils";

@@ -1,5 +1,5 @@
-import { OnErrorFunction } from "./onError";
-import { OnSuccessFunction } from "./onSuccess";
+import { OnErrorFunction } from "./onError.types";
+import { OnSuccessFunction } from "./onSuccess.types";
 import { ServiceConfig, ServiceFunction } from "./service.types";
 import { MethodValidationConfig } from "./validation.types";
 

@@ -1,8 +1,8 @@
 import { AxiosInstance } from "axios";
 import { noPayloadRequestMethods, withPayloadRequestMethods } from "../../constants/methods.const";
-import ForestInstance from "../Instance.class";
+import ForestInstance from "../instance.class";
 import { NoPayloadHTTPMethods, WithPayloadHTTPMethods } from "../../types/methods.types";
-import { Prefix } from "../../types/route";
+import { Prefix } from "../../types/route.types";
 import { ServiceConfig } from "../../types/service.types";
 import { noPayloadRequestFunctionCreator, noPayloadRequestFunctionCreatorByParam } from "./noPayload";
 import { withPayloadRequest, withPayloadRequestByParam } from "./withPayload";

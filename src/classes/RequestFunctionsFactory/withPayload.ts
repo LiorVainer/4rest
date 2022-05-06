@@ -1,15 +1,15 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { WithPayloadHTTPMethods } from "../../types/methods.types";
-import { defaultOnErrorFunction } from "../../types/onError";
-import { Key } from "../../types/payload";
-import { BaseParamType, Route } from "../../types/route";
+import { defaultOnErrorFunction } from "../../types/onError.types";
+import { Key } from "../../types/payload.types";
+import { BaseParamType, Route } from "../../types/route.types";
 import { ServiceConfig, ServiceFunction } from "../../types/service.types";
-import { mergeRequestConfig } from "../../utils/config";
+import { mergeRequestConfig } from "../../utils/config.utils";
 import { metadataCreator } from "../../utils/metadata.utils";
 import { onErrorHandle } from "../../utils/onError.utils";
 import { onSuccessHandle } from "../../utils/onSuccess.utils";
-import { payloadBuilder } from "../../utils/payload";
-import { routeBuilder, routeBuilderWithParam } from "../../utils/route";
+import { payloadBuilder } from "../../utils/payload.utils";
+import { routeBuilder, routeBuilderWithParam } from "../../utils/route.utils";
 import { payloadValidationHandle } from "../../utils/validation.utils";
 import { PayloadRequestFunctionByParamConfig, PayloadRequestFunctionConfig } from "./factory.types";
 

@@ -1,10 +1,10 @@
 import { AxiosRequestConfig } from "axios";
-import { ForestService } from "../classes/Service.class";
+import { ForestService } from "../classes/service.class";
 import { createMethodsFunctionsCreator } from "../classes/RequestFunctionsFactory";
-import { OnErrorFunction } from "./onError";
-import { OnSuccessFunction } from "./onSuccess";
-import { Key } from "./payload";
-import { Route } from "./route";
+import { OnErrorFunction } from "./onError.types";
+import { OnSuccessFunction } from "./onSuccess.types";
+import { Key } from "./payload.types";
+import { Route } from "./route.types";
 import { ValidationConfig } from "./validation.types";
 
 export type ServiceMethodsCreator = ReturnType<typeof createMethodsFunctionsCreator>;

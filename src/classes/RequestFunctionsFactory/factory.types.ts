@@ -1,9 +1,9 @@
 import { AxiosRequestConfig } from "axios";
 import { ZodSchema } from "zod";
-import { OnErrorFunction } from "../../types/onError";
-import { OnSuccessFunction } from "../../types/onSuccess";
-import { Key } from "../../types/payload";
-import { Route } from "../../types/route";
+import { OnErrorFunction } from "../../types/onError.types";
+import { OnSuccessFunction } from "../../types/onSuccess.types";
+import { Key } from "../../types/payload.types";
+import { Route } from "../../types/route.types";
 import { ServiceFunction } from "../../types/service.types";
 import { MethodValidationConfig } from "../../types/validation.types";
 

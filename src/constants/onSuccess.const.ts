@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { Metadata } from "../types/metadata.types";
 import { responseValidationHandle } from "../utils/validation.utils";
-import { OnSuccessFunction } from "./../types/onSuccess";
+import { OnSuccessFunction } from "../types/onSuccess.types";
 
 /**
  *

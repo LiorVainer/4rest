@@ -1,5 +1,5 @@
 import { Metadata } from "../types/metadata.types";
-import { defaultOnErrorFunction } from "../types/onError";
+import { defaultOnErrorFunction } from "../types/onError.types";
 
 export const isOnErrorByMethodRelvant = (metadata: Metadata) =>
   metadata.serviceFunction &&

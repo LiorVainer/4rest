@@ -1,9 +1,9 @@
 import { createMethodsFunctionsCreator } from "./RequestFunctionsFactory";
-import { ServiceMethodResponse } from "../types/promise";
+import { ServiceMethodResponse } from "../types/promise.types";
 import { ServiceConfig, ServiceMethodsCreator, SERVICE_FUNCTIONS } from "../types/service.types";
-import { fallback } from "../utils/general";
+import { fallback } from "../utils/general.utils";
 
-import ForestInstance from "./Instance.class";
+import ForestInstance from "./instance.class";
 
 export class ForestService<ClassResponseData = any, ClassPayloadData = ClassResponseData, ClassIdType = string> {
   protected config: ServiceConfig | undefined;
