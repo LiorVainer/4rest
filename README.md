@@ -11,7 +11,7 @@
 [![minizipped size](https://img.shields.io/bundlephobia/minzip/4rest)](https://packagephobia.com/result?p=4rest)
 [![License](https://img.shields.io/github/license/liorvainer/4rest?color=orange)](https://www.npmjs.com/package/4rest)
 
-<strong>4rest (Forest)</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) and [`zod`](https://www.npmjs.com/package/zod) packages suggesting easy to use and extensively customizable and configurable service with CRUD methods and type safe requests to API.
+<strong>4rest (Forest)</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) and [`zod`](https://www.npmjs.com/package/zod) packages suggesting easy to use and extensively customizable, extendable and configurable services with built in CRUD methods and type safe requests function to API.
 
 <br />
 
@@ -525,6 +525,8 @@ const userService = forestInstance.createService<UserWithId, User, number>("user
 
 _<strong>Note:</strong> if a method has its own specific validation, it will be used over the global one_
 
+<br>
+
 <a id="config/methods-creator"> <h3>📀 <strong>Methods Creator Helper</strong></h3></a>
 
 To help you construct new service methods, `ForestService` class comes included with property named `methodsCreator` that you can utilize to create new methods easily.
@@ -540,6 +542,8 @@ To help you construct new service methods, `ForestService` class comes included 
 - patch
 - patchByParam
 
+<br>
+
 _Examples_:
 
 ```typescript
@@ -547,6 +551,7 @@ public getByName = (name: string) => this.methodsCreator.getByParam<UserWithId, 
 public getByNameWithQuery = (name: string) => this.methodsCreator.get<UserWithId>({ route: "name", config: { params: { name } } })();
 public isEmailTaken = (email: string) => this.methodsCreator.getByParam<boolean, string>({ route: ["email", "taken"] })(email);
 ```
+<br>
 
 ### _Configuration Options_:
 
