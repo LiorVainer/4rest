@@ -11,7 +11,7 @@
 [![minizipped size](https://img.shields.io/bundlephobia/minzip/4rest)](https://packagephobia.com/result?p=4rest)
 [![License](https://img.shields.io/github/license/liorvainer/4rest?color=orange)](https://www.npmjs.com/package/4rest)
 
-<strong>4rest (Forest)</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) and [`zod`](https://www.npmjs.com/package/zod) packages suggesting easy to use and extensively customizable, extendable and configurable services with built in CRUD methods and type safe requests function to API.
+<strong>4rest (Forest)</strong> is a promise based, HTTP REST Client built on top of [`axios`](https://www.npmjs.com/package/axios) and [`zod`](https://www.npmjs.com/package/zod) packages suggesting easy to use and extensively customizable, extendable and configurable services with built in CRUD methods and type safe request functions to API.
 
 <br />
 
@@ -228,6 +228,7 @@ async function isEmailTaken(email: string) {
   const isEmailTaken: boolean = await (await userService.isEmailTaken(email)).data;
 }
 ```
+
 </br>
 
 <a id="config"> <h2>Configuration</h2></a>
@@ -382,7 +383,7 @@ const userService = instance.createService<UserWithId, User, number>("user", {
 
 You can configure in advance how to handle each request when it is completes successfully or failing and throws error.
 
-Set up <a href="#types/on-success">onSuccess function</a> which parameters will be the <strong>_response_</strong> from successful request and optionally the <a href="#types/service-method-metadata"><strong>_metadata_</strong></a>  of the request.
+Set up <a href="#types/on-success">onSuccess function</a> which parameters will be the <strong>_response_</strong> from successful request and optionally the <a href="#types/service-method-metadata"><strong>_metadata_</strong></a> of the request.
 
 Set up <a href="#types/on-error">onError function</a> which parameters will be the <strong>_error_</strong> that was thrown from a failed request and optionally the <a href="#types/service-method-metadata"><strong>_metadata_</strong></a> of the request.
 
@@ -553,6 +554,7 @@ public getByName = (name: string) => this.methodsCreator.getByParam<UserWithId, 
 public getByNameWithQuery = (name: string) => this.methodsCreator.get<UserWithId>({ route: "name", config: { params: { name } } })();
 public isEmailTaken = (email: string) => this.methodsCreator.getByParam<boolean, string>({ route: ["email", "taken"] })(email);
 ```
+
 <br>
 
 ### _Configuration Options_:
@@ -609,6 +611,7 @@ interface PayloadByParamConfig {
   key?: Key;
 }
 ```
+
 <br>
 
 <a id="types"> <h2>Types</h2></a>
