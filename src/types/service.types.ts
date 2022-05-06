@@ -26,29 +26,9 @@ export const SERVICE_FUNCTIONS: Record<ServiceFunction, ServiceFunction> = {
 
 export type GlobalServiceConfig = Omit<ServiceConfig, "validation">;
 export interface ServiceConfig {
-  routes?: {
-    getAll?: Route;
-    getById?: Route;
-    deleteAll?: Route;
-    deleteById?: Route;
-    post?: Route;
-    patch?: Route;
-    patchById?: Route;
-    put?: Route;
-    putById?: Route;
-  };
+  routes?: Partial<Record<ServiceFunction, Route>>;
   requestConfig?: AxiosRequestConfig;
-  requestConfigByMethod?: {
-    getAll?: AxiosRequestConfig;
-    getById?: AxiosRequestConfig;
-    deleteAll?: AxiosRequestConfig;
-    deleteById?: AxiosRequestConfig;
-    post?: AxiosRequestConfig;
-    patch?: AxiosRequestConfig;
-    patchById?: AxiosRequestConfig;
-    put?: AxiosRequestConfig;
-    putById?: AxiosRequestConfig;
-  };
+  requestConfigByMethod?: Partial<Record<ServiceFunction, Route>>;
   validation?: ValidationConfig;
   payloadKey?: Key;
   payloadKeyByMethod?: {
