@@ -382,9 +382,11 @@ const userService = instance.createService<UserWithId, User, number>("user", {
 
 You can configure in advance how to handle each request when it is completes successfully or failing and throws error.
 
-Set up onSuccess function which parameters will be the <strong>_response_</strong> from successful request and optionally the <strong>_metadata_</strong> of the request.
+Set up <a href="#types/on-success">onSuccess function</a> which parameters will be the <strong>_response_</strong> from successful request and optionally the <a href="#types/service-method-metadata"><strong>_metadata_</strong></a>  of the request.
 
-Set up onError function which parameters will be the <strong>_error_</strong> that was thrown from a failed request and optionally the <strong>_metadata_</strong> of the request.
+Set up <a href="#types/on-error">onError function</a> which parameters will be the <strong>_error_</strong> that was thrown from a failed request and optionally the <a href="#types/service-method-metadata"><strong>_metadata_</strong></a> of the request.
+
+<br>
 
 <strong>_Without metadata parameter used:_</strong>
 
