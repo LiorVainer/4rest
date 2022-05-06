@@ -5,7 +5,7 @@ import { OnErrorFunction } from "./onError.types";
 import { OnSuccessFunction } from "./onSuccess.types";
 import { Key } from "./payload.types";
 import { Route } from "./route.types";
-import { ValidationConfig } from "./validation.types";
+import { ServiceValidationConfig } from "./validation.types";
 
 export type ServiceMethodsCreator = ReturnType<typeof createMethodsFunctionsCreator>;
 export type ServiceMethodCreator = keyof ServiceMethodsCreator;
@@ -29,7 +29,7 @@ export interface ServiceConfig {
   routes?: Partial<Record<ServiceFunction, Route>>;
   requestConfig?: AxiosRequestConfig;
   requestConfigByMethod?: Partial<Record<ServiceFunction, Route>>;
-  validation?: ValidationConfig;
+  validation?: ServiceValidationConfig;
   payloadKey?: Key;
   payloadKeyByMethod?: {
     post?: Key;

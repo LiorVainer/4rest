@@ -9,7 +9,7 @@ interface MethodsValidation {
   types: ValidationTypes;
 }
 
-export interface ValidationConfig {
+export interface ServiceValidationConfig {
   types: ValidationTypes;
   onMethods?: Partial<Record<ServiceFunction, MethodsValidation>>;
 }
