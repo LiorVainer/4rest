@@ -17,11 +17,11 @@ export const isOnSuccessByMethodRelvant = (metadata: Metadata) =>
 export const isOnSuccessRelvant = (metadata: Metadata) =>
   !!metadata.serviceConfig?.onSuccess || isOnSuccessByMethodRelvant(metadata);
 
-export const onSuccessDecider = <T>(res: AxiosResponse<T>, metadata: Metadata) => {
+export const onSuccessDecider = <T>(metadata: Metadata) => {
   if (isOnSuccessByMethodRelvant(metadata)) {
-    return metadata.serviceConfig?.onSuccessByMethod![metadata.serviceFunction!]!(res, metadata);
+    return metadata.serviceConfig?.onSuccessByMethod![metadata.serviceFunction!];
   } else {
-    return metadata?.serviceConfig?.onSuccess!(res, metadata);
+    return metadata?.serviceConfig?.onSuccess;
   }
 };
 
@@ -34,11 +34,11 @@ export const onSuccessDecider = <T>(res: AxiosResponse<T>, metadata: Metadata) =
 export const onSuccessHandle = <T>(res: AxiosResponse<T>, metadata?: Metadata) => {
   if (metadata?.serviceConfig) {
     if (isOnSuccessRelvant(metadata) && !metadata.serviceConfig.validation) {
-      return onSuccessDecider(res, metadata);
+      return onSuccessDecider(metadata)!(res, metadata);
     } else if (!isOnSuccessRelvant(metadata) && metadata.serviceConfig.validation?.types.resoponseData) {
       return defaultValidationOnSuccessFunction(res, metadata);
     } else if (isOnSuccessRelvant(metadata) && metadata.serviceConfig.validation?.types.resoponseData) {
-      return customValidationOnSuccessFunction(onSuccessDecider(res, metadata), res, metadata);
+      return customValidationOnSuccessFunction(onSuccessDecider(metadata)!, res, metadata);
     }
   }
   return defaultOnSuccessFunction(res, metadata);
