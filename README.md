@@ -46,7 +46,7 @@ Using yarn
 <li><a href="#config/service/payload-key">Payload Data Key</a></li><li><a href="#config/service/handlingFunctions">On Success / On Error Handling</a></li><li><a href="#config/service/validation">Zod Validation</a></li></ul></li></ul>
 <ul><li><a href="#config/methods-creator">Methods Creator Helper</a></li></ul>
 <li><a href="#types">Types</a>
-<ul><li><a href="#types/service-generics">Service Generics</a></li><li><a href="#types/service-method-metadata">Service Method Metadata</a></li><li><a href="#types/on-success">OnSuccess Function</a></li><li><a href="#types/on-error">OnError Function</a></li></ul></li>
+<ul><li><a href="#types/service-generics">Service Generics</a></li><li><a href="#types/service-method-metadata">Service Method Metadata</a></li><li><a href="#types/on-success">OnSuccess Function</a></li><li><a href="#types/on-error">OnError Function</a></li><li><a href="#types/validation">Validation</a></li></ul></li>
 <ul></ul></ul>
 
 <br />
@@ -260,7 +260,7 @@ _<strong>Note:</strong> if a created service will have a config of it's own, it'
 <strong>Options to configure</strong> `forest.create()`
 
 ```typescript
-export interface InstanceConfig {
+interface InstanceConfig {
   axiosSettings?: AxiosSettings;
   globalServiceConfig?: ServiceConfig;
 }
@@ -484,6 +484,7 @@ _Examples for data recieved back from API:_
 // Invalid data, will throw error
 [{ name: "John Smith" }];
 ```
+<br>
 
 - <strong>Validation by service method:</strong>
 
@@ -509,6 +510,7 @@ _Examples for payload sent to API:_
 // Invalid data, will throw error
 { email: "john.smith@gmail.com" };
 ```
+<br>
 
 - <strong>Combination of both:</strong>
 
@@ -713,7 +715,7 @@ Each request function (method) in 4rest includes metadata about the current requ
 Method metadata includes the following properties:
 
 ```typescript
-export interface Metadata {
+interface Metadata {
   serviceConfig?: ServiceConfig; // current service config
   serviceFunction?: ServiceFunction; // name of one of the built in base service functions
 }
@@ -724,7 +726,7 @@ export interface Metadata {
 Function For Handling Successful Requests:
 
 ```typescript
-export type OnSuccessFunction = <T>(value: AxiosResponse<T>, metadata?: Metadata) => any;
+type OnSuccessFunction = <T>(value: AxiosResponse<T>, metadata?: Metadata) => any;
 ```
 
 <a id="types/on-error"><h3>OnError Function</h3></a>
@@ -732,7 +734,37 @@ export type OnSuccessFunction = <T>(value: AxiosResponse<T>, metadata?: Metadata
 Function For Handling Failed Requests:
 
 ```typescript
-export type OnSuccessFunction = <T>(value: AxiosResponse<T>, metadata?: Metadata) => any;
+type OnSuccessFunction = <T>(value: AxiosResponse<T>, metadata?: Metadata) => any;
+```
+
+<a id="types/validation"><h3>Validation</h3></a>
+
+<strong>_ValidationTypes_</strong> - validation can be set on either request payload or response data
+
+```typescript
+interface ValidationTypes<T = ZodSchema> {
+  requestPayload?: T;
+  resoponseData?: T;
+}
+```
+
+<strong>_ServiceValidationConfig_</strong> - lets you set validation on each method seperatly via `onMethods` property or globaly for all methods via `types` property
+
+```typescript
+interface MethodsValidation {
+  types: ValidationTypes;
+}
+
+interface ServiceValidationConfig {
+  types: ValidationTypes;
+  onMethods?: Partial<Record<ServiceFunction, MethodsValidation>>;
+}
+```
+<strong>_MethodValidationConfig_</strong> - you can set validation specificlly on custom method you create for your extended service
+
+
+```typescript
+type MethodValidationConfig = ValidationTypes;
 ```
 
 <br>
