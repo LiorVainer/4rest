@@ -1,5 +1,5 @@
 import axiosLib, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { AxiosSettings } from "../types/axios";
+import { AxiosSettings } from "../types/axios.types";
 
 export const createAxiosInstance = (config?: AxiosSettings): AxiosInstance => {
   if (config === undefined) {

@@ -1,4 +1,4 @@
-export type Method = "get" | "post" | "put" | "patch" | "delete" | "options" | "head";
+import { Method, NoPayloadHTTPMethods, WithPayloadHTTPMethods } from "../types/methods.types";
 
 export const Methods: Record<string, Method> = {
   GET: "get",
@@ -10,16 +10,12 @@ export const Methods: Record<string, Method> = {
   HEAD: "head",
 };
 
-export type NoPayloadHTTPMethods = "get" | "delete" | "head" | "options";
-
 export const noPayloadRequestMethods: Record<string, NoPayloadHTTPMethods> = {
   GET: "get",
   DELETE: "delete",
   HEAD: "head",
   OPTIONS: "options",
 };
-
-export type WithPayloadHTTPMethods = "post" | "put" | "patch";
 
 export const withPayloadRequestMethods: Record<string, WithPayloadHTTPMethods> = {
   POST: "post",

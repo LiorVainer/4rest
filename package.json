@@ -45,7 +45,8 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "axios": "^0.26.1"
+    "axios": "^0.26.1",
+    "zod": "^3.14.4"
   },
   "repository": {
     "type": "git",
@@ -55,7 +56,7 @@
     "url": "https://github.com/LiorVainer/4rest/issues"
   },
   "homepage": "https://github.com/LiorVainer/4rest#readme",
-  "description": "REST Client built on top of axios",
+  "description": "REST Client built on top of axios and zod packages",
   "keywords": [
     "Typescript",
     "axios",

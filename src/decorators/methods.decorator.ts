@@ -1,7 +1,7 @@
-import { createRequestMethods } from "./../RequestFactory/index";
-import { ForestService } from "./../forest/service";
-import { fallback } from "../utils/general";
-import { ServiceMethodResponse } from "../types/promise";
+import { createMethodsFunctionsCreator } from "../classes/RequestFunctionsFactory/index";
+import { ForestService } from "../classes/service.class";
+import { fallback } from "../utils/general.utils";
+import { ServiceMethodResponse } from "../types/promise.types";
 
 // export const GetAll = <T extends ForestService, Response = any>() => {
 //   return (target: T, propertyKey: string, descriptor: PropertyDescriptor) => {

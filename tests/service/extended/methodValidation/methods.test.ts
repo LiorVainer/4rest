@@ -1,0 +1,66 @@
+import MockAdapter from "axios-mock-adapter";
+import axios from "axios";
+
+import { UserWithId } from "../../../types/user";
+
+import { userService } from "./index.test";
+import { ZodError } from "zod";
+
+describe("Custom Service Method ", () => {
+  let mock: MockAdapter;
+
+  beforeEach(() => {
+    mock = new MockAdapter(axios);
+  });
+
+  afterEach(() => {
+    mock.reset();
+  });
+
+  test("getAll", async () => {
+    const responseDataUsersData: string[] = ["John Smith", "Jane Doe"];
+    mock.onGet("user").reply(200, responseDataUsersData);
+
+    const response = await userService.getAll();
+    expect("id" in response.data).toBeFalsy();
+    expect("length" in response.data).toBeTruthy();
+  });
+
+  test("getByName Valid", async () => {
+    const usersData: UserWithId[] = [
+      { _id: 1, name: "John Smith", email: "john.smith@gmail.com" },
+      { _id: 2, name: "Jane Doe", email: "jane.doe@gmail.com" },
+    ];
+
+    const name = "John Smith";
+    const matchUser = { _id: 1, name: "John Smith", email: "john.smith@gmail.com" };
+    mock.onGet(`user/${name}/name`).reply(
+      200,
+      usersData.find((user) => user.name === name)
+    );
+
+    const response = await userService.getByName("John Smith");
+
+    expect(response.data).toEqual(matchUser);
+  });
+
+  test("getByName Not Valid", async () => {
+    const usersData = [
+      { name: "John Smith", email: "john.smith@gmail.com" },
+      { name: "Jane Doe", email: "jane.doe@gmail.com" },
+    ];
+
+    const name = "John Smith";
+
+    mock.onGet(`user/${name}/name`).reply(
+      200,
+      usersData.find((user) => user.name === name)
+    );
+
+    try {
+      await userService.getByName("John Smith");
+    } catch (err) {
+      expect(err instanceof ZodError).toBeTruthy();
+    }
+  });
+});
