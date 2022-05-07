@@ -56,7 +56,7 @@
     "url": "https://github.com/LiorVainer/4rest/issues"
   },
   "homepage": "https://github.com/LiorVainer/4rest#readme",
-  "description": "REST Client built on top of axios",
+  "description": "REST Client built on top of axios and zod packages",
   "keywords": [
     "Typescript",
     "axios",
