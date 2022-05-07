@@ -57,7 +57,7 @@ The package was created to help developers to get their requests functions from 
 Using the package, you can divide your requests functions to API to different services based on the models (data structures) of the API.
 When you have initiallized your service, you can make request to API at every place in your app with type safety based on the service configuration.
 
-_Note: The package was meant to be used with rest apis only and is does not support graphql._
+_Note: The package was meant to be used with <strong>rest</strong> API only and it <strong>does not support graphql._</strong>
 
 <br />
 
